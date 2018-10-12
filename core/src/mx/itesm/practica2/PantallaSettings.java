@@ -12,7 +12,7 @@ public class PantallaSettings extends Pantalla {
     private Sprite settings;
     private Sprite volume;
 
-    private Texture fondo = new Texture("settings-protipe.png");
+    private Texture fondo = new Texture("FondoMenuFinal.png");
     private Texture btnRegreso = new Texture( "back.png");
 
     public PantallaSettings(Pantalla_Inicio pantallaInicio){
@@ -37,9 +37,7 @@ public class PantallaSettings extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(fondo, 0, 0);
-        batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * .70f, ALTO - btnRegreso.getHeight() * 1.5f);
-        //batch.draw(settings, ANCHO / 2 - settings.getHeight() * 1.5f, ALTO *.90f - settings.getHeight());
-        //batch.draw(volume, ANCHO / 2 - volume.getHeight() * .75f , ALTO / 2 - volume.getWidth() * .20f);
+        batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
         batch.end();
     }
 

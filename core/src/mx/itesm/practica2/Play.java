@@ -10,7 +10,7 @@ public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
 
-    private Texture fnd = new Texture("juego.png");
+    private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
 
     public Play(Pantalla_Inicio pantallaInicio) {
@@ -33,7 +33,7 @@ public class Play extends Pantalla {
         batch.begin();
         batch.draw(fnd, 0, 0);
         //Los elementos se crean en orden
-        //batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.5f, ALTO - BotRegreso.getHeight() * 1.5f);
+        batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.end();
     }
 

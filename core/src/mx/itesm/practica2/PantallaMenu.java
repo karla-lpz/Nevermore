@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 class PantallaMenu extends Pantalla{
     private final Pantalla_Inicio pantallaInicio;
 
-    private Texture fondo = new Texture("nevermore.png");
+    private Texture fondo = new Texture("FondoMenuFinal.png");
     //Contenedor de elementos graficos de la pantalla
     private Stage escenaMenu;
 
