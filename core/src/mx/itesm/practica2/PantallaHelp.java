@@ -10,7 +10,7 @@ public class PantallaHelp extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
 
-    private Texture fondo = new Texture("help.png");
+    private Texture fondo = new Texture("FondoFinal.png");
     private Texture btnRegreso = new Texture( "back.png");
 
     public PantallaHelp(Pantalla_Inicio pantallaInicio){
@@ -31,7 +31,7 @@ public class PantallaHelp extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(fondo, 0, 0);
-        batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.5f, ALTO - btnRegreso.getHeight() * 1.5f);
+        batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
         batch.end();
     }
 
@@ -71,8 +71,8 @@ public class PantallaHelp extends Pantalla {
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
-            float x = ANCHO-btnRegreso.getWidth()*1.5f;
-            float y = ALTO-btnRegreso.getWidth()*1.5f;
+            float x = ANCHO-btnRegreso.getWidth()*1.0f;
+            float y = ALTO-btnRegreso.getWidth()*1.2f;
             float anchoBtn = btnRegreso.getWidth();
             float altoBtn = btnRegreso.getWidth();
             if(v.x >= x && v.x <= x + anchoBtn && v.y >= y && v.y <= y + altoBtn){

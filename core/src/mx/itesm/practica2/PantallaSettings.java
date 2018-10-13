@@ -12,7 +12,7 @@ public class PantallaSettings extends Pantalla {
     private Sprite settings;
     private Sprite volume;
 
-    private Texture fondo = new Texture("FondoMenuFinal.png");
+    private Texture fondo = new Texture("FondoFinal.png");
     private Texture btnRegreso = new Texture( "back.png");
 
     public PantallaSettings(Pantalla_Inicio pantallaInicio){

@@ -29,7 +29,7 @@ class PantallaJuego extends Pantalla {
         sprite.setPosition(ANCHO/2, ALTO/3);
         //Fondo
         textFondo = new Texture("A_dream.jpg");
-        textBtnRegreso = new Texture("badlogic.jpg");
+        textBtnRegreso = new Texture("back.jpg");
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
 

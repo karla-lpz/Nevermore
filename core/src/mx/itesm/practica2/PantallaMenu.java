@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 class PantallaMenu extends Pantalla{
     private final Pantalla_Inicio pantallaInicio;
 
-    private Texture fondo = new Texture("FondoMenuFinal.png");
+    private Texture fondo = new Texture("FondoFinal.png");
     //Contenedor de elementos graficos de la pantalla
     private Stage escenaMenu;
 
@@ -44,12 +44,12 @@ class PantallaMenu extends Pantalla{
 
         //_____________________Play_____________________________________________________________________
 
-        Texture textBtnPlay = new Texture("play.png");
+        Texture textBtnPlay = new Texture("playBtn.png");
         TextureRegionDrawable trd = new TextureRegionDrawable(new TextureRegion(textBtnPlay));
 
         //Imagen Boton oprimido
 
-        Texture textBtnPlayOprimido = new Texture("play1.png");
+        Texture textBtnPlayOprimido = new Texture("playBtnPush.png");
         TextureRegionDrawable trdOp = new TextureRegionDrawable(new TextureRegion(textBtnPlayOprimido));
 
         ImageButton btnPlay = new ImageButton(trd, trdOp);
@@ -64,20 +64,20 @@ class PantallaMenu extends Pantalla{
             }
         });
 
-        //_______________________Settings____________Boton___________________________
-            Texture textBtnSettings = new Texture("setting.png");
-            TextureRegionDrawable SettingsTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnSettings));
+        //_______________________Scores____________Boton___________________________
+            Texture textBtnScores = new Texture("scoresBtn.png");
+            TextureRegionDrawable ScoresTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnScores));
 
-            Texture textBtnSettingsOp = new Texture("setting2.png");
-            TextureRegionDrawable SettingsTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnSettingsOp));
-            ImageButton btnSettings = new ImageButton(SettingsTrd2, SettingsTrd2Op);
-            btnSettings.setPosition(ANCHO/2-btnSettings.getWidth()/2, .4f*ALTO);
+            Texture textBtnScoresOp = new Texture("scoresBtnPush.png");
+            TextureRegionDrawable ScoresTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnScoresOp));
+            ImageButton btnScores = new ImageButton(ScoresTrd2, ScoresTrd2Op);
+            btnScores.setPosition(ANCHO/2-btnScores.getWidth()/2, .4f*ALTO);
 
-            btnSettings.addListener(new ClickListener(){
+            btnScores.addListener(new ClickListener(){
                @Override
                public void clicked(InputEvent event, float x, float y) {
                     super.clicked(event, x, y);
-                    pantallaInicio.setScreen(new PantallaSettings(pantallaInicio)
+                    pantallaInicio.setScreen(new PantallaScores(pantallaInicio)
                     );
                 }
             });
@@ -87,28 +87,73 @@ class PantallaMenu extends Pantalla{
 
 
 
-        //______________________Score_______________________________________________
+        //______________________Help_______________________________________________
 
-        Texture textBtnScore = new Texture("help1.png");
-        TextureRegionDrawable ScoreTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnScore));
+        Texture textBtnHelp = new Texture("helpBtn.png");
+        TextureRegionDrawable HelpTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnHelp));
 
-        Texture textBtnScoreOp = new Texture("help2.png");
-        TextureRegionDrawable ScoreTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnScoreOp));
-        ImageButton btnScore = new ImageButton(ScoreTrd2, ScoreTrd2Op);
-        btnScore.setPosition(ANCHO/2-btnScore.getWidth()/2, .2f*ALTO);
-        btnScore.addListener(new ClickListener(){
+        Texture textBtnHelpOp = new Texture("helpBtnPush.png");
+        TextureRegionDrawable HelpTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnHelpOp));
+        ImageButton btnHelp = new ImageButton(HelpTrd2, HelpTrd2Op);
+        btnHelp.setPosition(ANCHO/2-btnHelp.getWidth()/2, .2f*ALTO);
+        btnHelp.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                pantallaInicio.setScreen(new PantallaHelp(pantallaInicio));
             }
         });
+
+
+        //__________________________________________________________________________
+
+
+
+        //______________________Story_______________________________________________
+        
+        Texture textBtnStory = new Texture("libroBtn.png");
+        TextureRegionDrawable StoryTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnStory));
+
+        Texture textBtnStoryOp = new Texture("libroBtn.png");
+        TextureRegionDrawable StoryTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnStoryOp));
+        ImageButton btnStory = new ImageButton(StoryTrd2, StoryTrd2Op);
+        btnStory.setPosition(ANCHO/2-btnStory.getWidth()/0.5f, .05f*ALTO);
+        btnStory.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                pantallaInicio.setScreen(new PantallaHelp(pantallaInicio));
+            }
+        });
+
+        //__________________________________________________________________________
+
+
+        //______________________Settings_______________________________________________
+
+        Texture textBtnSettings = new Texture("engraneBtn.png");
+        TextureRegionDrawable SettingsTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnSettings));
+
+        Texture textBtnSettingsOp = new Texture("engraneBtn.png");
+        TextureRegionDrawable SettingsTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnSettingsOp));
+        ImageButton btnSettings = new ImageButton(SettingsTrd2, SettingsTrd2Op);
+        btnSettings.setPosition(ANCHO-btnSettings.getWidth(), .05f*ALTO);
+        btnSettings.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                pantallaInicio.setScreen(new PantallaHelp(pantallaInicio));
+            }
+        });
+
      //_______________________________________________________________________________
 
 
         escenaMenu.addActor(btnPlay);
+        escenaMenu.addActor(btnScores);
+        escenaMenu.addActor(btnHelp);
+        escenaMenu.addActor(btnStory);
         escenaMenu.addActor(btnSettings);
-        escenaMenu.addActor(btnScore);
 
 
     }
