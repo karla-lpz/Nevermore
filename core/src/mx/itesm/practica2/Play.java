@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
-import com.sun.xml.internal.bind.v2.TODO;
 
 public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
@@ -37,7 +36,7 @@ public class Play extends Pantalla {
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
     private void crearObjetos(){
-        pluma = new Pluma(plumaBlock, ANCHO/4, 10);
+        pluma = new Pluma(plumaBlock, ANCHO/4, 20);
 
     }
 
@@ -55,11 +54,11 @@ public class Play extends Pantalla {
         batch.draw(BtnPause, 0, ALTO / 1.12f);
         batch.end();
     }
-    //private void actualizarObjetos() {
-      //  if(estado== Estado.JUGANDO){
-           // pluma.mover(pluma);
-      //  }
-   // }
+    private void actualizarObjetos() {
+        if(estado== Estado.JUGANDO){
+            pluma.mover(pluma);
+        }
+    }
 
 
     @Override
@@ -123,7 +122,6 @@ public class Play extends Pantalla {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            //TODO: necesiamos que el eje de las y tenga mas limite en la parte de abajo y algun limite en la parte superior
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             pluma.sprite.setY(v.y);
