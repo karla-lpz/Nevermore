@@ -17,6 +17,7 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
+    private Texto texto;
     private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
@@ -37,7 +38,6 @@ public class Play extends Pantalla {
     }
     private void crearObjetos(){
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
-
     }
 
 
@@ -49,14 +49,12 @@ public class Play extends Pantalla {
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
         //Los elementos se crean en orden
-        //batch.draw(plumaSprite, ANCHO/4, 20 );
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
         batch.end();
     }
     private void actualizarObjetos() {
         if(estado== Estado.JUGANDO){
-            //pluma.mover(pluma);
         }
     }
 
@@ -122,6 +120,7 @@ public class Play extends Pantalla {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
+            //TODO Poner un limite en los angulos que puede tomar la pluma  
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             pluma.sprite.setY(v.y);

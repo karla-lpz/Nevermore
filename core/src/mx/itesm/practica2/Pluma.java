@@ -14,11 +14,7 @@ public class Pluma extends Objeto {
     }
     //
     public void rotar (Pluma pluma, float rotacionX, float movY){
-        //if(movY >= 10){
-        //     rotacionX = 0;
-        //}
         pluma.sprite.setRotation(rotacionX);
-        //pluma.sprite.rotate(rotacionX);
     }
 
 }
