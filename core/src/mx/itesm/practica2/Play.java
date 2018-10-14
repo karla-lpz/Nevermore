@@ -56,7 +56,7 @@ public class Play extends Pantalla {
     }
     private void actualizarObjetos() {
         if(estado== Estado.JUGANDO){
-            pluma.mover(pluma);
+            //pluma.mover(pluma);
         }
     }
 
