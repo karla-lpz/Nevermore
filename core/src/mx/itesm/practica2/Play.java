@@ -125,7 +125,7 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             pluma.sprite.setY(v.y);
-            pluma.rotar(pluma, v.x);
+            pluma.rotar(pluma, v.x, v.y);
             return true;
         }
         @Override
