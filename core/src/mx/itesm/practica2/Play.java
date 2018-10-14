@@ -25,7 +25,7 @@ public class Play extends Pantalla {
         sprite.setPosition(ALTO*.2f,ANCHO*.2f );
         sprite = new Sprite(new Texture("pausaBtn.png"));
         Texture BotRegreso = new Texture("back.png");
-        Texture BtnPause = new Texture("pausa.png");
+        Texture BtnPause = new Texture("pausaBtn.png");
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
 
@@ -37,7 +37,7 @@ public class Play extends Pantalla {
         batch.draw(fnd, 0, 0);
         //Los elementos se crean en orden
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
-        batch.draw(BtnPause, ANCHO - BtnPause.getWidth(), ALTO - BtnPause.getHeight());
+        batch.draw(BtnPause, 0, ALTO / 1.12f);
         batch.end();
     }
 

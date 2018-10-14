@@ -2,6 +2,7 @@ package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 class PantallaMenu extends Pantalla{
     private final Pantalla_Inicio pantallaInicio;
+    private Sprite sprite;
 
     private Texture fondo = new Texture("FondoFinal.png");
     //Contenedor de elementos graficos de la pantalla
@@ -26,6 +28,10 @@ class PantallaMenu extends Pantalla{
     public void show() {
         //Es el primer metodo que se ejecuta
         crearEscena();
+        //_____________________Título_____________________________________________________________________
+        sprite = new Sprite(new Texture("nevermoreTitulo.png"));
+        sprite.setPosition(ALTO/2f,ANCHO/2f );
+        //__________________________________________________________________________
         Gdx.input.setInputProcessor(escenaMenu);
     }
 
@@ -117,7 +123,7 @@ class PantallaMenu extends Pantalla{
         Texture textBtnStoryOp = new Texture("libroBtn.png");
         TextureRegionDrawable StoryTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnStoryOp));
         ImageButton btnStory = new ImageButton(StoryTrd2, StoryTrd2Op);
-        btnStory.setPosition(ANCHO/2-btnStory.getWidth()/0.5f, .05f*ALTO);
+        btnStory.setPosition(0, 0);
         btnStory.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -166,6 +172,7 @@ class PantallaMenu extends Pantalla{
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         //Dibujar la textura del fondo
+        batch.draw(sprite, ALTO/2f,ANCHO/2f);
         batch.draw(fondo, 0, 0);
         batch.end();
         //Cada que cambiamos de pantalla usamos el matrix
