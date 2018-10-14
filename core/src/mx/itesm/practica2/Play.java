@@ -11,12 +11,13 @@ import com.badlogic.gdx.math.Vector3;
 public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
-    Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
-    Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
-
+    private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
+    private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
+    private Pluma pluma;
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
+    private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
 
@@ -31,7 +32,14 @@ public class Play extends Pantalla {
         Texture BotRegreso = new Texture("back.png");
         Texture BtnPause = new Texture("pausaBtn.png");
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
+        crearObjetos();
+        Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
+    private void crearObjetos(){
+        pluma = new Pluma(plumaBlock, ANCHO/4, 20);
+
+    }
+
 
     @Override
     public void render(float delta) {
@@ -39,11 +47,17 @@ public class Play extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(fnd, 0, 0);
+        pluma.dibujar(batch);
         //Los elementos se crean en orden
-        batch.draw(plumaSprite, ANCHO/4, 20 );
+        //batch.draw(plumaSprite, ANCHO/4, 20 );
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
         batch.end();
+    }
+    private void actualizarObjetos() {
+        if(estado== Estado.JUGANDO){
+            pluma.mover(pluma);
+        }
     }
 
 
@@ -108,9 +122,11 @@ public class Play extends Pantalla {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
+            Vector3 v = new Vector3(screenX, screenY, 0);
+            camara.unproject(v);
+            pluma.sprite.setY(v.y);
+            return true;
         }
-
         @Override
         public boolean mouseMoved(int screenX, int screenY) {
             return false;
