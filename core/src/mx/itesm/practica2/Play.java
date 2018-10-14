@@ -2,13 +2,17 @@ package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
 public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
+    Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
+    Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
 
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
@@ -36,10 +40,12 @@ public class Play extends Pantalla {
         batch.begin();
         batch.draw(fnd, 0, 0);
         //Los elementos se crean en orden
+        batch.draw(plumaSprite, ANCHO/4, 20 );
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
         batch.end();
     }
+
 
     @Override
     public void pause() {
