@@ -13,8 +13,8 @@ public class Pluma extends Objeto {
         sprite.draw(batch);
     }
     //
-    public void rotar (Pluma pluma){
-
+    public void rotar (Pluma pluma, float rotacionX){
+        pluma.sprite.rotate(rotacionX);
     }
 
 }
