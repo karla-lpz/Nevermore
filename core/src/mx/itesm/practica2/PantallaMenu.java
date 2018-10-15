@@ -1,6 +1,7 @@
 package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,11 +24,13 @@ class PantallaMenu extends Pantalla{
 
         this.pantallaInicio = pantallaInicio;
     }
+    Music music = Gdx.audio.newMusic(Gdx.files.internal("soundGame.mp3"));
 
     @Override
     public void show() {
         //Es el primer metodo que se ejecuta
         crearEscena();
+        //music.play();
         //_____________________Título_____________________________________________________________________
         sprite = new Sprite(new Texture("nevermoreTitulo.png"));
         sprite.setPosition(ALTO/2f,ANCHO/2f );

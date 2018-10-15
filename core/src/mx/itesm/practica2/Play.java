@@ -120,11 +120,28 @@ public class Play extends Pantalla {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            //TODO Poner un limite en los angulos que puede tomar la pluma  
+
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
-            pluma.sprite.setY(v.y);
-            pluma.rotar(pluma, v.x, v.y);
+            Gdx.app.log("X", String.valueOf(v.x));
+            Gdx.app.log("Y", String.valueOf(v.x));
+
+            //TODO esto va dentro de una clase que se llama apuntando, cuando tocas la pluma se ejecuta se metodo, cuando
+            //TODO pero cuando sueltas se ejecuta el metodo disparo
+            pluma.sprite.setY(v.y-150);
+
+            if(v.y > 150){
+                pluma.sprite.setY(150);
+            }
+                pluma.rotar(pluma, v.x);
+
+                //270>v.x>470
+
+                if(v.x > 470){
+                    pluma.rotar(pluma, 470);
+                } else if(v.x < 270){
+                    pluma.rotar(pluma, 270);
+                }
             return true;
         }
         @Override
