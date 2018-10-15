@@ -5,9 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Pluma extends Objeto {
 
-//TODO (entra con el metodo touchUp)EL metodo disparo guarda el ultimo valor de Y que tuvo el sprite, ese valor lo va a usar como potencia y el angulo que lleva
-//TODO (entra con el metodo touchDown) EL metodo apuntar es el que le da movimiento a la flecha y se termina de ejecutar cuando el evento de touchUp entra
-//TODO Podemos cualcular a donde se dirige la flecha con Teorema de pitagoras.
 
     boolean flag = false;
     boolean volando;

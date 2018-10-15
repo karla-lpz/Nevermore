@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
+import java.awt.event.InputEvent;
+
 public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
@@ -109,34 +111,33 @@ public class Play extends Pantalla {
             if(v.x >= xP && v.x <= xP + anchoP && v.y >= yP && v.y <= yP + altoP){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
             }
-
             return true;
         }
 
+        //TODO (entra con el metodo touchUp)EL metodo disparo guarda el ultimo valor de Y que tuvo el sprite, ese valor lo va a usar como potencia y el angulo que lleva
+        //TODO (entra con el metodo touchDown) EL metodo apuntar es el que le da movimiento a la flecha y se termina de ejecutar cuando el evento de touchUp entra
+        //TODO Podemos cualcular a donde se dirige la flecha con Teorema de pitagoras.
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            pluma.sprite.setSize(200,200);
+            for (){
+                pluma.sprite.setPosition();
+            }
             return false;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             Gdx.app.log("X", String.valueOf(v.x));
             Gdx.app.log("Y", String.valueOf(v.x));
-
-            //TODO esto va dentro de una clase que se llama apuntando, cuando tocas la pluma se ejecuta se metodo, cuando
-            //TODO pero cuando sueltas se ejecuta el metodo disparo
-            pluma.sprite.setY(v.y-150);
-
+            pluma.sprite.setY(v.y-200);
             if(v.y > 150){
                 pluma.sprite.setY(150);
             }
                 pluma.rotar(pluma, v.x);
-
                 //270>v.x>470
-
                 if(v.x > 470){
                     pluma.rotar(pluma, 470);
                 } else if(v.x < 270){
