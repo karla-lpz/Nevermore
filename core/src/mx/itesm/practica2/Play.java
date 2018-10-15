@@ -12,6 +12,7 @@ import java.awt.event.InputEvent;
 
 public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
+    private float power;
     private Sprite sprite;
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
@@ -119,15 +120,17 @@ public class Play extends Pantalla {
         //TODO Podemos cualcular a donde se dirige la flecha con Teorema de pitagoras.
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            pluma.sprite.setSize(200,200);
 
+            for (int i = screenX; i < power*10; i++){
+                pluma.sprite.setPosition(0, i);
+            }
             return false;
         }
-
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
+            power = 100 - v.y;
             Gdx.app.log("X", String.valueOf(v.x));
             Gdx.app.log("Y", String.valueOf(v.x));
             pluma.sprite.setY(v.y-200);
