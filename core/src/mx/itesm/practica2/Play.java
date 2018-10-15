@@ -120,9 +120,7 @@ public class Play extends Pantalla {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             pluma.sprite.setSize(200,200);
-            for (){
-                pluma.sprite.setPosition();
-            }
+
             return false;
         }
 
