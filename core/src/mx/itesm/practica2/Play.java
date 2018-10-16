@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
-
 import java.awt.event.InputEvent;
 
 public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private float power;
+    private float direccion;
     private Sprite sprite;
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
@@ -120,9 +120,10 @@ public class Play extends Pantalla {
         //TODO Podemos cualcular a donde se dirige la flecha con Teorema de pitagoras.
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
-            for (int i = screenX; i < power*10; i++){
-                pluma.sprite.setPosition(0, i);
+            Gdx.app.log("Se solto el boton","el boton esta suelto" );
+            for (int i = screenX; i < power*12; i++){
+                pluma.sprite.setPosition(direccion , i);
+                Gdx.app.log("POWER", String.valueOf(power));
             }
             return false;
         }
@@ -131,10 +132,11 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             power = 100 - v.y;
-            Gdx.app.log("X", String.valueOf(v.x));
-            Gdx.app.log("Y", String.valueOf(v.x));
+            direccion = v.x;
+            //Gdx.app.log("X", String.valueOf(v.x));
+            //Gdx.app.log("Y", String.valueOf(v.x));
             pluma.sprite.setY(v.y-200);
-            if(v.y > 150){
+            if(v.y >= 150){
                 pluma.sprite.setY(150);
             }
                 pluma.rotar(pluma, v.x);
