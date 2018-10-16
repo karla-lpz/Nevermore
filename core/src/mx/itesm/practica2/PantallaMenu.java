@@ -16,6 +16,7 @@ class PantallaMenu extends Pantalla{
     private Sprite sprite;
 
     private Texture fondo = new Texture("FondoFinal.png");
+    private Texture title = new Texture("nevermoreTitulo.png");
     //Contenedor de elementos graficos de la pantalla
     private Stage escenaMenu;
 
@@ -33,7 +34,7 @@ class PantallaMenu extends Pantalla{
         //music.play();
         //_____________________Título_____________________________________________________________________
         sprite = new Sprite(new Texture("nevermoreTitulo.png"));
-        sprite.setPosition(ALTO/2f,ANCHO/2f );
+        sprite.setPosition(ALTO/2,ANCHO/2 );
         //__________________________________________________________________________
         Gdx.input.setInputProcessor(escenaMenu);
     }
@@ -177,6 +178,7 @@ class PantallaMenu extends Pantalla{
         //Dibujar la textura del fondo
         batch.draw(sprite, ALTO/2f,ANCHO/2f);
         batch.draw(fondo, 0, 0);
+        batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
         batch.end();
         //Cada que cambiamos de pantalla usamos el matrix
         escenaMenu.draw();

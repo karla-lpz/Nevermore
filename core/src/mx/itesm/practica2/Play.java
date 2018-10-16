@@ -121,7 +121,7 @@ public class Play extends Pantalla {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             Gdx.app.log("Se solto el boton","el boton esta suelto" );
-            for (int i = screenX; i < power*12; i++){
+            for (int i = screenX; i < power * 12; i++){
                 pluma.sprite.setPosition(direccion , i);
                 Gdx.app.log("POWER", String.valueOf(power));
             }
