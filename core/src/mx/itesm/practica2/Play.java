@@ -13,6 +13,8 @@ public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private float power;
     private float direccion;
+    private float time;
+    private float VELOCIDAD = 500;
     private Sprite sprite;
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
@@ -47,14 +49,18 @@ public class Play extends Pantalla {
     @Override
     public void render(float delta) {
         borrarPantalla(0, 0, 1);
+        time += Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
-        //Los elementos se crean en orden
+        pluma.mover(time);
+        //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
+
         batch.end();
+        //Gdx.app.log("Time", String.valueOf(time));
     }
     private void actualizarObjetos() {
         if(estado== Estado.JUGANDO){
@@ -115,16 +121,30 @@ public class Play extends Pantalla {
             return true;
         }
 
-        //TODO (entra con el metodo touchUp)EL metodo disparo guarda el ultimo valor de Y que tuvo el sprite, ese valor lo va a usar como potencia y el angulo que lleva
-        //TODO (entra con el metodo touchDown) EL metodo apuntar es el que le da movimiento a la flecha y se termina de ejecutar cuando el evento de touchUp entra
-        //TODO Podemos cualcular a donde se dirige la flecha con Teorema de pitagoras.
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            //-vectores
             Gdx.app.log("Se solto el boton","el boton esta suelto" );
-            for (int i = screenX; i < power * 12; i++){
-                pluma.sprite.setPosition(direccion , i);
-                Gdx.app.log("POWER", String.valueOf(power));
-            }
+            Vector3 v = new Vector3(screenX, screenY, 0);
+            camara.unproject(v);
+            //Estos metodos no se como funcionan pero, no suenan logicos, como cambiar los argumentos de una funcion? y luego ni se usan de nuevo
+            //
+            //screenX = pluma.setVx(v.x);
+            //screenY = vy;
+           //TODO tengo que darle los valores en vx y vx como vectores pero estos valores son de PLUMA entonces aqui solo se hacen los calculos
+
+            //esto es a donde se dirige la pluma
+            /*La variable alfa=tangente^⁻1 de el valor de ALTO de la pantalla menos el valor de donde esta el dedo en forma de vectores
+              luego la velocidad en x es el sin de alfa porque tenemos que sacar un valor del desplazamiento, este valor es menor que el cos de alfa que es igual a vy
+              la velocidad en y
+              los metodos setVy y setVx son para fijar el desplazamiento que va a tener la flecha
+            */
+            float alfa = (float) Math.atan2(ALTO-v.y, ANCHO-v.x);
+            float vy = VELOCIDAD * (float)Math.sin (alfa);
+            float vx = VELOCIDAD * (float)Math.cos(alfa);
+            pluma.setVx(vx);
+            pluma.setVy(vy);
+
             return false;
         }
         @Override
@@ -133,15 +153,15 @@ public class Play extends Pantalla {
             camara.unproject(v);
             power = 100 - v.y;
             direccion = v.x;
-            //Gdx.app.log("X", String.valueOf(v.x));
-            //Gdx.app.log("Y", String.valueOf(v.x));
             pluma.sprite.setY(v.y-200);
-            if(v.y >= 150){
-                pluma.sprite.setY(150);
+
+            if(v.y >= 100){
+                pluma.sprite.setY(100);
             }
+
                 pluma.rotar(pluma, v.x);
-                //270>v.x>470
-                if(v.x > 470){
+                if(v.x > 470)
+                {
                     pluma.rotar(pluma, 470);
                 } else if(v.x < 270){
                     pluma.rotar(pluma, 270);

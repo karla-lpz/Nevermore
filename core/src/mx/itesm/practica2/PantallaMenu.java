@@ -31,7 +31,7 @@ class PantallaMenu extends Pantalla{
     public void show() {
         //Es el primer metodo que se ejecuta
         crearEscena();
-        //music.play();
+            //music.play();
         //_____________________Título_____________________________________________________________________
         sprite = new Sprite(new Texture("nevermoreTitulo.png"));
         sprite.setPosition(ALTO/2,ANCHO/2 );
