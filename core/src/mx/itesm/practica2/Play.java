@@ -15,8 +15,9 @@ public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private float power;
     private float direccion;
+    private float variable;
     private float time;
-    private float VELOCIDAD = 10;
+    private float VELOCIDAD = 500;
     private Sprite sprite;
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
@@ -24,7 +25,7 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
-   // private Texto texto;
+    //private Texto texto;
     private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
@@ -61,11 +62,8 @@ public class Play extends Pantalla {
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
-        //Tiempo del juego
-       // texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3*ALTO/4);
-      //  texto2.mostrarMensaje(batch, "Mensaje de puntuacion", ANCHO/2-ANCHO/6, 3*ALTO/4)
+        //texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3*ALTO/4);
         batch.end();
-        //Gdx.app.log("Time", String.valueOf(time));
     }
     private void actualizarObjetos() {
         if(estado== Estado.JUGANDO){
@@ -123,32 +121,21 @@ public class Play extends Pantalla {
             if(v.x >= xP && v.x <= xP + anchoP && v.y >= yP && v.y <= yP + altoP){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
             }
+
             return true;
+
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            //-vectores
-            Gdx.app.log("Se solto el boton","el boton esta suelto" );
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
-            //Estos metodos no se como funcionan pero, no suenan logicos, como cambiar los argumentos de una funcion? y luego ni se usan de nuevo
-            pluma.setVx(screenX);
-            pluma.setVy(screenY);
-           //TODO tengo que darle los valores en vx y vx como vectores pero estos valores son de PLUMA entonces aqui solo se hacen los calculos
-            /*
-              Esto es a donde se dirige la pluma.
-              La variable alfa=tangente^⁻1 de el valor de ALTO de la pantalla menos el valor de donde esta el dedo en forma de vectores
-              luego la velocidad en x es el sin de alfa porque tenemos que sacar un valor del desplazamiento, este valor es menor que el cos de alfa que es igual a vy
-              la velocidad en y
-              los metodos setVy y setVx son para fijar el desplazamiento que va a tener la flecha
-            */
-            float alfa = (float) Math.atan2(ALTO-v.y, ANCHO-v.x);
-            float vy = VELOCIDAD * (float)Math.sin (alfa);
-            float vx = VELOCIDAD * (float)Math.cos(alfa);
+            variable = ((360 - v.x)/50) * ANCHO;
+            float alfa = (float) Math.atan(v.x);
+            float vy = 5 * (float)Math.sin (alfa);
+            float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
             pluma.setVy(vy);
-
             return false;
         }
         @Override
@@ -156,19 +143,27 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             power = 100 - v.y;
+            if(v.x >= 390){
+                v.x = 390;
+            }else if (v.x <= 340){
+                v.x = 340;
+            }
+            variable = (((v.x - 360)/50) * ANCHO) + 10;
             direccion = v.x;
             pluma.sprite.setY(v.y-200);
-
-            if(v.y >= 100){
-                pluma.sprite.setY(100);
+            if(v.y >= 200){
+                pluma.sprite.setY(200);
             }
 
+
+
+
                 pluma.rotar(pluma, v.x);
-                if(v.x > 470)
+                if(v.x > 390)
                 {
-                    pluma.rotar(pluma, 470);
-                } else if(v.x < 270){
-                    pluma.rotar(pluma, 270);
+                    pluma.rotar(pluma, 390);
+                } else if(v.x < 340){
+                    pluma.rotar(pluma, 340);
                 }
             return true;
         }
