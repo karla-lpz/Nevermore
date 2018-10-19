@@ -2,7 +2,9 @@ package mx.itesm.practica2;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sun.xml.internal.bind.v2.TODO;
+
+
+
 
 public class Pluma extends Objeto {
     boolean flag = false;
@@ -43,8 +45,6 @@ public class Pluma extends Objeto {
         float dy = vy * dt;
         sprite.setPosition(sprite.getX()+ dx, sprite.getY()+dy);
     }
-
-
     public void vuelo(float rotacion){
         if(volando == true){
             sprite.setRotation(rotacion);

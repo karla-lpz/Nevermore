@@ -9,12 +9,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import java.awt.event.InputEvent;
 
+
+
 public class Play extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private float power;
     private float direccion;
     private float time;
-    private float VELOCIDAD = 500;
+    private float VELOCIDAD = 10;
     private Sprite sprite;
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
@@ -22,7 +24,7 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
-    private Texto texto;
+   // private Texto texto;
     private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
@@ -43,6 +45,7 @@ public class Play extends Pantalla {
     }
     private void crearObjetos(){
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
+        //texto = new Texto();
     }
 
 
@@ -58,7 +61,9 @@ public class Play extends Pantalla {
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
-
+        //Tiempo del juego
+       // texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3*ALTO/4);
+      //  texto2.mostrarMensaje(batch, "Mensaje de puntuacion", ANCHO/2-ANCHO/6, 3*ALTO/4)
         batch.end();
         //Gdx.app.log("Time", String.valueOf(time));
     }
@@ -128,13 +133,12 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             //Estos metodos no se como funcionan pero, no suenan logicos, como cambiar los argumentos de una funcion? y luego ni se usan de nuevo
-            //
-            //screenX = pluma.setVx(v.x);
-            //screenY = vy;
+            pluma.setVx(screenX);
+            pluma.setVy(screenY);
            //TODO tengo que darle los valores en vx y vx como vectores pero estos valores son de PLUMA entonces aqui solo se hacen los calculos
-
-            //esto es a donde se dirige la pluma
-            /*La variable alfa=tangente^⁻1 de el valor de ALTO de la pantalla menos el valor de donde esta el dedo en forma de vectores
+            /*
+              Esto es a donde se dirige la pluma.
+              La variable alfa=tangente^⁻1 de el valor de ALTO de la pantalla menos el valor de donde esta el dedo en forma de vectores
               luego la velocidad en x es el sin de alfa porque tenemos que sacar un valor del desplazamiento, este valor es menor que el cos de alfa que es igual a vy
               la velocidad en y
               los metodos setVy y setVx son para fijar el desplazamiento que va a tener la flecha
