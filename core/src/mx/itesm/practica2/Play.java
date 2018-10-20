@@ -17,7 +17,8 @@ public class Play extends Pantalla {
     private float direccion;
     private float variable;
     private float time;
-    private float VELOCIDAD = 500;
+    private Boolean volando = false;
+    private float VELOCIDAD = 5;
     private Sprite sprite;
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
@@ -58,7 +59,8 @@ public class Play extends Pantalla {
         batch.begin();
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
-        pluma.mover(time);
+        pluma.mover(time, volando);
+        Gdx.app.log("Donde esta la puta bandera", Boolean.toString(volando));
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
@@ -121,7 +123,8 @@ public class Play extends Pantalla {
             if(v.x >= xP && v.x <= xP + anchoP && v.y >= yP && v.y <= yP + altoP){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
             }
-
+            variable = (((v.x - 360)/50) * ANCHO) + 10;
+            direccion = v.x;
             return true;
 
         }
@@ -132,31 +135,29 @@ public class Play extends Pantalla {
             camara.unproject(v);
             variable = ((360 - v.x)/50) * ANCHO;
             float alfa = (float) Math.atan(v.x);
-            float vy = 5 * (float)Math.sin (alfa);
+            float vy = VELOCIDAD * (float)Math.sin (alfa);
             float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
             pluma.setVy(vy);
+            volando = true;
             return false;
         }
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
-            power = 100 - v.y;
-            if(v.x >= 390){
-                v.x = 390;
-            }else if (v.x <= 340){
-                v.x = 340;
-            }
-            variable = (((v.x - 360)/50) * ANCHO) + 10;
-            direccion = v.x;
+            power = (v.y * 0.1f) * 2;
+
+//Seteando el sprite en la posicion inicial
+
             pluma.sprite.setY(v.y-200);
             if(v.y >= 200){
                 pluma.sprite.setY(200);
             }
+//______________________________________
 
 
-
+//Esta es la parte que hace que la puma gire y ademas tiene los limites de la pluma
 
                 pluma.rotar(pluma, v.x);
                 if(v.x > 390)
@@ -165,8 +166,16 @@ public class Play extends Pantalla {
                 } else if(v.x < 340){
                     pluma.rotar(pluma, 340);
                 }
+ //_____________________________________
+
+
             return true;
+
         }
+
+
+//______Termina Touch_Drag
+
         @Override
         public boolean mouseMoved(int screenX, int screenY) {
             return false;
