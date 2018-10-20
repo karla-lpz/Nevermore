@@ -8,10 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Texto {
     private BitmapFont font;
 
-   /*public Texto(){
+   public Texto(){
         font = new BitmapFont(Gdx.files.internal("squaredeal.fnt"));
     }
-*/
+
     public void mostrarMensaje(SpriteBatch batch, String mensaje, float x, float y){
         GlyphLayout glyp = new GlyphLayout();
         glyp.setText(font, mensaje);

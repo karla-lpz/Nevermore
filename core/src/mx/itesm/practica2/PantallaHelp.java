@@ -12,6 +12,7 @@ public class PantallaHelp extends Pantalla {
 
     private Texture fondo = new Texture("FondoFinal.png");
     private Texture btnRegreso = new Texture( "back.png");
+    private Texture title = new Texture("helptitulo.png");
 
     public PantallaHelp(Pantalla_Inicio pantallaInicio){
 
@@ -21,6 +22,8 @@ public class PantallaHelp extends Pantalla {
     public void show() {
         sprite = new Sprite(new Texture("back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
+        sprite = new Sprite(new Texture("helptitulo.png"));
+        sprite.setPosition(ALTO / 2, ANCHO / 2);
         Texture btnRegreso = new Texture("back.png");
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
@@ -32,6 +35,7 @@ public class PantallaHelp extends Pantalla {
         batch.begin();
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
+        batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
         batch.end();
     }
 
