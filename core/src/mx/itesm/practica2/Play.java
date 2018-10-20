@@ -26,7 +26,8 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
-    //private Texto texto;
+    private Texto texto;
+    private Texto textoPuntuación;
     private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
@@ -47,7 +48,8 @@ public class Play extends Pantalla {
     }
     private void crearObjetos(){
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
-        //texto = new Texto();
+        texto = new Texto();
+        textoPuntuación = new Texto();
     }
 
 
@@ -59,11 +61,12 @@ public class Play extends Pantalla {
         batch.begin();
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
-        pluma.mover(time, volando);
+        pluma.mover(time, volando, power);
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
-        //texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3*ALTO/4);
+        texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
+        textoPuntuación.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
         batch.end();
     }
     private void actualizarObjetos() {
