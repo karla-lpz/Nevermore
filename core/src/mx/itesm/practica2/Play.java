@@ -59,7 +59,7 @@ public class Play extends Pantalla {
         batch.begin();
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
-        pluma.mover(time, volando, power);
+        pluma.mover(time, volando);
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
@@ -134,7 +134,7 @@ public class Play extends Pantalla {
             camara.unproject(v);
             variable = ((360 - v.x)/50) * ANCHO;
             float alfa = (float) Math.atan(v.x);
-            float vy = power * (float)Math.sin (alfa);
+            float vy = VELOCIDAD * (float)Math.sin (alfa);
             float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
             pluma.setVy(vy);
@@ -146,8 +146,6 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             power = (v.y * 0.1f) * 2;
-            Gdx.app.log("Power FLAG", Float.toString(power));
-            Gdx.app.log("YYYYYYY FLAG", Float.toString(v.y));
 
 //Seteando el sprite en la posicion inicial
 

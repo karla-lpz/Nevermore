@@ -1,6 +1,7 @@
 package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -31,7 +32,7 @@ class PantallaMenu extends Pantalla{
     public void show() {
         //Es el primer metodo que se ejecuta
         crearEscena();
-            //music.play();
+        cargarMusica();
         //_____________________Título_____________________________________________________________________
         sprite = new Sprite(new Texture("nevermoreTitulo.png"));
         sprite.setPosition(ALTO/2,ANCHO/2 );
@@ -152,7 +153,7 @@ class PantallaMenu extends Pantalla{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                pantallaInicio.setScreen(new PantallaHelp(pantallaInicio));
+                pantallaInicio.setScreen(new PantallaSettings(pantallaInicio));
             }
         });
 
@@ -168,6 +169,14 @@ class PantallaMenu extends Pantalla{
 
     }
 
+    private void cargarMusica() {
+        AssetManager manager = new AssetManager();
+        manager.load("soundGame.mp3", Music.class);
+        manager.finishLoading();
+        music = manager.get("soundGame.mp3");
+        music.setLooping(true);
+        music.play();
+    }
 
 
     @Override
@@ -197,7 +206,7 @@ class PantallaMenu extends Pantalla{
 
     @Override
     public void dispose() {
-
+        music.dispose();
     }
 
 }
