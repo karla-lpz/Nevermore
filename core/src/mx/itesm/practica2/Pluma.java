@@ -1,5 +1,6 @@
 package mx.itesm.practica2;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -39,16 +40,18 @@ public class Pluma extends Objeto {
         flag = true;
     }
     //Mober es una propiedad de la flecha
-    public void mover(float dt)
+    public void mover(float dt, boolean volando)
     {
         float dx = vx * dt;
         float dy = vy * dt;
         sprite.setPosition(sprite.getX()+ dx, sprite.getY()+dy);
-    }
-    public void vuelo(float rotacion){
         if(volando == true){
-            sprite.setRotation(rotacion);
-       }
+            vuelo();
+        }
+        //sprite.setBounds(sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway, sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway);
+    }
+    public void vuelo(){
+        sprite.setScale(sprite.getScaleX() - .009f);
     }
 
 }
