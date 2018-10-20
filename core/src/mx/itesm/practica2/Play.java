@@ -60,7 +60,6 @@ public class Play extends Pantalla {
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
         pluma.mover(time, volando);
-        Gdx.app.log("Donde esta la puta bandera", Boolean.toString(volando));
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);

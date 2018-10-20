@@ -51,8 +51,7 @@ public class Pluma extends Objeto {
         //sprite.setBounds(sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway, sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway);
     }
     public void vuelo(){
-        sprite.setScale(sprite.getScaleX() - .01f);
-        Gdx.app.log("YOOOOOOO SOOOOY LA PUTA BANDERA", "BAAANDERAAAAA PUUUTA");
+        sprite.setScale(sprite.getScaleX() - .009f);
     }
 
 }
