@@ -40,18 +40,19 @@ public class Pluma extends Objeto {
         flag = true;
     }
     //Mober es una propiedad de la flecha
-    public void mover(float dt, boolean volando)
+    public void mover(float dt, boolean volando, float poder)
     {
         float dx = vx * dt;
         float dy = vy * dt;
         sprite.setPosition(sprite.getX()+ dx, sprite.getY()+dy);
         if(volando == true){
-            vuelo();
+            vuelo(poder);
         }
         //sprite.setBounds(sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway, sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway);
     }
-    public void vuelo(){
-        sprite.setScale(sprite.getScaleX() - .009f);
+    public void vuelo(float poder){
+        sprite.setScale(sprite.getScaleX() - (.02f));
+
     }
 
 }
