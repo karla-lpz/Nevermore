@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -27,7 +28,6 @@ class PantallaMenu extends Pantalla{
         this.pantallaInicio = pantallaInicio;
     }
     Music music = Gdx.audio.newMusic(Gdx.files.internal("soundGame.mp3"));
-
     @Override
     public void show() {
         //Es el primer metodo que se ejecuta
@@ -102,7 +102,6 @@ class PantallaMenu extends Pantalla{
 
         Texture textBtnHelp = new Texture("helpBtn.png");
         TextureRegionDrawable HelpTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnHelp));
-
         Texture textBtnHelpOp = new Texture("helpBtnPush.png");
         TextureRegionDrawable HelpTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnHelpOp));
         ImageButton btnHelp = new ImageButton(HelpTrd2, HelpTrd2Op);

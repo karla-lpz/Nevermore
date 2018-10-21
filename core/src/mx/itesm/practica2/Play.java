@@ -23,6 +23,7 @@ public class Play extends Pantalla {
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
     private Pluma pluma;
+    private Texture Arco = new Texture("arco.png");
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
@@ -38,12 +39,14 @@ public class Play extends Pantalla {
     @Override
     public void show() {
         sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("arco.png"));
         sprite.setPosition(ALTO*.2f,ANCHO*.2f );
         sprite = new Sprite(new Texture("pausaBtn.png"));
         Texture BotRegreso = new Texture("back.png");
         Texture BtnPause = new Texture("pausaBtn.png");
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
         crearObjetos();
+        Texture Arco = new Texture("arco.png");
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
     private void crearObjetos(){
@@ -61,7 +64,8 @@ public class Play extends Pantalla {
         batch.begin();
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
-        pluma.mover(time, volando, power);
+        batch.draw(Arco, 0, ALTO / 5.9f);
+        pluma.mover(time, volando);
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
@@ -77,6 +81,7 @@ public class Play extends Pantalla {
 
     @Override
     public void pause() {
+
 
     }
 
@@ -111,19 +116,24 @@ public class Play extends Pantalla {
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
+            //batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
             float xR = ANCHO-BotRegreso.getWidth()*1.0f;
             float yR = ALTO-BotRegreso.getWidth()*1.2f;
             float anchoBtn = BotRegreso.getWidth();
             float altoBtn = BotRegreso.getWidth();
             if(v.x >= xR && v.x <= xR + anchoBtn && v.y >= yR && v.y <= yR + altoBtn){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
+                Gdx.app.log("Pause is on", "ON");
+                Gdx.graphics.setContinuousRendering(true);
             }
-            float xP = ANCHO-BtnPause.getWidth();
-            float yP = ALTO-BtnPause.getWidth();
+           // batch.draw(BtnPause, 0, ALTO / 1.12f);
+            float xP = 0;
+            float yP= ALTO-BotRegreso.getWidth()*1.2f;
             float anchoP = BtnPause.getWidth();
             float altoP = BtnPause.getWidth();
             if(v.x >= xP && v.x <= xP + anchoP && v.y >= yP && v.y <= yP + altoP){
-                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
+               Gdx.graphics.setContinuousRendering(false);
+
             }
             variable = (((v.x - 360)/50) * ANCHO) + 10;
             direccion = v.x;
@@ -168,6 +178,7 @@ public class Play extends Pantalla {
                 } else if(v.x < 340){
                     pluma.rotar(pluma, 340);
                 }
+
  //_____________________________________
 
 
