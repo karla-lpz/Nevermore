@@ -17,18 +17,24 @@ public class Play extends Pantalla {
     private float direccion;
     private float variable;
     private float time;
-    private Boolean volando = false;
     private float VELOCIDAD = 5;
-    private Sprite sprite;
+
+    private Boolean volando = false;
+
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
-    private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
-    private Pluma pluma;
     private Texture Arco = new Texture("arco.png");
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
+
+    private Sprite sprite;
+    private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
+
+    private Pluma pluma;
+
     private Texto texto;
     private Texto textoPuntuación;
+
     private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
@@ -70,8 +76,8 @@ public class Play extends Pantalla {
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
-        texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
-        textoPuntuación.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
+        //texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
+        textoPuntuación.mostrarMensaje(batch, "Punctuation:", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
         batch.end();
     }
     private void actualizarObjetos() {

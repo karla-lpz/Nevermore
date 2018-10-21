@@ -14,6 +14,11 @@ public class PantallaHelp extends Pantalla {
     private Texture btnRegreso = new Texture( "back.png");
     private Texture title = new Texture("helptitulo.png");
 
+    private Texto helpText;
+    private Texto textEnemies;
+    private Texto textItems;
+
+
     public PantallaHelp(Pantalla_Inicio pantallaInicio){
 
         this.pantallaInicio = pantallaInicio;
@@ -25,7 +30,14 @@ public class PantallaHelp extends Pantalla {
         sprite = new Sprite(new Texture("helptitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         Texture btnRegreso = new Texture("back.png");
+        createText();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
+    }
+
+    public void createText(){
+        helpText = new Texto();
+        textEnemies = new Texto();
+        textItems = new Texto();
     }
 
     @Override
@@ -36,6 +48,12 @@ public class PantallaHelp extends Pantalla {
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
         batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
+        helpText.mostrarMensaje(batch, "Swipe down to shoot \n the feather and kill \n your enemies",
+                0.80f * ANCHO/2, 2.2f * ALTO/3);
+        textEnemies.mostrarMensaje(batch, "Beat all of \n them to save your \n life and return to \n your world",
+                0.80f * ANCHO / 2, 1.6f * ALTO / 3);
+        textItems.mostrarMensaje(batch, "It would be items \n to help you in your \n adventure",0.80f * ANCHO / 2,
+                0.75f * ALTO / 3);
         batch.end();
     }
 
