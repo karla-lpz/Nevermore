@@ -7,6 +7,7 @@ public class PantallaStory extends  Pantalla{
     private final Pantalla_Inicio pantallaInicio;
 
     private Texture story1 = new Texture("HISTORIA1.png");
+    private Texture btnContinue = new Texture( "back.png");
 
     public PantallaStory(Pantalla_Inicio pantallaInicio){
 
