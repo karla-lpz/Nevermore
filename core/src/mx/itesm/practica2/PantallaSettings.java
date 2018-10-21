@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
+import java.awt.Window;
+
 public class PantallaSettings extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
@@ -42,6 +44,9 @@ public class PantallaSettings extends Pantalla {
 
 
 
+
+
+
     @Override
     public void pause() {
 
@@ -58,6 +63,10 @@ public class PantallaSettings extends Pantalla {
     }
 
     class ProcesadorDeEntrada implements InputProcessor {
+
+
+
+
 
         @Override
         public boolean keyDown(int keycode) {

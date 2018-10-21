@@ -50,6 +50,7 @@ public class Play extends Pantalla {
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
     private void crearObjetos(){
+
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
         texto = new Texto();
         textoPuntuación = new Texto();
@@ -65,7 +66,7 @@ public class Play extends Pantalla {
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
         batch.draw(Arco, 0, ALTO / 5.9f);
-        pluma.mover(time, volando);
+        pluma.mover(time, volando, power);
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
@@ -124,7 +125,7 @@ public class Play extends Pantalla {
             if(v.x >= xR && v.x <= xR + anchoBtn && v.y >= yR && v.y <= yR + altoBtn){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
                 Gdx.app.log("Pause is on", "ON");
-                Gdx.graphics.setContinuousRendering(true);
+
             }
            // batch.draw(BtnPause, 0, ALTO / 1.12f);
             float xP = 0;
@@ -132,7 +133,8 @@ public class Play extends Pantalla {
             float anchoP = BtnPause.getWidth();
             float altoP = BtnPause.getWidth();
             if(v.x >= xP && v.x <= xP + anchoP && v.y >= yP && v.y <= yP + altoP){
-               Gdx.graphics.setContinuousRendering(false);
+                Gdx.graphics.setContinuousRendering(false);
+                pantallaInicio.setScreen(new MenuStage(pantallaInicio) );
 
             }
             variable = (((v.x - 360)/50) * ANCHO) + 10;
@@ -159,6 +161,7 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             power = (v.y * 0.1f) * 2;
+            Gdx.app.log("POWER", Float.toString(power));
 
 //Seteando el sprite en la posicion inicial
 

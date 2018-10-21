@@ -32,7 +32,7 @@ class PantallaMenu extends Pantalla{
     public void show() {
         //Es el primer metodo que se ejecuta
         crearEscena();
-        cargarMusica();
+       // cargarMusica();
         //_____________________Título_____________________________________________________________________
         sprite = new Sprite(new Texture("nevermoreTitulo.png"));
         sprite.setPosition(ALTO/2,ANCHO/2 );
@@ -41,8 +41,6 @@ class PantallaMenu extends Pantalla{
     }
 
     private void crearEscena() {
-        //Estamos creando una escena
-        //asi le ponemos la vista a la escena
 
         escenaMenu = new Stage(vista);
 
@@ -88,8 +86,7 @@ class PantallaMenu extends Pantalla{
                @Override
                public void clicked(InputEvent event, float x, float y) {
                     super.clicked(event, x, y);
-                    pantallaInicio.setScreen(new PantallaScores(pantallaInicio)
-                    );
+                    pantallaInicio.setScreen(new PantallaScores(pantallaInicio));
                 }
             });
 

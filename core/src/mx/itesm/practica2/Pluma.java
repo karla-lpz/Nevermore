@@ -16,64 +16,76 @@ public class Pluma extends Objeto {
     public void setVy(float vy){
         this.vy = vy;
     }
+
+
     public void setVx(float vx){
         this.vx = vx;
     }
+
+    public void resetPosition(){
+        if (sprite == null) {
+
+        }
+    }
+
 
 
     public Pluma(Texture textura, float x, float y) {
         super(textura, x, y);
     }
 
+
+
     public void dibujar(SpriteBatch batch) {
         sprite.draw(batch);
     }
 
-    //TODO revisar en donde se pone pica para ajustar en donde se pone el sprite
-    /*
-    * El calculo es, donde se pique, en x o y, menos el valor del sprite para alto u ancho y ponerlo en ese lugar
-    * hagamos un metodo setPosPicado para cambiar la posicion inicial de mi sprite?? No es tan necesario
-    * NEED HELP!!!
-    * */
+
+
     public void rotar(Pluma pluma, float rotacionX) {
         pluma.sprite.setRotation(rotacionX);
         flag = true;
     }
-    //Mober es una propiedad de la flecha
-    public void mover(float dt, boolean volando)
+
+
+    public void mover(float dt, boolean volando, float power)
     {
+        float limite_vertical;
         float dx = vx * dt;
         float dy = vy * dt;
         sprite.setPosition(sprite.getX()+ dx, sprite.getY()+dy);
         if(volando == true){
-            vuelo();
-        }
-        if(sprite.getY() > 1080){
-            sprite.setY(1000f);
-
-
-            /*
-            Set the sprite as deleted i dnk how to do that
-            */
-
-
-
+            vuelo(true);
         }
 
-        /*if(sprite.getX() > 720 || sprite.getX() < 0){
-            sprite.setX(700);
-            set sprite as delete
-        }*/
-        //sprite.setBounds(sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway, sprite.getScaleX() - GoingAway, sprite.getY() - GoingAway);
+        if(sprite.getY() >= 1080 - (power * 10) ){
+            vuelo(false);
+            limite_vertical = 1000 -(power * 100);
+            sprite.setY(limite_vertical);
+        }
+
     }
-    public void vuelo(){
+
+
+
+
+
+    public void vuelo(boolean volando){
         sprite.setScale(sprite.getScaleX() - (.02f));
-        if(sprite.getScaleX() <= 0)
-        {
-            sprite.setScale(.1f);
-            volando = false;
-        }
+        if(volando == false)
+            if(sprite.getScaleX() <= 0)
+            {
+                sprite.setScale(.0001f);
+
+            }
 
     }
+
+
+
+
+
+
+
 
 }
