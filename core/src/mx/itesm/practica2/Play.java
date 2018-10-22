@@ -4,11 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import java.awt.event.InputEvent;
 
@@ -26,56 +23,18 @@ public class Play extends Pantalla {
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
     private Pluma pluma;
-    private static final int FRAME_COLS = 2, FRAME_ROWS=7;
     private Texture Arco = new Texture("arco.png");
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
-    private Texture plumas = new Texture("pluma.png");
     private Texto texto;
     private Texto textoPuntuación;
     private Estado estado = Estado.JUGANDO;
-    private int plumasNivel  = 5;
-
-    Animation<TextureRegion> crowAnimation;
-    Texture crowSheet;
-    SpriteBatch spriteBatch;
-    float stateTime;
 
     public Play(Pantalla_Inicio pantallaInicio) {
 
         this.pantallaInicio = pantallaInicio;
     }
-
-
-    public void create() {
-
-        // Load the sprite sheet as a Texture
-        crowSheet = new Texture(Gdx.files.internal("sprites1.png"));
-
-        // Use the split utility method to create a 2D array of TextureRegions. This is
-        // possible because this sprite sheet contains frames of equal size and they are
-        // all aligned.
-        TextureRegion[][] tmp = TextureRegion.split(crowSheet, crowSheet.getWidth() / FRAME_COLS, crowSheet.getHeight() / FRAME_ROWS);
-
-        // Place the regions into a 1D array in the correct order, starting from the top
-        // left, going across first. The Animation constructor requires a 1D array.
-        TextureRegion[] crowFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                crowFrames[index++] = tmp[i][j];
-            }
-        }
-        // Initialize the Animation with the frame interval and array of frames
-        crowAnimation = new Animation<TextureRegion>(0.025f, crowFrames);
-
-        // Instantiate a SpriteBatch for drawing and reset the elapsed animation
-        // time to 0
-        spriteBatch = new SpriteBatch();
-        stateTime = 0f;
-    }
-
 
     @Override
     public void show() {
@@ -86,7 +45,6 @@ public class Play extends Pantalla {
         Texture BotRegreso = new Texture("back.png");
         Texture BtnPause = new Texture("pausaBtn.png");
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
-        create();
         crearObjetos();
         Texture Arco = new Texture("arco.png");
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
@@ -94,7 +52,6 @@ public class Play extends Pantalla {
     private void crearObjetos(){
 
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
-        pluma.setPlumas(plumasNivel);
         texto = new Texto();
         textoPuntuación = new Texto();
     }
@@ -102,11 +59,9 @@ public class Play extends Pantalla {
 
     @Override
     public void render(float delta) {
-        borrarPantalla(0, 0, 0);
-        TextureRegion currentFrame = crowAnimation.getKeyFrame(stateTime, true);
-        stateTime += Gdx.graphics.getDeltaTime();
+        borrarPantalla(0, 0, 1);
+        time += Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camara.combined);
-        spriteBatch.draw(currentFrame, ANCHO/2, ALTO/2); // Draw current frame at (50, 50)
         batch.begin();
         batch.draw(fnd, 0, 0);
         pluma.dibujar(batch);
@@ -115,10 +70,8 @@ public class Play extends Pantalla {
         //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
-        texto.mostrarMensaje(batch, Integer.toString(3), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
+        texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
         textoPuntuación.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
-
-
         batch.end();
     }
     private void actualizarObjetos() {
@@ -140,8 +93,7 @@ public class Play extends Pantalla {
 
     @Override
     public void dispose() {
-        spriteBatch.dispose();
-        crowSheet.dispose();
+
     }
 
     class ProcesadorDeEntrada implements InputProcessor {
@@ -201,8 +153,6 @@ public class Play extends Pantalla {
             float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
             pluma.setVy(vy);
-            plumasNivel --;
-            pluma.setPlumas(plumasNivel);
             volando = true;
             return false;
         }
