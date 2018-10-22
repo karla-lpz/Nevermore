@@ -50,19 +50,19 @@ public class Pluma extends Objeto {
 
     public void mover(float dt, boolean volando, float power)
     {
-        float limite_vertical;
-        float dx = vx * dt;
-        float dy = vy * dt;
-        sprite.setPosition(sprite.getX()+ dx, sprite.getY()+dy);
-        if(volando == true){
-            vuelo(true);
-            cant_plumas --;
-        }
 
-        if(sprite.getY() >= 1080 - (power * 10) ){
-            vuelo(false);
-            limite_vertical = 1000 -(power * 100);
-            sprite.setY(limite_vertical);
+        if(volando == true)
+        {
+            float limite_vertical;
+            float dx = vx * dt;
+            float dy = vy * dt;
+
+            sprite.setPosition(sprite.getX() + dx, sprite.getY() + dy);
+
+            if (volando == true) {
+                vuelo(true);
+                cant_plumas--;
+            }
         }
 
     }
@@ -74,23 +74,20 @@ public class Pluma extends Objeto {
         cant_plumas = nivel;
     }
 
-
     public void vuelo(boolean volando){
-        sprite.setScale(sprite.getScaleX() - (.02f));
-        if(volando == false)
-            if(sprite.getScaleX() <= 0)
-            {
-                sprite.setScale(.0001f);
-
-            }
+        if(sprite.getScaleX() > 0) {
+            sprite.setScale(sprite.getScaleX() - (.02f));
+        }else{
+            sprite.setScale(0f, 0f);
+        }
 
     }
 
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+

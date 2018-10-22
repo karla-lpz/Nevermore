@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import java.awt.event.InputEvent;
 
@@ -18,22 +19,42 @@ public class Play extends Pantalla {
     private float variable;
     private float time;
     private Boolean volando = false;
-    private float VELOCIDAD = 5;
+
     private Sprite sprite;
+
+//Enemigo___________________________________________________________________________________________
+
+    private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
+    private Sprite enemigoSprite = new com.badlogic.gdx.graphics.g2d.Sprite(enemigoBlock);
+    private Enemigo enemigo;
+
+//__________________________________________________________________________________________________
+
+
+
+//Flecha____________________________________________________________________________________________
+
+
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new com.badlogic.gdx.graphics.g2d.Sprite(plumaBlock);
     private Pluma pluma;
+    private float VELOCIDAD = 10;
+
+//__________________________________________________________________________________________________
+
     private Texture Arco = new Texture("arco.png");
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
     private Texto texto;
+    private float puntos;
     private Texto textoPuntuación;
     private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
 
         this.pantallaInicio = pantallaInicio;
+
     }
 
     @Override
@@ -52,6 +73,7 @@ public class Play extends Pantalla {
     private void crearObjetos(){
 
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
+        enemigo = new Enemigo(enemigoBlock, (float) Math.random() * 500 + -250, (float) Math.random() * 10 + 880);
         texto = new Texto();
         textoPuntuación = new Texto();
     }
@@ -62,15 +84,21 @@ public class Play extends Pantalla {
         borrarPantalla(0, 0, 1);
         time += Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camara.combined);
+        //Gdx.app.log("Shit", Float.toString(enemigo.getPosition()));
         batch.begin();
+
+        if(pluma.getPositionX() > enemigo.getPositionX() && pluma.getPositionX() < (enemigo.getPositionX() + enemigo.getAncho()) && pluma.getPositionY() > enemigo.getPositionY() && pluma.getPositionY() < (enemigo.getAlto() + enemigo.getPositionY()) ){
+            puntos ++;
+
+        }
         batch.draw(fnd, 0, 0);
+        enemigo.dibujar(batch);
         pluma.dibujar(batch);
         batch.draw(Arco, 0, ALTO / 5.9f);
         pluma.mover(time, volando, power);
-        //El render es el que va a dibujar a la pluma mientras se mueve entonces deberia cambiar de trayectoria
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
-        texto.mostrarMensaje(batch, Float.toString(100f - time), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
+        texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
         textoPuntuación.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
         batch.end();
     }
@@ -154,6 +182,13 @@ public class Play extends Pantalla {
             pluma.setVx(vx);
             pluma.setVy(vy);
             volando = true;
+            if(pluma.getPositionX() == enemigo.getPositionX() && pluma.getPositionY() == enemigo.getPositionY()){
+                Gdx.app.log("thats a hit", "Fuck this is hard");
+                Gdx.app.log("Arrow Position", Float.toString(pluma.getPositionX()));
+                Gdx.app.log("thats a hit", Float.toString(pluma.getPositionY()));
+                Gdx.app.log("Arrow Position", Float.toString(enemigo.getPositionX()));
+                Gdx.app.log("thats a hit", Float.toString(enemigo.getPositionY()));
+            }
             return false;
         }
         @Override
@@ -169,8 +204,6 @@ public class Play extends Pantalla {
             if(v.y >= 200){
                 pluma.sprite.setY(200);
             }
-//______________________________________
-
 
 //Esta es la parte que hace que la puma gire y ademas tiene los limites de la pluma
 
@@ -182,11 +215,8 @@ public class Play extends Pantalla {
                     pluma.rotar(pluma, 340);
                 }
 
- //_____________________________________
-
 
             return true;
-
         }
 
 
