@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.io.FileNotFoundException;
+
 class PantallaMenu extends Pantalla{
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
@@ -86,8 +88,12 @@ class PantallaMenu extends Pantalla{
                @Override
                public void clicked(InputEvent event, float x, float y) {
                     super.clicked(event, x, y);
-                    pantallaInicio.setScreen(new PantallaScores(pantallaInicio));
-                }
+                   try {
+                       pantallaInicio.setScreen(new PantallaScores(pantallaInicio));
+                   } catch (FileNotFoundException e) {
+                       e.printStackTrace();
+                   }
+               }
             });
 
 

@@ -1,0 +1,5 @@
+Roberto,90
+Karla,80
+Danna,60
+Kira,50
+Sergio,20
