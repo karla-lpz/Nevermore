@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Pluma extends Objeto {
     boolean flag = false;
     boolean volando;
-
+    private int cant_plumas;
     private float vx, vy;
 
     public void setVy(float vy){
@@ -56,6 +56,7 @@ public class Pluma extends Objeto {
         sprite.setPosition(sprite.getX()+ dx, sprite.getY()+dy);
         if(volando == true){
             vuelo(true);
+            cant_plumas --;
         }
 
         if(sprite.getY() >= 1080 - (power * 10) ){
@@ -66,8 +67,12 @@ public class Pluma extends Objeto {
 
     }
 
-
-
+    public int getPlumas(){
+        return cant_plumas;
+    }
+    public void setPlumas(int nivel){
+        cant_plumas = nivel;
+    }
 
 
     public void vuelo(boolean volando){
