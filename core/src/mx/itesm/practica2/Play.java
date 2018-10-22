@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import java.awt.event.InputEvent;
-
+import java.util.ArrayList;
 
 
 public class Play extends Pantalla {
@@ -24,9 +24,10 @@ public class Play extends Pantalla {
 
 //Enemigo___________________________________________________________________________________________
 
-    private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
-    private Sprite enemigoSprite = new com.badlogic.gdx.graphics.g2d.Sprite(enemigoBlock);
+    //private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
+    //private Sprite enemigoSprite = new com.badlogic.gdx.graphics.g2d.Sprite(enemigoBlock);
     private Enemigo enemigo;
+    private ArrayList<Enemigo> crows;
 
 //__________________________________________________________________________________________________
 
@@ -73,7 +74,8 @@ public class Play extends Pantalla {
     private void crearObjetos(){
 
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
-        enemigo = new Enemigo(enemigoBlock, (float) Math.random() * 500 + -250, (float) Math.random() * 10 + 880);
+        enemigo = new Enemigo( new Texture("cuervo-sprite.png"), ANCHO / 2, ALTO / 2);
+        //enemigo = new Enemigo(enemigoBlock, (float) Math.random() * 500 + -250, (float) Math.random() * 10 + 880);
         texto = new Texto();
         textoPuntuación = new Texto();
     }
@@ -100,6 +102,8 @@ public class Play extends Pantalla {
         batch.draw(BtnPause, 0, ALTO / 1.12f);
         texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
         textoPuntuación.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
+
+        enemigo.dibujar(batch);
         batch.end();
     }
     private void actualizarObjetos() {
