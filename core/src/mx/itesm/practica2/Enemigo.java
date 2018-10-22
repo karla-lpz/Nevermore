@@ -29,8 +29,11 @@ public class Enemigo extends Objeto {
     public Enemigo(Texture textura, float x, float y) {
         super(textura, x, y);
         TextureRegion texturaCompleta = new TextureRegion(textura);
-        TextureRegion[][] texturaPersonaje = texturaCompleta.split(166,342);
-        animatedSprite = new Animation(0.1f, texturaPersonaje[0][3], texturaPersonaje[0][2], texturaPersonaje[0][1] );
+        TextureRegion[][] texturaPersonaje = texturaCompleta.split(342,166);
+        //11 frames
+        animatedSprite = new Animation(0.2f, texturaPersonaje[0][1], texturaPersonaje[0][2], texturaPersonaje[0][3], texturaPersonaje[0][4],
+                texturaPersonaje[0][5], texturaPersonaje[0][6],texturaPersonaje[1][0], texturaPersonaje[1][1],texturaPersonaje[1][2], texturaPersonaje[1][3],
+                texturaPersonaje[1][4]);
         animatedSprite.setPlayMode(Animation.PlayMode.LOOP);
         timerAnimacion = 0;
         sprite = new Sprite(texturaPersonaje[0][0]);    // QUIETO
