@@ -6,16 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
-import java.awt.Window;
-
 public class PantallaSettings extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
 
     private Sprite sprite;
 
-    private Texture fondo = new Texture("FondoFinal.png");
+    private Texture fondo = new Texture("settingsPantalla.png");
     private Texture btnRegreso = new Texture( "back.png");
-    private Texture musicBtn = new Texture( "back.png");
+    private Texture creditsBtn = new Texture( "creditsBtn.png");
     private Texture title = new Texture("settingstitulo.png");
 
     private boolean music;
@@ -32,7 +30,7 @@ public class PantallaSettings extends Pantalla {
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite = new Sprite(new Texture("scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("creditsBtn.png"));
         sprite.setPosition(ALTO / 2,ANCHO / 2);
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
@@ -44,7 +42,7 @@ public class PantallaSettings extends Pantalla {
         batch.begin();
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
-        batch.draw(musicBtn,  0.75f * ANCHO / 2 , 0.25f * ALTO / 2);
+        batch.draw(creditsBtn,  0.50f * ANCHO / 2 , 0.07f * ALTO / 2);
         batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
         batch.end();
     }
@@ -103,8 +101,8 @@ public class PantallaSettings extends Pantalla {
             }
             float xMusic = 0.75f * ANCHO / 2 ;
             float yMusic = 0.25f * ALTO / 2;
-            float anchoMusic = musicBtn.getWidth();
-            float altoMusic = musicBtn.getWidth();
+            float anchoMusic = creditsBtn.getWidth();
+            float altoMusic = creditsBtn.getWidth();
             if(v.x >= xMusic && v.x <= xMusic + anchoMusic && v.y >= yMusic && v.y <= yMusic + altoMusic){
                 pantallaInicio.setScreen(new PantallaCredits(pantallaInicio));
             }
