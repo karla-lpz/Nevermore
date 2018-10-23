@@ -20,18 +20,8 @@ public class PantallaScores extends Pantalla {
     private Texture fondo = new Texture("FondoFinal.png");
     private Texture btnRegreso = new Texture( "back.png");
     private Texture title = new Texture("scorestitulo.png");
-    private Texture firstPlace = new Texture("medalla-oro.png");
-    private Texture secondPlace = new Texture("medalla-plata.png");
-    private Texture thirdPlace = new Texture("medalla-bronce.png");
 
     private Texto score;
-    private Texto fPlaceText;
-    private Texto sPlaceText;
-    private Texto tPlaceText;
-    private Texto fourthPlace;
-    private Texto fourthPlaceText;
-    private Texto fifthPlace;
-    private Texto fifthPlaceText;
 
     private ArrayList<String> scores;
 
@@ -40,7 +30,7 @@ public class PantallaScores extends Pantalla {
         this.pantallaInicio = pantallaInicio;
         scores = new ArrayList<String>();
         try {
-            //Gdx.app.log( "HOLO", "HOLI" );
+            Gdx.app.log( "HOLO", "HOLI" );
             File scoreFile = new File("assets/Scores.txt");
             BufferedReader br = new BufferedReader(new FileReader(scoreFile));
             String readLine;
@@ -60,29 +50,11 @@ public class PantallaScores extends Pantalla {
         sprite = new Sprite(new Texture("scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         Texture btnRegreso = new Texture("back.png");
-        sprite = new Sprite(new Texture("medalla-oro.png"));
-        sprite.setPosition(ALTO / 2, ANCHO / 2);
-        sprite = new Sprite(new Texture("medalla-plata.png"));
-        sprite.setPosition(ALTO / 2, ANCHO / 2);
-        sprite = new Sprite(new Texture("medalla-bronce.png"));
-        sprite.setPosition(ALTO / 2, ANCHO / 2);
-        createText();
+        score = new Texto();
         for (int i = 0; i <= scores.size() - 1; i ++){
          score.mostrarMensaje(batch, scores.get(i), ANCHO / 2, ALTO / 2);
         }
-        sprite.setScale(1);
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
-    }
-
-    private void createText(){
-        score = new Texto();
-        fPlaceText = new Texto();
-        sPlaceText = new Texto();
-        tPlaceText = new Texto();
-        fourthPlaceText = new Texto();
-        fourthPlace = new Texto();
-        fifthPlace = new Texto();
-        fifthPlaceText = new Texto();
     }
 
     @Override
@@ -93,19 +65,10 @@ public class PantallaScores extends Pantalla {
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
         batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
-        batch.draw(firstPlace, ALTO /160.5f,  ANCHO / 0.85f);
-        fPlaceText.mostrarMensaje(batch, "Roberto 100", 40.5f * ALTO / 160.5f , ANCHO / 0.75f);
-        batch.draw(secondPlace, ALTO /160.5f,  0.82f * ANCHO / 0.85f);
-        sPlaceText.mostrarMensaje(batch, "Hugo 85", 35.5f * ALTO / 160.5f, ANCHO / 0.90f);
-        batch.draw(thirdPlace, ALTO /160.5f,  0.64f * ANCHO / 0.85f);
-        tPlaceText.mostrarMensaje(batch, "Sergio 77", 37.5f * ALTO / 160.5f, ANCHO / 1.1f);
-        fourthPlace.mostrarMensaje(batch, "4", 9.5f  * ALTO / 160.5f, ANCHO / 1.5f);
-        fourthPlaceText.mostrarMensaje(batch, "Angeles 61", 37.5f  * ALTO / 160.5f, ANCHO / 1.45f);
-        fifthPlace.mostrarMensaje(batch, "5", 9.5f  * ALTO / 160.5f, ANCHO / 1.9f);
-        fifthPlaceText.mostrarMensaje(batch, "Alejandra 55", 39.5f  * ALTO / 160.5f, ANCHO / 1.9f);
 
         batch.end();
     }
+
 
 
     @Override

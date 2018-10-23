@@ -10,15 +10,20 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
-
+//TODO: Vidas:
+//TODO: Enemigos:
+//TODO: Settings imagen:
+//TODO: SCores que no funcionen:
+//TODO: ganar y perder:
+//TODO: Creditos letrero:
 
 public class Play extends Pantalla {
+    private static float score;
     private final Pantalla_Inicio pantallaInicio;
     private float power;
     private float direccion;
     private float variable;
     private float time;
-    private Boolean volando = false;
 
     private Sprite sprite;
 
@@ -74,10 +79,11 @@ public class Play extends Pantalla {
     private void crearObjetos(){
 
         pluma = new Pluma(plumaBlock, ANCHO/4, 20);
-        enemigo = new Enemigo( new Texture("cuervo-sprite.png"), ANCHO / 2, ALTO / 2);
+        enemigo = new Enemigo( new Texture("cuervo-sprite.png"), (float) Math.random() * 500 + -250, (float) Math.random() * 10 + 880);
         //enemigo = new Enemigo(enemigoBlock, (float) Math.random() * 500 + -250, (float) Math.random() * 10 + 880);
         texto = new Texto();
         textoPuntuación = new Texto();
+
     }
 
 
@@ -86,18 +92,19 @@ public class Play extends Pantalla {
         borrarPantalla(0, 0, 1);
         time += Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camara.combined);
-        //Gdx.app.log("Shit", Float.toString(enemigo.getPosition()));
         batch.begin();
-
+//TODO esto deberia estar en Pluma
         if(pluma.getPositionX() > enemigo.getPositionX() && pluma.getPositionX() < (enemigo.getPositionX() + enemigo.getAncho()) && pluma.getPositionY() > enemigo.getPositionY() && pluma.getPositionY() < (enemigo.getAlto() + enemigo.getPositionY()) ){
             puntos ++;
-
+            pluma.renew();
+            score = puntos;
         }
         batch.draw(fnd, 0, 0);
         enemigo.dibujar(batch);
         pluma.dibujar(batch);
         batch.draw(Arco, 0, ALTO / 5.9f);
-        pluma.mover(time, volando, power);
+        pluma.mover(delta, power);
+        enemigo.mover(delta);
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
         texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
@@ -111,6 +118,9 @@ public class Play extends Pantalla {
         }
     }
 
+    public static float getScore() {
+        return score;
+    }
 
     @Override
     public void pause() {
@@ -171,6 +181,7 @@ public class Play extends Pantalla {
             }
             variable = (((v.x - 360)/50) * ANCHO) + 10;
             direccion = v.x;
+
             return true;
 
         }
@@ -180,19 +191,12 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             variable = ((360 - v.x)/50) * ANCHO;
-            float alfa = (float) Math.atan(v.x);
-            float vy = VELOCIDAD * (float)Math.sin (alfa);
+            float alfa = (float) Math.atan2(ALTO-v.y, v.x);
+            float vy = pluma.getVelocidad() * (float)Math.sin (alfa);
             float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
             pluma.setVy(vy);
-            volando = true;
-            if(pluma.getPositionX() == enemigo.getPositionX() && pluma.getPositionY() == enemigo.getPositionY()){
-                Gdx.app.log("thats a hit", "Fuck this is hard");
-                Gdx.app.log("Arrow Position", Float.toString(pluma.getPositionX()));
-                Gdx.app.log("thats a hit", Float.toString(pluma.getPositionY()));
-                Gdx.app.log("Arrow Position", Float.toString(enemigo.getPositionX()));
-                Gdx.app.log("thats a hit", Float.toString(enemigo.getPositionY()));
-            }
+            pluma.volar(true);
             return false;
         }
         @Override
