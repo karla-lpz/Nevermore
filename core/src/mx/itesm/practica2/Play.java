@@ -2,13 +2,10 @@ package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
-import java.awt.event.InputEvent;
+
 import java.util.ArrayList;
 //TODO: Vidas:
 //TODO: Enemigos:
@@ -54,7 +51,7 @@ public class Play extends Pantalla {
     private Texture BtnPause = new Texture("pausaBtn.png");
     private Texto texto;
     private float puntos;
-    private Texto textoPuntuación;
+    private Texto punctuationText;
     private Estado estado = Estado.JUGANDO;
 
     public Play(Pantalla_Inicio pantallaInicio) {
@@ -82,7 +79,7 @@ public class Play extends Pantalla {
         enemigo = new Enemigo( new Texture("cuervo-sprite.png"), (float) Math.random() * 500 + -250, (float) Math.random() * 10 + 880);
         //enemigo = new Enemigo(enemigoBlock, (float) Math.random() * 500 + -250, (float) Math.random() * 10 + 880);
         texto = new Texto();
-        textoPuntuación = new Texto();
+        punctuationText = new Texto();
 
     }
 
@@ -108,7 +105,7 @@ public class Play extends Pantalla {
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         batch.draw(BtnPause, 0, ALTO / 1.12f);
         texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
-        textoPuntuación.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
+        punctuationText.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
 
         enemigo.dibujar(batch);
         batch.end();
