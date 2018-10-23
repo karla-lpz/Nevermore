@@ -29,7 +29,7 @@ public class PantallaHelp extends Pantalla {
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite = new Sprite(new Texture("helptitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
-        Texture btnRegreso = new Texture("back.png");
+        //Texture btnRegreso = new Texture("back.png");
         createText();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }

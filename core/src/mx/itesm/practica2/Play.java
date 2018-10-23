@@ -24,8 +24,8 @@ public class Play extends Pantalla {
 
 //Enemigo___________________________________________________________________________________________
 
-    //private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
-    //private Sprite enemigoSprite = new com.badlogic.gdx.graphics.g2d.Sprite(enemigoBlock);
+    private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
+    private Sprite enemigoSprite = new com.badlogic.gdx.graphics.g2d.Sprite(enemigoBlock);
     private Enemigo enemigo;
     private ArrayList<Enemigo> crows;
 
