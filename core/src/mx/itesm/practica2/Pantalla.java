@@ -70,4 +70,5 @@ public abstract class Pantalla implements Screen
         // Las subclases están obligadas a sobrescribir el método dispose()
         dispose();
     }
+
 }

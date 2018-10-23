@@ -6,24 +6,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
-import java.awt.Window;
-
-public class PantallaSettings extends Pantalla {
+public class PantallaCredits extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
 
     private Sprite sprite;
 
     private Texture fondo = new Texture("FondoFinal.png");
     private Texture btnRegreso = new Texture( "back.png");
-    private Texture musicBtn = new Texture( "back.png");
-    private Texture title = new Texture("settingstitulo.png");
+    private Texture title = new Texture("creditstitulo.png");
 
-    private boolean music;
+    private Texto participantsTitle;
+    private Texto participantsName;
+    private Texto paticipantsC;
+    private Texto music;
 
-    public PantallaSettings(Pantalla_Inicio pantallaInicio) {
+    public PantallaCredits(Pantalla_Inicio pantallaInicio) {
 
         this.pantallaInicio = pantallaInicio;
-
     }
 
     @Override
@@ -32,9 +31,16 @@ public class PantallaSettings extends Pantalla {
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite = new Sprite(new Texture("scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
-        sprite = new Sprite(new Texture("back.png"));
-        sprite.setPosition(ALTO / 2,ANCHO / 2);
-        Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
+        createText();
+        Gdx.input.setInputProcessor(new PantallaCredits.ProcesadorDeEntrada());
+
+    }
+
+    private void createText(){
+        participantsTitle = new Texto();
+        participantsName = new Texto();
+        paticipantsC = new Texto();
+        music = new Texto();
     }
 
     @Override
@@ -44,15 +50,13 @@ public class PantallaSettings extends Pantalla {
         batch.begin();
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
-        batch.draw(musicBtn,  0.75f * ANCHO / 2 , 0.25f * ALTO / 2);
         batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
+        participantsTitle.mostrarMensaje(batch, "Participants", 40.5f * ALTO / 160.5f , ANCHO / 0.75f );
+        participantsName.mostrarMensaje(batch, "Diana Diaz \nLeilani Trejo \nKarla Lopez \nHumberto Perez",
+                30.5f * ALTO / 160.5f, ANCHO / 0.83f );
+        paticipantsC.mostrarMensaje(batch, "LAD \nLAD \nISC \nISC", 62.5f * ALTO / 160.5f, ANCHO / 0.83f);
         batch.end();
     }
-
-
-
-
-
 
     @Override
     public void pause() {
@@ -69,12 +73,7 @@ public class PantallaSettings extends Pantalla {
 
     }
 
-    class ProcesadorDeEntrada implements InputProcessor {
-
-
-
-
-
+    private class ProcesadorDeEntrada implements InputProcessor {
         @Override
         public boolean keyDown(int keycode) {
             return false;
@@ -99,15 +98,9 @@ public class PantallaSettings extends Pantalla {
             float anchoBtn = btnRegreso.getWidth();
             float altoBtn = btnRegreso.getWidth();
             if(v.x >= x && v.x <= x + anchoBtn && v.y >= y && v.y <= y + altoBtn){
-                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
+                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
             }
-            float xMusic = 0.75f * ANCHO / 2 ;
-            float yMusic = 0.25f * ALTO / 2;
-            float anchoMusic = musicBtn.getWidth();
-            float altoMusic = musicBtn.getWidth();
-            if(v.x >= xMusic && v.x <= xMusic + anchoMusic && v.y >= yMusic && v.y <= yMusic + altoMusic){
-                pantallaInicio.setScreen(new PantallaCredits(pantallaInicio));
-            }
+
             return true;
         }
 
