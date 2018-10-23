@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 
-
 public class Pluma extends Objeto {
     boolean flag = false;
     boolean volando;
     private int cant_plumas;
     private float vx, vy;
+    private float velocidad = 800;
+
 
     public void setVy(float vy){
         this.vy = vy;
@@ -23,9 +24,7 @@ public class Pluma extends Objeto {
     }
 
     public void resetPosition(){
-        if (sprite == null) {
-
-        }
+        volando = false;
     }
 
 
@@ -40,15 +39,22 @@ public class Pluma extends Objeto {
         sprite.draw(batch);
     }
 
+    public void renew(){
+
+        sprite.setPosition(Play.ANCHO/4, 20);
+        volando = false;
+        sprite.setScale(1);
+        sprite.setRotation(360);
+    }
 
 
     public void rotar(Pluma pluma, float rotacionX) {
         pluma.sprite.setRotation(rotacionX);
         flag = true;
     }
+//TODO:
 
-
-    public void mover(float dt, boolean volando, float power)
+    public void mover(float dt, float power)
     {
 
         if(volando == true)
@@ -63,6 +69,9 @@ public class Pluma extends Objeto {
                 vuelo(true);
                 cant_plumas--;
             }
+            if (sprite.getY() >= Pantalla.ALTO*1.5){
+                renew();
+            }
         }
 
     }
@@ -76,13 +85,20 @@ public class Pluma extends Objeto {
 
     public void vuelo(boolean volando){
         if(sprite.getScaleX() > 0) {
-            sprite.setScale(sprite.getScaleX() - (.02f));
+            sprite.setScale(sprite.getScaleX() - (.015f));
         }else{
             sprite.setScale(0f, 0f);
         }
 
     }
 
+    public void volar(boolean b) {
+        volando = true;
+    }
+
+    public float getVelocidad() {
+        return velocidad;
+    }
 }
 
 

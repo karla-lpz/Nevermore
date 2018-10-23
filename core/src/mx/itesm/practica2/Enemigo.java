@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Enemigo extends Objeto {
     boolean flag = false;
-    boolean volando;
+    boolean volando = true;
 
     private int cant_enemigos;
     private float vx, vy;
@@ -18,6 +18,7 @@ public class Enemigo extends Objeto {
 
     private Animation<TextureRegion> animatedSprite;
     private float timerAnimacion;
+    private boolean volar;
 
     public void setVy(float vy){
         this.vy = vy;
@@ -41,7 +42,9 @@ public class Enemigo extends Objeto {
 
     }
 
-
+//TODO: Mueva en X
+//TODO: renew
+    //TODO SCALE
 
     public void dibujar(SpriteBatch batch) {
         timerAnimacion += Gdx.graphics.getDeltaTime();
@@ -51,24 +54,31 @@ public class Enemigo extends Objeto {
 
     }
 
-    public void mover()
+    public void scaleAnimetion(SpriteBatch batch){
+        //batch.draw(animatedSprite, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight(), sprite.scale(sprite.getScaleX()+ .015), sprite.scale(sprite.getScaleY() + 1.5)) ;
+    }
+
+
+    public void mover(float dt)
     {
+
+        if(volando == true)
+        {
+            vuelo(true);
+            Gdx.app.log(Float.toString(sprite.getScaleX()), "se mueve");
+
+        }
+
+    }
+
+    /*public void mover()
+    {
+
         vuelo(true);
-    }
-
-    public int getEnemigos(){
-        return cant_enemigos;
-    }
-    public void setEnemigos(int nivel){
-        cant_enemigos = nivel;
-    }
-
+    }*/
 
     public void vuelo(boolean volando){
-
-        sprite.setScale(sprite.getScaleX() + (.1f));
-
-
+        sprite.setScale(sprite.getScaleX() + (.15f));
 
     }
 
@@ -85,6 +95,10 @@ public class Enemigo extends Objeto {
     public float getAlto() {
         float alto = sprite.getHeight();
         return alto;
+    }
+
+    public void setVolar(boolean volar) {
+        this.volar = volar;
     }
 }
 
