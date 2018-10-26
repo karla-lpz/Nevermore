@@ -16,6 +16,7 @@ public class PantallaStory extends  Pantalla{
 
     private Texture story1 = new Texture("HISTORIA1.png");
     private Texture story2 = new Texture("HISTORIA2.png");
+    private Texture story3 = new Texture("HISTORIA3.png");
     private Texture btnRegreso = new Texture("back.png");
     private Texture btnNext = new Texture( "continueBtn.png");
     private Texture btnPrev = new Texture( "back.png");
@@ -30,6 +31,7 @@ public class PantallaStory extends  Pantalla{
         this.pantallaInicio = pantallaInicio;
         story.add(story1);
         story.add(story2);
+        story.add(story3);
     }
     @Override
     public void show() {
