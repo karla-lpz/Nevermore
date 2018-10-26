@@ -7,12 +7,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class Pluma extends Objeto {
-    boolean flag = false;
+    boolean isActive;
     boolean volando;
     private int cant_plumas;
     private float vx, vy;
     private float velocidad = 800;
 
+    public void deactivate() {
+        this.isActive = false;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
+    }
 
     public void setVy(float vy){
         this.vy = vy;
@@ -31,6 +38,7 @@ public class Pluma extends Objeto {
 
     public Pluma(Texture textura, float x, float y) {
         super(textura, x, y);
+        this.isActive = true;
     }
 
 
@@ -50,7 +58,6 @@ public class Pluma extends Objeto {
 
     public void rotar(Pluma pluma, float rotacionX) {
         pluma.sprite.setRotation(rotacionX);
-        flag = true;
     }
 //TODO:
 
@@ -89,7 +96,6 @@ public class Pluma extends Objeto {
         }else{
             sprite.setScale(0f, 0f);
         }
-
     }
 
     public void volar(boolean b) {
@@ -98,6 +104,14 @@ public class Pluma extends Objeto {
 
     public float getVelocidad() {
         return velocidad;
+    }
+
+    public float getAncho() {
+        return this.sprite.getWidth();
+    }
+
+    public float getAlto() {
+        return this.sprite.getHeight();
     }
 }
 

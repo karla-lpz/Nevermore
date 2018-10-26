@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class Enemigo extends Objeto {
-    boolean flag = false;
+    boolean isActive;
     boolean volando = true;
 
     private int cant_enemigos;
@@ -29,6 +29,7 @@ public class Enemigo extends Objeto {
 
     public Enemigo(Texture textura, float x, float y) {
         super(textura, x, y);
+        this.isActive = true;
         TextureRegion texturaCompleta = new TextureRegion(textura);
         TextureRegion[][] texturaPersonaje = texturaCompleta.split(342,166);
         //11 frames
@@ -58,6 +59,13 @@ public class Enemigo extends Objeto {
         //batch.draw(animatedSprite, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight(), sprite.scale(sprite.getScaleX()+ .015), sprite.scale(sprite.getScaleY() + 1.5)) ;
     }
 
+    public void deactivate() {
+        this.isActive = false;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
+    }
 
     public void mover(float dt)
     {
@@ -65,7 +73,6 @@ public class Enemigo extends Objeto {
         if(volando == true)
         {
             vuelo(true);
-            Gdx.app.log(Float.toString(sprite.getScaleX()), "se mueve");
 
         }
 
@@ -84,7 +91,7 @@ public class Enemigo extends Objeto {
 
 
     public float getAncho() {
-        float ancho = sprite.getHeight();
+        float ancho = sprite.getWidth();
         return ancho;
     }
 
@@ -101,6 +108,3 @@ public class Enemigo extends Objeto {
         this.volar = volar;
     }
 }
-
-
-
