@@ -27,8 +27,10 @@ public class Pluma extends Objeto {
 
 
     public void setVx(float vx){
-        this.vx = vx;
+        this.vx = Math.max(vx, -547);
     }
+
+
 
     public void resetPosition(){
         volando = false;
@@ -69,9 +71,7 @@ public class Pluma extends Objeto {
             float limite_vertical;
             float dx = vx * dt;
             float dy = vy * dt;
-
             sprite.setPosition(sprite.getX() + dx, sprite.getY() + dy);
-
             if (volando == true) {
                 vuelo(true);
                 cant_plumas--;

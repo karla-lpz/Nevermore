@@ -78,11 +78,7 @@ public class Enemigo extends Objeto {
 
     }
 
-    /*public void mover()
-    {
 
-        vuelo(true);
-    }*/
 
     public void vuelo(boolean volando){
         sprite.setScale(sprite.getScaleX() + (.15f));

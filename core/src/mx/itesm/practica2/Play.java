@@ -248,7 +248,10 @@ public class Play extends Pantalla {
             float vy = pluma.getVelocidad() * (float)Math.sin (alfa);
             float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
+            //pluma.setVx(Math.max(vx, -547));
+            Gdx.app.log("Impulso en X", Float.toString(vx));
             pluma.setVy(vy);
+            Gdx.app.log("Impulso en Y", Float.toString(vx));
             pluma.volar(true);
             return false;
         }
@@ -269,6 +272,9 @@ public class Play extends Pantalla {
                 } else if(v.x < 340){
                     pluma.rotar(pluma, 340);
                 }
+                Math.max(screenX, 390);
+                Math.min(screenX, 340);
+
                 return true;
             }
             return false;

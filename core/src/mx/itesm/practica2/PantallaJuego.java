@@ -41,7 +41,6 @@ class PantallaJuego extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(textFondo, 0, 0);
-        //Los elementos se crean en orden
         batch.draw(textBtnRegreso, ANCHO-textBtnRegreso.getWidth()*1.5f, ALTO-textBtnRegreso.getHeight()*1.5f);
         sprite.draw(batch);
         batch.end();
@@ -102,6 +101,7 @@ class PantallaJuego extends Pantalla {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
+
             return false;
         }
 
