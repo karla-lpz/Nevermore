@@ -69,7 +69,7 @@ public class Play extends Pantalla {
         }
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
-            this.plumas.add(new Pluma(plumaBlock, ANCHO/3, 20));
+            this.plumas.add(new Pluma(plumaBlock, ANCHO/3.6f, 20));
         }
     }
 
@@ -83,6 +83,10 @@ public class Play extends Pantalla {
         crearObjetos();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
+
+
+    // TODO: 6/11/18 Crear una clase eliminiar objetos
+
     private void crearObjetos(){
         pluma = this.plumas.remove();
         enemigo = this.crows.remove();
