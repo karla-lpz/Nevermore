@@ -28,8 +28,8 @@ public class Pluma extends Objeto {
 
     public void setVx(float vx){
 
-        //this.vx = Math.max(vx, -547);
-        this.vx = vx;
+        this.vx = Math.max(vx, -547);
+        //this.vx = vx;
     }
 
 

@@ -39,7 +39,7 @@ public class Play extends Pantalla {
 
 //Flecha____________________________________________________________________________________________
 
-
+//TODO: Move Pluma to method show
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new Sprite(plumaBlock);
     private Pluma pluma;
