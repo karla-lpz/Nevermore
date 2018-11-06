@@ -10,10 +10,7 @@ public class Objeto {
         sprite = new Sprite(textura);
         sprite.setY(y);
         sprite.setX(x);
-
     }
-
-
     public float getPositionX() {
         float positionX = sprite.getX();
         return positionX;
@@ -22,5 +19,9 @@ public class Objeto {
     public float getPositionY() {
         float positionY = sprite.getY();
         return positionY;
+    }
+
+    public Object getRectangle() {
+        return sprite.getBoundingRectangle();
     }
 }

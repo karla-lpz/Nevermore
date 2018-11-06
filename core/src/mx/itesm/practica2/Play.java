@@ -11,7 +11,7 @@ import java.util.Queue;
 //TODO: Vidas:
 //TODO: Enemigos:
 //TODO: Settings imagen:
-//TODO: SCores que no funcionen:
+//TODO: Scores que no funcionen:
 //TODO: ganar y perder:
 //TODO: Creditos letrero:
 
@@ -121,18 +121,34 @@ public class Play extends Pantalla {
             pluma.deactivate();
         }
 
+
+//Pos de la pluma dada por render
         float x11 = pluma.getPositionX();
-        float x21 = enemigo.getPositionX() + 60;
         float y11 = pluma.getPositionY();
+        Gdx.app.log("AP",Float.toString(pluma.getAlto() * pluma.getAncho()));
+//Pos de enemigo dada por render
+        float x21 = enemigo.getPositionX() + 60;
         float y21 = enemigo.getPositionY();
+        Gdx.app.log("AC",Float.toString(enemigo.getAlto() * enemigo.getAncho()));
+
+
+
         float x12 = x11 + pluma.getAncho();
         float x22 = x21 + enemigo.getAncho() - 120;
         float y22 = y21 + enemigo.getAlto() - 120;
+
+
+
+
+
         if(pluma.isActive
                 &&(((x11 > x21 && x11 < x22) || (x12 > x21 && x12 < x22))
                 && (y11 > y21 && y11 < y22))){
             pluma.deactivate();
             enemigo.deactivate();
+            Gdx.app.log("H","Hit!");
+
+
             puntos ++;
             score = puntos;
         }

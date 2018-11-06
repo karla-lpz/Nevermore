@@ -27,7 +27,9 @@ public class Pluma extends Objeto {
 
 
     public void setVx(float vx){
-        this.vx = Math.max(vx, -547);
+
+        //this.vx = Math.max(vx, -547);
+        this.vx = vx;
     }
 
 
@@ -98,6 +100,8 @@ public class Pluma extends Objeto {
         }
     }
 
+
+
     public void volar(boolean b) {
         volando = true;
     }
@@ -113,6 +117,7 @@ public class Pluma extends Objeto {
     public float getAlto() {
         return this.sprite.getHeight();
     }
+
 }
 
 

@@ -45,7 +45,7 @@ public class Enemigo extends Objeto {
 
 //TODO: Mueva en X
 //TODO: renew
-    //TODO SCALE
+// TODO SCALE
 
     public void dibujar(SpriteBatch batch) {
         timerAnimacion += Gdx.graphics.getDeltaTime();
