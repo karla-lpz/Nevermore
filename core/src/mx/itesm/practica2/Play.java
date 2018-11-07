@@ -4,16 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.LinkedList;
 import java.util.Queue;
 //TODO: Vidas:
 //TODO: Enemigos:
+//TODO: Settings imagen:
 //TODO: Scores que no funcionen:
 //TODO: ganar y perder:
 //TODO: Creditos letrero:
-//TODO: checar camara y vista
 
 public class Play extends Pantalla {
     private static float score;
@@ -22,7 +23,8 @@ public class Play extends Pantalla {
     private float direccion;
     private float variable;
     private float time;
-
+    private float iniPlumaY;
+    private float iniPlumaX;
     private Sprite sprite;
 
 //Enemigo___________________________________________________________________________________________
@@ -30,9 +32,7 @@ public class Play extends Pantalla {
     private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
     private Sprite enemigoSprite = new Sprite(enemigoBlock);
     private Enemigo enemigo;
-    //Queue para guardar los enemigos
     private Queue<Enemigo> crows;
-    //número enemigos
     private int numCrows = 6;
 
 //__________________________________________________________________________________________________
@@ -72,6 +72,7 @@ public class Play extends Pantalla {
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
             this.plumas.add(new Pluma(plumaBlock, ANCHO/3.6f, 20));
+            //ancho/2 - pluma.block.with /2
         }
     }
 
@@ -87,7 +88,7 @@ public class Play extends Pantalla {
     }
 
 
-    // TODO: Crear una clase eliminiar objetos
+    // TODO: 6/11/18 Crear una clase eliminiar objetos
 
     private void crearObjetos(){
         pluma = this.plumas.remove();
@@ -101,14 +102,17 @@ public class Play extends Pantalla {
     @Override
     public void render(float delta) {
         if (estado == Estado.PAUSADO) {
+            //Dibujando no es hacer el return
+            //si estas pausado dajes de dibujar
+            //poner en el metodo actualizar
+            //si estas pausado te brincas slo a actualizar
             return;
         }
-        //quitar plumas
         if (!this.pluma.isActive && !this.plumas.isEmpty()) {
             this.pluma = this.plumas.remove();
         }
 
-        //quitar enemigos
+
         if (!this.enemigo.isActive && !this.crows.isEmpty()) {
             enemigo = this.crows.remove();
         }
@@ -132,25 +136,40 @@ public class Play extends Pantalla {
 //Pos de la pluma dada por render
         float x11 = pluma.getPositionX();
         float y11 = pluma.getPositionY();
-        Gdx.app.log("AP",Float.toString(pluma.getAlto() * pluma.getAncho()));
+
+
+
+
+
+        Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
+        Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
+        if(rectPluma.overlaps(rectEnem)){
+            Gdx.app.log("HIt", "hit");
+            pluma.deactivate();
+            enemigo.deactivate();
+            //Cambiar los tamaños de los enemigos
+            //terminar de hacer los active
+            //quitar el codigo que no sirve
+            //la condicion debe de ir ligada al isActive como en las coliciones anteriores
+        }
 //Pos de enemigo dada por render
         float x21 = enemigo.getPositionX() + 60;
         float y21 = enemigo.getPositionY();
-        Gdx.app.log("AC",Float.toString(enemigo.getAlto() * enemigo.getAncho()));
-
-
 
         float x12 = x11 + pluma.getAncho();
         float x22 = x21 + enemigo.getAncho() - 120;
+        //Cambiar los nombres quitar el 120 es malo
+
         float y22 = y21 + enemigo.getAlto() - 120;
 
 
-        //colisiones (checar)
+
+
+
         if(pluma.isActive
                 &&(((x11 > x21 && x11 < x22) || (x12 > x21 && x12 < x22))
                 && (y11 > y21 && y11 < y22))){
-            pluma.deactivate();
-            enemigo.deactivate();
+
             Gdx.app.log("H","Hit!");
 
 
@@ -175,7 +194,6 @@ public class Play extends Pantalla {
         texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
         punctuationText.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
 
-        //estados ganado y perdido
         if (estado == Estado.PERDIO) {
             loseText.mostrarMensaje(batch, "PERDISTE", ANCHO/2, ALTO/2);
         }
@@ -231,6 +249,9 @@ public class Play extends Pantalla {
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
+            //si no esta el dedo en iniplumay no hagas nada
+            //iniPlumaY;
+
             //batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
             float xR = ANCHO-BotRegreso.getWidth()*1.0f;
             float yR = ALTO-BotRegreso.getWidth()*1.2f;
@@ -240,7 +261,7 @@ public class Play extends Pantalla {
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
 
             }
-            // Pausa
+            // batch.draw(BtnPause, 0, ALTO / 1.12f);
             float xP = 0;
             float yP= ALTO-BotRegreso.getWidth()*1.2f;
             float anchoP = BtnPause.getWidth();
@@ -279,13 +300,24 @@ public class Play extends Pantalla {
         }
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
+            //revisar el 1000 y hacerlo en coordenadas virtuales
+            //no usar coordenadas ficias
+            //vx y vy es un tamaño virtual
             if (screenY >= 1000 && estado == Estado.JUGANDO) {
                 Vector3 v = new Vector3(screenX, screenY, 0);
                 camara.unproject(v);
                 power = (v.y * 0.1f) * 2;
-                pluma.sprite.setY(v.y-200);
+                //pluma.sprite.setY(v.y-200);
+                float dy = v.y - iniPlumaY;
+                iniPlumaY = v.y;
+                pluma.sprite.setY(pluma.sprite.getY() + dy);
+
+                //Es el desplasamiento de la pluma, tengo que mover relativo a la pluma
+
                 if(v.y >= 200){
-                    pluma.sprite.setY(200);
+                   // pluma.sprite.setY(200);
+                    //corrigir el desplasamiento del dedo
+
                 }
                 pluma.rotar(pluma, v.x);
                 if(v.x > 390)

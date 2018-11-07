@@ -40,6 +40,7 @@ public class Enemigo extends Objeto {
         timerAnimacion = 0;
         sprite = new Sprite(texturaPersonaje[0][0]);    // QUIETO
         sprite.setPosition(x,y);
+        sprite.setScale(.01f);
 
     }
 
@@ -51,7 +52,11 @@ public class Enemigo extends Objeto {
         timerAnimacion += Gdx.graphics.getDeltaTime();
         // Frame que se dibujará
         TextureRegion region = animatedSprite.getKeyFrame(timerAnimacion);
-        batch.draw(region, sprite.getX(), sprite.getY());
+        //batch.draw(region, sprite.getX(), sprite.getY());
+        //Escalar
+        sprite.setRegion(region);
+        sprite.draw(batch);
+
 
     }
 
@@ -81,7 +86,10 @@ public class Enemigo extends Objeto {
 
 
     public void vuelo(boolean volando){
-        sprite.setScale(sprite.getScaleX() + (.15f));
+        sprite.setScale(sprite.getScaleX() + (.005f));
+        if (sprite.getScaleX() >= 5) {
+            isActive = false;
+        }
 
     }
 
