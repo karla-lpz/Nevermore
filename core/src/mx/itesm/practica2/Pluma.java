@@ -63,7 +63,7 @@ public class Pluma extends Objeto {
     public void rotar(Pluma pluma, float rotacionX) {
         pluma.sprite.setRotation(rotacionX);
     }
-//TODO:
+
 
     public void mover(float dt, float power)
     {

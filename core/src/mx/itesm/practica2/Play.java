@@ -10,10 +10,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 //TODO: Vidas:
 //TODO: Enemigos:
-//TODO: Settings imagen:
 //TODO: Scores que no funcionen:
 //TODO: ganar y perder:
 //TODO: Creditos letrero:
+//TODO: checar camara y vista
 
 public class Play extends Pantalla {
     private static float score;
@@ -30,7 +30,9 @@ public class Play extends Pantalla {
     private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
     private Sprite enemigoSprite = new Sprite(enemigoBlock);
     private Enemigo enemigo;
+    //Queue para guardar los enemigos
     private Queue<Enemigo> crows;
+    //número enemigos
     private int numCrows = 6;
 
 //__________________________________________________________________________________________________
@@ -85,7 +87,7 @@ public class Play extends Pantalla {
     }
 
 
-    // TODO: 6/11/18 Crear una clase eliminiar objetos
+    // TODO: Crear una clase eliminiar objetos
 
     private void crearObjetos(){
         pluma = this.plumas.remove();
@@ -101,11 +103,12 @@ public class Play extends Pantalla {
         if (estado == Estado.PAUSADO) {
             return;
         }
+        //quitar plumas
         if (!this.pluma.isActive && !this.plumas.isEmpty()) {
             this.pluma = this.plumas.remove();
         }
 
-
+        //quitar enemigos
         if (!this.enemigo.isActive && !this.crows.isEmpty()) {
             enemigo = this.crows.remove();
         }
@@ -142,9 +145,7 @@ public class Play extends Pantalla {
         float y22 = y21 + enemigo.getAlto() - 120;
 
 
-
-
-
+        //colisiones (checar)
         if(pluma.isActive
                 &&(((x11 > x21 && x11 < x22) || (x12 > x21 && x12 < x22))
                 && (y11 > y21 && y11 < y22))){
@@ -174,6 +175,7 @@ public class Play extends Pantalla {
         texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
         punctuationText.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
 
+        //estados ganado y perdido
         if (estado == Estado.PERDIO) {
             loseText.mostrarMensaje(batch, "PERDISTE", ANCHO/2, ALTO/2);
         }
@@ -238,7 +240,7 @@ public class Play extends Pantalla {
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
 
             }
-            // batch.draw(BtnPause, 0, ALTO / 1.12f);
+            // Pausa
             float xP = 0;
             float yP= ALTO-BotRegreso.getWidth()*1.2f;
             float anchoP = BtnPause.getWidth();
