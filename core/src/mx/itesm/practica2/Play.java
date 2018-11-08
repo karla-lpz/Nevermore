@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+//import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -121,6 +122,9 @@ public class Play extends Pantalla {
             this.estado = Estado.GANO;
             //TODO: AGREGAR PUNTAJES
         }
+        if(enemigo.getAncho() > 100){
+            shoots --;
+        }
 
         if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO) {
             this.estado = Estado.PERDIO;
@@ -133,27 +137,23 @@ public class Play extends Pantalla {
         }
 
 
-//Pos de la pluma dada por render
-        float x11 = pluma.getPositionX();
-        float y11 = pluma.getPositionY();
 
 
-
-
-
+//Nuevo codigo pluma vs enemigo
+        //TODO Agregar los scores
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
+
         Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
-        if(rectPluma.overlaps(rectEnem)){
-            Gdx.app.log("HIt", "hit");
+        if(pluma.isActive && rectPluma.overlaps(rectEnem)){
             pluma.deactivate();
             enemigo.deactivate();
-            //Cambiar los tamaños de los enemigos
-            //terminar de hacer los active
-            //quitar el codigo que no sirve
-            //la condicion debe de ir ligada al isActive como en las coliciones anteriores
+            puntos ++;
+            score = puntos;
         }
 //Pos de enemigo dada por render
-        float x21 = enemigo.getPositionX() + 60;
+
+
+       /* float x21 = enemigo.getPositionX() + 60;
         float y21 = enemigo.getPositionY();
 
         float x12 = x11 + pluma.getAncho();
@@ -161,21 +161,19 @@ public class Play extends Pantalla {
         //Cambiar los nombres quitar el 120 es malo
 
         float y22 = y21 + enemigo.getAlto() - 120;
+*/
 
 
 
 
-
-        if(pluma.isActive
+       /* if(pluma.isActive
                 &&(((x11 > x21 && x11 < x22) || (x12 > x21 && x12 < x22))
                 && (y11 > y21 && y11 < y22))){
-
             Gdx.app.log("H","Hit!");
-
 
             puntos ++;
             score = puntos;
-        }
+        }*/
 
         borrarPantalla(0, 0, 1);
         time += Gdx.graphics.getDeltaTime();
@@ -310,9 +308,11 @@ public class Play extends Pantalla {
                 //pluma.sprite.setY(v.y-200);
                 float dy = v.y - iniPlumaY;
                 iniPlumaY = v.y;
-                pluma.sprite.setY(pluma.sprite.getY() + dy);
 
-                //Es el desplasamiento de la pluma, tengo que mover relativo a la pluma
+
+                pluma.sprite.setY( pluma.sprite.getY() - dy );
+
+                //Es el desplasamiento de la pluma, tengo que mover relativo al dedo
 
                 if(v.y >= 200){
                    // pluma.sprite.setY(200);
