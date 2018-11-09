@@ -294,8 +294,8 @@ public class Play extends Pantalla {
                 }else if(v.x < 340){
                     pluma.rotar(pluma, 340);
                 }
-                Math.max(screenX, 390);
-                Math.min(screenX, 340);
+                Math.max(v.y, 390);
+                Math.min(v.x, 340);
 
                 return true;
             }
