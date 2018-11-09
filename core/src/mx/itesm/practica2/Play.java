@@ -272,8 +272,9 @@ public class Play extends Pantalla {
             //revisar el 1000 y hacerlo en coordenadas virtuales
             //no usar coordenadas ficias
             //vx y vy es un tamaño virtual
-            if (screenY >= 1000 && estado == Estado.JUGANDO) {
-                Vector3 v = new Vector3(screenX, screenY, 0);
+            Vector3 v = new Vector3(screenX, screenY, 0);
+            if (v.y >= 1000 && estado == Estado.JUGANDO) {
+
                 camara.unproject(v);
                 power = (v.y * 0.1f) * 2;
                 //pluma.sprite.setY(v.y-200);
