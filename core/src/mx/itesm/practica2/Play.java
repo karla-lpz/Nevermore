@@ -16,6 +16,7 @@ import java.util.Queue;
 //TODO: Scores que no funcionen:
 //TODO: ganar y perder:
 //TODO: Creditos letrero:
+//TODO: Corregir direccion de la pluma con
 
 public class Play extends Pantalla {
     private static float score;
@@ -122,9 +123,13 @@ public class Play extends Pantalla {
             this.estado = Estado.GANO;
             //TODO: AGREGAR PUNTAJES
         }
-        if(enemigo.getAncho() > 100){
-            shoots --;
-        }
+       /* if(enemigo.getAncho() > 1000){
+            enemigo.deactivate();
+            pluma.deactivate();
+            shoots--;
+            score --;
+            puntos = score;
+        }*/
 
         if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO) {
             this.estado = Estado.PERDIO;
@@ -135,14 +140,9 @@ public class Play extends Pantalla {
                 || pluma.getPositionX() > ANCHO) {
             pluma.deactivate();
         }
-
-
-
-
 //Nuevo codigo pluma vs enemigo
         //TODO Agregar los scores
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
-
         Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
             pluma.deactivate();
@@ -150,30 +150,6 @@ public class Play extends Pantalla {
             puntos ++;
             score = puntos;
         }
-//Pos de enemigo dada por render
-
-
-       /* float x21 = enemigo.getPositionX() + 60;
-        float y21 = enemigo.getPositionY();
-
-        float x12 = x11 + pluma.getAncho();
-        float x22 = x21 + enemigo.getAncho() - 120;
-        //Cambiar los nombres quitar el 120 es malo
-
-        float y22 = y21 + enemigo.getAlto() - 120;
-*/
-
-
-
-
-       /* if(pluma.isActive
-                &&(((x11 > x21 && x11 < x22) || (x12 > x21 && x12 < x22))
-                && (y11 > y21 && y11 < y22))){
-            Gdx.app.log("H","Hit!");
-
-            puntos ++;
-            score = puntos;
-        }*/
 
         borrarPantalla(0, 0, 1);
         time += Gdx.graphics.getDeltaTime();
@@ -249,7 +225,6 @@ public class Play extends Pantalla {
             camara.unproject(v);
             //si no esta el dedo en iniplumay no hagas nada
             //iniPlumaY;
-
             //batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
             float xR = ANCHO-BotRegreso.getWidth()*1.0f;
             float yR = ALTO-BotRegreso.getWidth()*1.2f;
@@ -257,7 +232,6 @@ public class Play extends Pantalla {
             float altoBtn = BotRegreso.getWidth();
             if(v.x >= xR && v.x <= xR + anchoBtn && v.y >= yR && v.y <= yR + altoBtn){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
-
             }
             // batch.draw(BtnPause, 0, ALTO / 1.12f);
             float xP = 0;
@@ -270,19 +244,16 @@ public class Play extends Pantalla {
                 } else if (estado == Estado.PAUSADO) {
                     estado = Estado.JUGANDO;
                 }
-
             }
             variable = (((v.x - 360)/50) * ANCHO) + 10;
             direccion = v.x;
-
             return true;
-
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            if (screenY < 1000 || !(estado == Estado.JUGANDO)) return true;
             Vector3 v = new Vector3(screenX, screenY, 0);
+            if (v.y < 1000 || !(estado == Estado.JUGANDO)) return true;
             camara.unproject(v);
             variable = ((360 - v.x)/50) * ANCHO;
             float alfa = (float) Math.atan2(ALTO-v.y, v.x);
@@ -308,22 +279,18 @@ public class Play extends Pantalla {
                 //pluma.sprite.setY(v.y-200);
                 float dy = v.y - iniPlumaY;
                 iniPlumaY = v.y;
-
-
                 pluma.sprite.setY( pluma.sprite.getY() - dy );
 
                 //Es el desplasamiento de la pluma, tengo que mover relativo al dedo
-
-                if(v.y >= 200){
+                /*if(v.y >= 200){
                    // pluma.sprite.setY(200);
                     //corrigir el desplasamiento del dedo
-
-                }
+                }*/
                 pluma.rotar(pluma, v.x);
                 if(v.x > 390)
                 {
                     pluma.rotar(pluma, 390);
-                } else if(v.x < 340){
+                }else if(v.x < 340){
                     pluma.rotar(pluma, 340);
                 }
                 Math.max(screenX, 390);
