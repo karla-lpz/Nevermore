@@ -280,7 +280,12 @@ public class Play extends Pantalla {
                 //pluma.sprite.setY(v.y-200);
                 float dy = v.y - iniPlumaY;
                 iniPlumaY = v.y;
-                pluma.sprite.setY( pluma.sprite.getY() - dy );
+                pluma.sprite.setY( pluma.sprite.getY() + dy );
+                //coordenada Y de mi dedo contra la coordenada Y de la pluma y es el valor de touch down = deplazamiemto
+                //y en drag cuando el dedo se mueve le sumas a Y de la pluma diferenecia entre la posicion inicial
+                // y lo que se movio, esa distancia la meto como posicion inicial de pluma
+
+
 
                 //Es el desplasamiento de la pluma, tengo que mover relativo al dedo
                 /*if(v.y >= 200){
