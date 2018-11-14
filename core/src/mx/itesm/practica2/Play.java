@@ -58,7 +58,7 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
-    Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGB888);
+    Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGBA8888);
     private Texto texto;
     private float puntos;
     private Texto punctuationText;
@@ -179,11 +179,13 @@ public class Play extends Pantalla {
             batch.draw(BtnPause, 0, ALTO / 1.12f);
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
-            Gdx.app.log("valor de touchDownbool =", Boolean.toString(touchDownBool));
             if(touchDownBool == false){
                 pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/5));
                 pixmap.drawLine((int)(ANCHO-50f),0,(int)(ANCHO/2), (int)(ALTO/5));
             }else {
+                pixmap.setColor(1,1,1,0f);
+                pixmap.fill();
+                pixmap.setColor(1,0,0,1f);
                 pixmap.drawLine(50,0,cuerdaX, cuerdaY);
                 pixmap.drawLine((int)(ANCHO-50f),0,cuerdaX,cuerdaY);
             }
@@ -250,8 +252,6 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             touchDownBool = true;
-            cuerdaX = (int)v.x;
-            cuerdaY = (int)v.y;
             //si no esta el dedo en iniplumay no hagas nada
             //iniPlumaY;
             //batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
@@ -303,7 +303,8 @@ public class Play extends Pantalla {
             //vx y vy es un tamaño virtual
             Vector3 v = new Vector3(screenX, screenY, 0);
             if (v.y >= 1000 && estado == Estado.JUGANDO) {
-
+                cuerdaX = (int)v.x;
+                cuerdaY = (int)v.y;
                 camara.unproject(v);
                 power = (v.y * 0.1f) * 2;
                 //pluma.sprite.setY(v.y-200);
