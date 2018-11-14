@@ -5,12 +5,23 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.Viewport;
 //import com.sun.xml.internal.bind.v2.TODO;
 
+import java.awt.Menu;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.SocketHandler;
 //TODO: Vidas:
 //TODO: Enemigos:
 //TODO: Settings imagen:
@@ -37,10 +48,9 @@ public class Play extends Pantalla {
     private Enemigo enemigo;
     private Queue<Enemigo> crows;
     private int numCrows = 6;
+    private ProcesadorDeEntrada.EscenaPausa escenaPausa;
 
 //__________________________________________________________________________________________________
-
-
 
 //Flecha____________________________________________________________________________________________
 
@@ -89,7 +99,7 @@ public class Play extends Pantalla {
         sprite = new Sprite(new Texture("arco.png"));
         sprite.setPosition(ALTO*.2f,ANCHO*.2f );
         sprite = new Sprite(new Texture("pausaBtn.png"));
-        pixmap.setColor(1f,0f,0f,1f);
+        pixmap.setColor(1f,1f,1f,1f);
         //pixmap.setBlending(Pixmap.Blending.None);
         //pixmap.fillRectangle(0,0,pixmap.getWidth(),pixmap.getHeight());
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
@@ -119,11 +129,7 @@ public class Play extends Pantalla {
     @Override
     public void render(float delta) {
         if (estado == Estado.PAUSADO) {
-            //Dibujando no es hacer el return
-            //si estas pausado dajes de dibujar
-            //poner en el metodo actualizar
-            //si estas pausado te brincas slo a actualizar
-            return;
+            escenaPausa.draw();
         }
         if (!this.pluma.isActive && !this.plumas.isEmpty()) {
             this.pluma = this.plumas.remove();
@@ -138,13 +144,7 @@ public class Play extends Pantalla {
             this.estado = Estado.GANO;
             //TODO: AGREGAR PUNTAJES
         }
-       /* if(enemigo.getAncho() > 1000){
-            enemigo.deactivate();
-            pluma.deactivate();
-            shoots--;
-            score --;
-            puntos = score;
-        }*/
+
 
         if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO) {
             this.estado = Estado.PERDIO;
@@ -155,6 +155,7 @@ public class Play extends Pantalla {
                 || pluma.getPositionX() > ANCHO) {
             pluma.deactivate();
         }
+        //201713
 //Nuevo codigo pluma vs enemigo
         //TODO Agregar los scores
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
@@ -180,14 +181,16 @@ public class Play extends Pantalla {
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
             if(touchDownBool == false){
-                pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/5));
-                pixmap.drawLine((int)(ANCHO-50f),0,(int)(ANCHO/2), (int)(ALTO/5));
+                pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/10));
+                pixmap.drawLine((int)(ANCHO-50f),0,(int)(ANCHO/2), (int)(ALTO/10));
             }else {
                 pixmap.setColor(1,1,1,0f);
                 pixmap.fill();
-                pixmap.setColor(1,0,0,1f);
-                pixmap.drawLine(50,0,cuerdaX, cuerdaY);
-                pixmap.drawLine((int)(ANCHO-50f),0,cuerdaX,cuerdaY);
+                pixmap.setColor(1,1,1,1f);
+                pixmap.drawLine(50,0,(int)(ANCHO/2), (cuerdaY/3));
+
+                pixmap.drawLine((int)(ANCHO-50f),0,(int)(ANCHO/2),(cuerdaY/3));
+
             }
             Texture texturaRectangulo = new Texture( pixmap );
             batch.draw(texturaRectangulo, 0,0);
@@ -252,6 +255,7 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
             touchDownBool = true;
+            pixmap.setColor(1,1,1,1);
             //si no esta el dedo en iniplumay no hagas nada
             //iniPlumaY;
             //batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
@@ -270,7 +274,12 @@ public class Play extends Pantalla {
             if(v.x >= xP && v.x <= xP + anchoP && v.y >= yP && v.y <= yP + altoP && (estado == Estado.JUGANDO || estado == Estado.PAUSADO)){
                 if (estado == Estado.JUGANDO) {
                     estado = Estado.PAUSADO;
-                } else if (estado == Estado.PAUSADO) {
+                    if (escenaPausa == null) {
+                        escenaPausa = new EscenaPausa(vista, batch);
+                    }
+                    Gdx.input.setInputProcessor(escenaPausa);
+                }
+                else if (estado == Estado.PAUSADO) {
                     estado = Estado.JUGANDO;
                 }
             }
@@ -282,6 +291,7 @@ public class Play extends Pantalla {
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             Vector3 v = new Vector3(screenX, screenY, 0);
+            touchDownBool = false;
             if (v.y < 1000 || !(estado == Estado.JUGANDO)) return true;
             camara.unproject(v);
             variable = ((360 - v.x)/50) * ANCHO;
@@ -304,7 +314,7 @@ public class Play extends Pantalla {
             Vector3 v = new Vector3(screenX, screenY, 0);
             if (v.y >= 1000 && estado == Estado.JUGANDO) {
                 cuerdaX = (int)v.x;
-                cuerdaY = (int)v.y;
+                cuerdaY = (int)v.y-1000;
                 camara.unproject(v);
                 power = (v.y * 0.1f) * 2;
                 //pluma.sprite.setY(v.y-200);
@@ -315,7 +325,8 @@ public class Play extends Pantalla {
                 //coordenada Y de mi dedo contra la coordenada Y de la pluma y es el valor de touch down = deplazamiemto
                 //y en drag cuando el dedo se mueve le sumas a Y de la pluma diferenecia entre la posicion inicial
                 // y lo que se movio, esa distancia la meto como posicion inicial de pluma
-
+                 //Quitar el Math
+                //
                 pluma.rotar(pluma, v.x);
                 if(v.x > 390)
                 {
@@ -331,8 +342,84 @@ public class Play extends Pantalla {
             return false;
         }
 
+            private class EscenaPausa extends Stage{
+                public EscenaPausa(Viewport vista, SpriteBatch batch) {
+                    super(vista, batch);
+                    Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
+                    pixmap.setColor(1f, 1f, 1f, 1f);
+                    pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
+                    Texture texturaRectangulo = new Texture(pixmap);
+                    pixmap.dispose();
+                    Image imgRectangulo = new Image(texturaRectangulo);
+                    imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
+                    this.addActor(imgRectangulo);
+                    Texture texturaBtnSalir = new Texture("comun/btnSalir.png");
+                    TextureRegionDrawable trdSalir = new TextureRegionDrawable(
+                            new TextureRegion(texturaBtnSalir));
+                    ImageButton btnSalir = new ImageButton(trdSalir);
+                    btnSalir.setPosition(ANCHO/2-btnSalir.getWidth()/2, ALTO/2);
+                    btnSalir.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            //Regresa al menú
+                            pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+                        }
+                    });
+                    this.addActor(btnSalir);
 
-//______Termina Touch_Drag
+
+                }
+
+            }
+
+       /* private class EscenaPausa extends Stage
+        {
+            // La escena que se muestra cuando está pausado
+            public EscenaPausa(Viewport vista, SpriteBatch batch) {
+                super(vista,batch);
+                // Crear rectángulo transparente
+                Pixmap pixmap = new Pixmap((int)(ANCHO*0.7f), (int)(ALTO*0.8f), Pixmap.Format.RGBA8888 );
+                pixmap.setColor( 1f, 1f, 1f, 0.65f );
+                pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
+                Texture texturaRectangulo = new Texture( pixmap );
+                pixmap.dispose();
+                Image imgRectangulo = new Image(texturaRectangulo);
+                imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
+                this.addActor(imgRectangulo);
+
+                // Salir
+                Texture texturaBtnSalir = new Texture("comun/btnSalir.png");
+                TextureRegionDrawable trdSalir = new TextureRegionDrawable(
+                        new TextureRegion(texturaBtnSalir));
+                ImageButton btnSalir = new ImageButton(trdSalir);
+                btnSalir.setPosition(ANCHO/2-btnSalir.getWidth()/2, ALTO/2);
+                btnSalir.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        // Regresa al menú
+                        juego.setScreen(new PantallaMenu(juego));
+                    }
+                });
+                this.addActor(btnSalir);
+
+                // Continuar
+                Texture texturaBtnContinuar = new Texture("comun/btnContinuar.png");
+                TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
+                        new TextureRegion(texturaBtnContinuar));
+                ImageButton btnContinuar = new ImageButton(trdContinuar);
+                btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO/4);
+                btnContinuar.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        // Regresa al juego
+                        estado = EstadoJuego.JUGANDO;
+                        Gdx.input.setInputProcessor(new ProcesadorEntrada()); // No debería crear uno nuevo
+                    }
+                });
+                this.addActor(btnContinuar);
+            }
+        }
+        */
 
         @Override
         public boolean mouseMoved(int screenX, int screenY) {

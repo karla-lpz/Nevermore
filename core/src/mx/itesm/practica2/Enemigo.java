@@ -69,6 +69,7 @@ public class Enemigo extends Objeto {
     }
 
     public boolean isActive() {
+
         return this.isActive;
     }
 
