@@ -2,6 +2,7 @@ package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,7 +44,7 @@ public class Play extends Pantalla {
 
 //Flecha____________________________________________________________________________________________
 
-//TODO: Move Pluma to method show
+    //TODO: Move Pluma to method show
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new Sprite(plumaBlock);
     private Pluma pluma;
@@ -57,12 +58,16 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
+    Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGB888);
     private Texto texto;
     private float puntos;
     private Texto punctuationText;
     private Texto winText;
     private Texto loseText;
     private Estado estado;
+    private boolean touchDownBool;
+    private int cuerdaX;
+    private int cuerdaY;
 
     public Play(Pantalla_Inicio pantallaInicio) {
         estado = Estado.JUGANDO;
@@ -84,8 +89,12 @@ public class Play extends Pantalla {
         sprite = new Sprite(new Texture("arco.png"));
         sprite.setPosition(ALTO*.2f,ANCHO*.2f );
         sprite = new Sprite(new Texture("pausaBtn.png"));
+        pixmap.setColor(1f,0f,0f,1f);
+        //pixmap.setBlending(Pixmap.Blending.None);
+        //pixmap.fillRectangle(0,0,pixmap.getWidth(),pixmap.getHeight());
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
         crearObjetos();
+        eliminarObjetos();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
 
@@ -93,12 +102,18 @@ public class Play extends Pantalla {
     // TODO: 6/11/18 Crear una clase eliminiar objetos
 
     private void crearObjetos(){
-        pluma = this.plumas.remove();
-        enemigo = this.crows.remove();
+        touchDownBool = false;
         texto = new Texto();
         punctuationText = new Texto();
         winText = new Texto();
         loseText = new Texto();
+
+
+    }
+    private void eliminarObjetos(){
+        pluma = this.plumas.remove();
+        enemigo = this.crows.remove();
+
     }
 
     @Override
@@ -145,6 +160,7 @@ public class Play extends Pantalla {
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
         Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
+            rectPluma.height = rectPluma.getHeight() - 20f;
             pluma.deactivate();
             enemigo.deactivate();
             puntos ++;
@@ -163,6 +179,16 @@ public class Play extends Pantalla {
             batch.draw(BtnPause, 0, ALTO / 1.12f);
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
+            Gdx.app.log("valor de touchDownbool =", Boolean.toString(touchDownBool));
+            if(touchDownBool == false){
+                pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/5));
+                pixmap.drawLine((int)(ANCHO-50f),0,(int)(ANCHO/2), (int)(ALTO/5));
+            }else {
+                pixmap.drawLine(50,0,cuerdaX, cuerdaY);
+                pixmap.drawLine((int)(ANCHO-50f),0,cuerdaX,cuerdaY);
+            }
+            Texture texturaRectangulo = new Texture( pixmap );
+            batch.draw(texturaRectangulo, 0,0);
         }
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
@@ -223,6 +249,9 @@ public class Play extends Pantalla {
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             Vector3 v = new Vector3(screenX, screenY, 0);
             camara.unproject(v);
+            touchDownBool = true;
+            cuerdaX = (int)v.x;
+            cuerdaY = (int)v.y;
             //si no esta el dedo en iniplumay no hagas nada
             //iniPlumaY;
             //batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);

@@ -101,7 +101,6 @@ public class Pluma extends Objeto {
     }
 
 
-
     public void volar(boolean b) {
         volando = true;
     }
