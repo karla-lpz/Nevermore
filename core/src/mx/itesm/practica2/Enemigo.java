@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import javax.xml.soap.Text;
+
 
 public class Enemigo extends Objeto {
     boolean isActive;
@@ -47,7 +49,6 @@ public class Enemigo extends Objeto {
 //TODO: Mueva en X
 //TODO: renew
 // TODO SCALE
-
     public void dibujar(SpriteBatch batch) {
         timerAnimacion += Gdx.graphics.getDeltaTime();
         // Frame que se dibujará
@@ -65,6 +66,7 @@ public class Enemigo extends Objeto {
     }
 
     public void deactivate() {
+
         this.isActive = false;
     }
 
@@ -81,6 +83,11 @@ public class Enemigo extends Objeto {
             vuelo(true);
 
         }
+
+    }
+    public void Mancha(Texture texture, int x, int y){
+        sprite.setY(y);
+        sprite.setX(x);
 
     }
 

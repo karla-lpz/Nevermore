@@ -52,7 +52,6 @@ public class Pluma extends Objeto {
     }
 
     public void renew(){
-
         sprite.setPosition(Play.ANCHO/4, 20);
         volando = false;
         sprite.setScale(1);
