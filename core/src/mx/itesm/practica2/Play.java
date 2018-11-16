@@ -1,5 +1,6 @@
 package mx.itesm.practica2;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Pixmap;
