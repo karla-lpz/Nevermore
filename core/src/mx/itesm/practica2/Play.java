@@ -88,7 +88,6 @@ public class Play extends Pantalla {
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
             this.plumas.add(new Pluma(plumaBlock, ANCHO/3.6f, 20));
-            //ancho/2 - pluma.block.with /2
         }
     }
 
@@ -325,9 +324,6 @@ public class Play extends Pantalla {
             }
             return false;
         }
-
-
-
         @Override
         public boolean mouseMoved(int screenX, int screenY) {
             return false;
@@ -341,19 +337,17 @@ public class Play extends Pantalla {
     private class EscenaPausa extends Stage{
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
+
+            Texture fondoPausa = new Texture(Gdx.files.internal("fondopausa1.png"));
             Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
-            pixmap.setColor(0f, 0f, 0f, .5f);
-            pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
-            Texture texturaRectangulo = new Texture(pixmap);
             pixmap.dispose();
-            Image imgRectangulo = new Image(texturaRectangulo);
+            Image imgRectangulo = new Image(fondoPausa);
             imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
             this.addActor(imgRectangulo);
-            Texture texturaBtnSalir = new Texture("playBtn.png");
-            TextureRegionDrawable trdSalir = new TextureRegionDrawable(
-                    new TextureRegion(texturaBtnSalir));
+            Texture texturaBtnSalir = new Texture("home.png");
+            TextureRegionDrawable trdSalir = new TextureRegionDrawable(new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
-            btnSalir.setPosition(ANCHO/2-btnSalir.getWidth()/2, ALTO/2);
+            btnSalir.setPosition((ANCHO/2)+150-btnSalir.getWidth()/2, ALTO/6);
             btnSalir.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -362,11 +356,11 @@ public class Play extends Pantalla {
                 }
             });
             this.addActor(btnSalir);
-            Texture texturaBtnContinuar = new Texture("playBtn.png");
+            Texture texturaBtnContinuar = new Texture("playbtn1.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO/4);
+            btnContinuar.setPosition((ANCHO/2)-150-btnContinuar.getWidth()/2, ALTO/6);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
