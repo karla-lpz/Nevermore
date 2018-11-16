@@ -166,6 +166,7 @@ public class Play extends Pantalla {
             puntos ++;
             score = puntos;
         }
+
         borrarPantalla(0, 0, 1);
         time += Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camara.combined);
