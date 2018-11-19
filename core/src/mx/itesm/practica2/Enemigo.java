@@ -1,6 +1,7 @@
 package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -79,7 +80,6 @@ public class Enemigo extends Objeto {
     }
 
     public void deactivate() {
-
         this.isActive = false;
     }
 

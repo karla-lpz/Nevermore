@@ -51,15 +51,23 @@ public class Play extends Pantalla {
     private Enemigo enemigo;
     private Queue<Enemigo> crows;
     private int numCrows = 6;
+
+    //Sonido
     Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("FOLEY_LANZAMIENTO.mp3"));
     Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("FOLEY_EXPLOSION.mp3"));
+    Sound EffectC = Gdx.audio.newSound(Gdx.files.internal("FOLEY_CUERVO.mp3"));
+
 
     private EscenaPausa escenaPausa;
 //__________________________________________________________________________________________________
 
 //Flecha____________________________________________________________________________________________
+    private Texture corazon1 = new Texture("CORA_LLENO.png");
+    private Texture corazon2 = new Texture("CORA2.png");
+    private Texture corazon3 = new Texture("CORA3.png");
+    private Texture corazon4 = new Texture("CORA4.png");
+    private Texture corazon5 = new Texture("CORA5.png");
 
-    //TODO: Move Pluma to method show
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new Sprite(plumaBlock);
     private Pluma pluma;
@@ -97,7 +105,6 @@ public class Play extends Pantalla {
             this.plumas.add(new Pluma(plumaBlock, ANCHO/3.6f, 20));
         }
     }
-
     @Override
     public void show() {
         sprite = new Sprite(new Texture("back.png"));
@@ -111,16 +118,13 @@ public class Play extends Pantalla {
         eliminarObjetos();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
-
-
     private void crearObjetos(){
         touchDownBool = false;
         texto = new Texto();
+        EffectC.play();
         punctuationText = new Texto();
         winText = new Texto();
         loseText = new Texto();
-
-
     }
     private void eliminarObjetos(){
         pluma = this.plumas.remove();
@@ -135,7 +139,6 @@ public class Play extends Pantalla {
             this.pluma = this.plumas.remove();
         }
 
-
         if (!this.enemigo.isActive && !this.crows.isEmpty()) {
             enemigo = this.crows.remove();
         }
@@ -145,12 +148,9 @@ public class Play extends Pantalla {
             stage ++;
             //TODO: AGREGAR PUNTAJES
         }
-
-
         if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO) {
             this.estado = Estado.PERDIO;
         }
-
         if (pluma.getPositionY() > ALTO
                 || pluma.getPositionX() < -200
                 || pluma.getPositionX() > ANCHO) {
@@ -158,12 +158,13 @@ public class Play extends Pantalla {
         }
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
         Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
+
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
             rectPluma.height = rectPluma.getHeight() - 20f;
             rectPluma.width = rectPluma.getWidth() - 20f;
             EffectE.play(1f);
             pluma.deactivate();
-            enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
+            //enemigo.Mancha(Mancha, enemigo.getPositionX(), enemigo.getPositionY() , enemigo.getScaleX() , enemigo.getScaleY());
             enemigo.deactivate();
             puntos ++;
             score = puntos;
@@ -336,6 +337,8 @@ public class Play extends Pantalla {
             Gdx.app.log("Impulso en Y", Float.toString(vx));
             pluma.volar(true);
             EffectL.play(1f);
+            //Gdx.input.vibrate(2000);
+
             return false;
         }
         @Override
@@ -375,9 +378,10 @@ public class Play extends Pantalla {
     private class EscenaPausa extends Stage{
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
-            Texto score = new Texto();
+
             Musica.pause();
             Texture fondoPausa = new Texture(Gdx.files.internal("fondopausa1.png"));
+            //texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
             //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
             //pixmap.dispose();
             Image imgRectangulo = new Image(fondoPausa);
