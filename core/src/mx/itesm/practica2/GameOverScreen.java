@@ -15,6 +15,8 @@ public class GameOverScreen extends Pantalla {
     private static final int BANNER_WIDTH = 350;
     private static final int BANNER_HEIGHT = 100;
 
+    private Texture fnd = new Texture("nivel2.png");
+
     Pantalla_Inicio game;
 
     int score, highscore;
@@ -48,10 +50,11 @@ public class GameOverScreen extends Pantalla {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
 
+        game.batch.draw(fnd, 0, 0);
         game.batch.draw(gameOverBanner, Gdx.graphics.getWidth() / 3.5f - BANNER_WIDTH / 2,
                 Gdx.graphics.getHeight() - BANNER_HEIGHT - 200, 900, 150);
 

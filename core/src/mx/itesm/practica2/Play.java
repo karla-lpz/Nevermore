@@ -40,6 +40,7 @@ public class Play extends Pantalla {
     private float time;
     private float iniPlumaY;
     private float iniPlumaX;
+
     private Sprite sprite;
     private int stage = 0;
     private Music Musica;
@@ -201,7 +202,8 @@ public class Play extends Pantalla {
         punctuationText.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
 
         if (estado == Estado.PERDIO) {
-            loseText.mostrarMensaje(batch, "PERDISTE", ANCHO/2, ALTO/2);
+            //loseText.mostrarMensaje(batch, "PERDISTE", ANCHO/2, ALTO/2);
+            pantallaInicio.setScreen(new GameOverScreen(pantallaInicio, 0) );
         }
 
         if (estado == Estado.GANO) {
