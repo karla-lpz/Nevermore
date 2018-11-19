@@ -18,7 +18,6 @@ import java.io.FileNotFoundException;
 class PantallaMenu extends Pantalla{
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
-
     private Texture fondo = new Texture("FondoFinal.png");
     private Texture title = new Texture("nevermoreTitulo.png");
     //Contenedor de elementos graficos de la pantalla
@@ -29,12 +28,12 @@ class PantallaMenu extends Pantalla{
 
         this.pantallaInicio = pantallaInicio;
     }
-    Music music = Gdx.audio.newMusic(Gdx.files.internal("soundGame.mp3"));
+    Music music = Gdx.audio.newMusic(Gdx.files.internal("CANCION_MENU_PRINCIPAL.mp3"));
     @Override
     public void show() {
         //Es el primer metodo que se ejecuta
         crearEscena();
-       // cargarMusica();
+        cargarMusica();
         //_____________________Título_____________________________________________________________________
         sprite = new Sprite(new Texture("nevermoreTitulo.png"));
         sprite.setPosition(ALTO/2,ANCHO/2 );
@@ -72,6 +71,7 @@ class PantallaMenu extends Pantalla{
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                     pantallaInicio.setScreen(new Play(pantallaInicio));
+                    music.stop();
             }
         });
 
@@ -173,11 +173,12 @@ class PantallaMenu extends Pantalla{
 
     private void cargarMusica() {
         AssetManager manager = new AssetManager();
-        manager.load("soundGame.mp3", Music.class);
+        manager.load("CANCION_MENU_PRINCIPAL.mp3", Music.class);
         manager.finishLoading();
-        music = manager.get("soundGame.mp3");
+        music = manager.get("CANCION_MENU_PRINCIPAL.mp3");
         music.setLooping(true);
         music.play();
+        music.setLooping(true);
     }
 
 

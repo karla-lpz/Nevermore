@@ -1,13 +1,15 @@
 package mx.itesm.practica2;
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import java.awt.TextComponent;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.awt.Menu;
@@ -39,6 +41,8 @@ public class Play extends Pantalla {
     private float iniPlumaY;
     private float iniPlumaX;
     private Sprite sprite;
+    private int stage = 0;
+    private Music Musica;
 
 //Enemigo___________________________________________________________________________________________
 
@@ -47,7 +51,9 @@ public class Play extends Pantalla {
     private Enemigo enemigo;
     private Queue<Enemigo> crows;
     private int numCrows = 6;
-    //Pausa
+    Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("FOLEY_LANZAMIENTO.mp3"));
+    Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("FOLEY_EXPLOSION.mp3"));
+
     private EscenaPausa escenaPausa;
 //__________________________________________________________________________________________________
 
@@ -61,8 +67,8 @@ public class Play extends Pantalla {
     private Queue<Pluma> plumas;
     private int shoots = 9;
 
-//__________________________________________________________________________________________________
 
+//__________________________________________________________________________________________________
     private Texture Arco = new Texture("arco.png");
     private Texture Mancha = new Texture("manchacuervo.png");
     private Texture fnd = new Texture("nivel1.png");
@@ -80,6 +86,7 @@ public class Play extends Pantalla {
     private int cuerdaY;
     public Play(Pantalla_Inicio pantallaInicio) {
         estado = Estado.JUGANDO;
+        Music Musica = Gdx.audio.newMusic(Gdx.files.internal("CANCION_NIVEL1.mp3"));
         this.pantallaInicio = pantallaInicio;
         this.crows = new LinkedList<Enemigo>();
         for (int i = 0; i < this.numCrows; i++) {
@@ -100,12 +107,11 @@ public class Play extends Pantalla {
         pixmap.setColor(1f,1f,1f,1f);
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
         crearObjetos();
+        cargarMusica();
         eliminarObjetos();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
 
-
-    // TODO: 6/11/18 Crear una clase eliminiar objetos
 
     private void crearObjetos(){
         touchDownBool = false;
@@ -136,6 +142,7 @@ public class Play extends Pantalla {
 
         if (!this.enemigo.isActive && estado != Estado.GANO) {
             this.estado = Estado.GANO;
+            stage ++;
             //TODO: AGREGAR PUNTAJES
         }
 
@@ -154,7 +161,9 @@ public class Play extends Pantalla {
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
             rectPluma.height = rectPluma.getHeight() - 20f;
             rectPluma.width = rectPluma.getWidth() - 20f;
+            EffectE.play(1f);
             pluma.deactivate();
+            enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
             enemigo.deactivate();
             puntos ++;
             score = puntos;
@@ -172,6 +181,8 @@ public class Play extends Pantalla {
             batch.draw(BtnPause, 0, ALTO / 1.12f);
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
+            Texture texturaRectangulo = new Texture( pixmap );
+            batch.draw(texturaRectangulo, 0,0);
 
             if(touchDownBool == false){
                 pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/10));
@@ -183,8 +194,7 @@ public class Play extends Pantalla {
                 pixmap.drawLine(50,0,(int)(ANCHO/2), (cuerdaY/3));
                 pixmap.drawLine((int)(ANCHO-50f),0,(int)(ANCHO/2),(cuerdaY/3));
             }
-            Texture texturaRectangulo = new Texture( pixmap );
-            batch.draw(texturaRectangulo, 0,0);
+
         }
         batch.draw(BotRegreso, ANCHO - BotRegreso.getWidth() * 1.0f, ALTO - BotRegreso.getHeight() * 1.2f);
         texto.mostrarMensaje(batch, Float.toString(puntos), ANCHO/2-ANCHO/6, 3.3f*ALTO/4); //falta calcular bien el tiempo
@@ -196,6 +206,7 @@ public class Play extends Pantalla {
 
         if (estado == Estado.GANO) {
             winText.mostrarMensaje(batch, "GANASTE", ANCHO/2, ALTO/2);
+            Musica.stop();
         }
         batch.end();
 
@@ -206,6 +217,7 @@ public class Play extends Pantalla {
     }
     private void actualizarObjetos() {
         if(estado== Estado.JUGANDO){
+            Musica.play();
         }
     }
 
@@ -223,7 +235,31 @@ public class Play extends Pantalla {
     public void resume() {
 
     }
+    private void cargarMusica() {
+        if(stage == 1 ){
+            AssetManager manager = new AssetManager();
+            manager.load("CANCION_NIVEL1.mp3", Music.class);
+            manager.finishLoading();
+            Musica = manager.get("CANCION_NIVEL1.mp3");
+            Musica.setLooping(true);
+            Musica.play();
+        } else if(stage == 2){
+            AssetManager manager = new AssetManager();
+            manager.load("CANCION_NIVEL3.mp3", Music.class);
+            manager.finishLoading();
+            Musica = manager.get("CANCION_NIVEL3.mp3");
+            Musica.setLooping(true);
+            Musica.play();
+        } else{
+            AssetManager manager = new AssetManager();
+            manager.load("CANCION_NIVEL1.mp3", Music.class);
+            manager.finishLoading();
+            Musica = manager.get("CANCION_NIVEL1.mp3");
+            Musica.setLooping(true);
+            Musica.play();
+        }
 
+    }
     @Override
     public void dispose() {
 
@@ -262,9 +298,11 @@ public class Play extends Pantalla {
             float yP= ALTO-BotRegreso.getWidth()*1.2f;
             float anchoP = BtnPause.getWidth();
             float altoP = BtnPause.getWidth();
+            //Pone el estado en Pausa
             if(v.x >= xP && v.x <= xP + anchoP && v.y >= yP && v.y <= yP + altoP && (estado == Estado.JUGANDO || estado == Estado.PAUSADO)){
                 if (estado == Estado.JUGANDO) {
                     estado = Estado.PAUSADO;
+                    //si pausa no existe lo crea
                     if (escenaPausa == null) {
                         escenaPausa = new EscenaPausa(vista, batch);
                     }
@@ -297,18 +335,18 @@ public class Play extends Pantalla {
             pluma.setVy(vy);
             Gdx.app.log("Impulso en Y", Float.toString(vx));
             pluma.volar(true);
+            EffectL.play(1f);
             return false;
         }
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-
             Vector3 v = new Vector3(screenX, screenY, 0);
             if (v.y >= 1000 && estado == Estado.JUGANDO) {
+                //Se modifican aos
                 cuerdaX = (int)v.x;
                 cuerdaY = (int)v.y-1000;
                 camara.unproject(v);
                 power = (v.y * 0.1f) * 2;
-                //pluma.sprite.setY(v.y-200);
                 float dy = v.y - iniPlumaY;
                 iniPlumaY = v.y;
                 pluma.sprite.setY(v.y - (pluma.getAlto() /2) );
@@ -337,10 +375,11 @@ public class Play extends Pantalla {
     private class EscenaPausa extends Stage{
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
-
+            Texto score = new Texto();
+            Musica.pause();
             Texture fondoPausa = new Texture(Gdx.files.internal("fondopausa1.png"));
-            Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
-            pixmap.dispose();
+            //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
+            //pixmap.dispose();
             Image imgRectangulo = new Image(fondoPausa);
             imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
             this.addActor(imgRectangulo);
@@ -352,7 +391,9 @@ public class Play extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     //Regresa al menú
+                    Musica.stop();
                     pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+
                 }
             });
             this.addActor(btnSalir);
@@ -365,6 +406,7 @@ public class Play extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al juego
+                    Musica.play();
                     estado = Estado.JUGANDO;
                     Gdx.input.setInputProcessor(new ProcesadorDeEntrada()); // No debería crear uno nuevo
                 }
