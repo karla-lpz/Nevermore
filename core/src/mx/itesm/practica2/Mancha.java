@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import javax.xml.soap.Text;
 
-
-public class Mancha extends Objeto {
+public class Mancha extends Object {
     boolean isActive;
     boolean volando = true;
 

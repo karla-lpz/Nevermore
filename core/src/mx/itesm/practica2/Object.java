@@ -4,9 +4,9 @@ package mx.itesm.practica2;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Objeto {
+public class Object {
     protected Sprite sprite;
-    public Objeto(Texture textura, float x, float y){
+    public Object(Texture textura, float x, float y){
         sprite = new Sprite(textura);
         sprite.setY(y);
         sprite.setX(x);
@@ -21,7 +21,7 @@ public class Objeto {
         return positionY;
     }
 
-    public Object getRectangle() {
+    public java.lang.Object getRectangle() {
         return sprite.getBoundingRectangle();
     }
 }

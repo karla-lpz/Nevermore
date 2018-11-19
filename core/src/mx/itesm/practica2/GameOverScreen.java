@@ -59,10 +59,10 @@ public class GameOverScreen extends Pantalla {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT);
-        game.batch.setProjectionMatrix(camara.combined);
+        //game.batch.setProjectionMatrix(camara.combined);
         game.batch.begin();
 
-        game.batch.draw(fnd, 0, 0);
+        //game.batch.draw(fnd, 0, 0);
         game.batch.draw(gameOverBanner, Gdx.graphics.getWidth() / 3.5f - BANNER_WIDTH / 2,
                 Gdx.graphics.getHeight() - BANNER_HEIGHT - 200, 900, 150);
 
@@ -74,10 +74,10 @@ public class GameOverScreen extends Pantalla {
         GlyphLayout tryAgainLayout = new GlyphLayout(scoreFont, "Try Again");
         GlyphLayout mainMenuLayout = new GlyphLayout(scoreFont, "Main Menu");
 
-        float tryAgainX = Gdx.graphics.getWidth() / 3 - tryAgainLayout.width / 2;
-        float tryAgainY = Gdx.graphics.getHeight() / 3 - tryAgainLayout.height / 2;
-        float mainMenuX = Gdx.graphics.getWidth() / 3 - mainMenuLayout.width / 2;
-        float mainMenuY = Gdx.graphics.getHeight() / 3 - mainMenuLayout.height / 2 - tryAgainLayout.height - 15;
+        float tryAgainX = Gdx.graphics.getWidth() / 2 - tryAgainLayout.width / 2;
+        float tryAgainY = Gdx.graphics.getHeight() / 2 - tryAgainLayout.height / 2;
+        float mainMenuX = Gdx.graphics.getWidth() / 2 - mainMenuLayout.width / 2;
+        float mainMenuY = Gdx.graphics.getHeight() / 2 - mainMenuLayout.height / 2 - tryAgainLayout.height - 15;
 
         float touchX = Gdx.input.getX(), touchY = Gdx.graphics.getHeight() - Gdx.input.getY();
 

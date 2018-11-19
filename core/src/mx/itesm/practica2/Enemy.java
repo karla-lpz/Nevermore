@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
-public class Enemigo extends Objeto {
+public class Enemy extends Object {
     boolean isActive;
     boolean volando = true;
 
@@ -28,7 +28,7 @@ public class Enemigo extends Objeto {
         this.vx = vx;
     }
 
-    public Enemigo(Texture textura, float x, float y) {
+    public Enemy(Texture textura, float x, float y) {
         super(textura, x, y);
         this.isActive = true;
         TextureRegion texturaCompleta = new TextureRegion(textura);

@@ -1,12 +1,11 @@
 package mx.itesm.practica2;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 
-public class Pluma extends Objeto {
+public class Pluma extends Object {
     boolean isActive;
     boolean volando;
     private int cant_plumas;
