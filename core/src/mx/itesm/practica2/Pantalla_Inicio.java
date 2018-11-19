@@ -9,11 +9,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Pantalla_Inicio extends Game {
 
-	@Override
+    public static final int WIDTH = 720;
+    public static final int HEIGHT = 1280;
+
+    public SpriteBatch batch;
+    public Game pantallaInicio;
+
+    @Override
 	public void create () {
 		setScreen(new PantallaMenu(this));
+		batch = new SpriteBatch();
 		//Que sea la primer pantalla que se muestra
 		//Se manda el this para que tome toda la direcccion completa y mande llamar las demas pantallas
+	}
+
+	public void render(){
+		super.render();
 	}
 
 }
