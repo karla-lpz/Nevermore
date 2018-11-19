@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 //TODO: Vidas:
@@ -44,7 +45,7 @@ public class Play extends Pantalla {
     private Sprite sprite;
     private int stage = 0;
     private Music Musica;
-
+    private Array<Corazones> arrCorazon;
 //Enemigo___________________________________________________________________________________________
 
     private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
@@ -83,6 +84,7 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("nivel1.png");
     private Texture BotRegreso = new Texture("back.png");
     private Texture BtnPause = new Texture("pausaBtn.png");
+    Corazones cora = new Corazones(20, 20);
     Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGBA8888);
     private Texto texto;
     private float puntos;
@@ -118,6 +120,8 @@ public class Play extends Pantalla {
         cargarMusica();
         eliminarObjetos();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
+        arrCorazon = new Array<Corazones>(12*5);
+
     }
     private void crearObjetos(){
         touchDownBool = false;
@@ -126,6 +130,7 @@ public class Play extends Pantalla {
         punctuationText = new Texto();
         winText = new Texto();
         loseText = new Texto();
+
     }
     private void eliminarObjetos(){
         pluma = this.plumas.remove();
@@ -149,7 +154,7 @@ public class Play extends Pantalla {
             stage ++;
             //TODO: AGREGAR PUNTAJES
         }
-        if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO) {
+        if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO || cora.getEstado() == Corazones.EstadoCorazon.MUERTO) {
             this.estado = Estado.PERDIO;
         }
         if (pluma.getPositionY() > ALTO
@@ -165,6 +170,7 @@ public class Play extends Pantalla {
             rectPluma.width = rectPluma.getWidth() - 20f;
             EffectE.play(1f);
             pluma.deactivate();
+            cora.BajarVida(cora.getEstado());
             //enemigo.Mancha(Mancha, enemigo.getPositionX(), enemigo.getPositionY() , enemigo.getScaleX() , enemigo.getScaleY());
             enemigo.deactivate();
             puntos ++;
@@ -183,6 +189,7 @@ public class Play extends Pantalla {
             batch.draw(BtnPause, 0, ALTO / 1.12f);
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
+            cora.render(batch, cora.getEstado());
             Texture texturaRectangulo = new Texture( pixmap );
             batch.draw(texturaRectangulo, 0,0);
 
@@ -231,8 +238,8 @@ public class Play extends Pantalla {
     @Override
     public void pause() {
 
-
     }
+
 
     @Override
     public void resume() {
