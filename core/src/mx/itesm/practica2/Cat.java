@@ -17,8 +17,8 @@ public class Cat extends Enemy {
         TextureRegion texturaCompleta = new TextureRegion(textura);
         TextureRegion[][] textureCharacter = texturaCompleta.split(624,284);
         //10 frames
-        animatedSprite = new Animation(0.2f, textureCharacter[0][10], textureCharacter[0][9], textureCharacter[0][8], textureCharacter[0][7],
-                textureCharacter[0][6], textureCharacter[0][5],textureCharacter[0][4], textureCharacter[0][3],textureCharacter[0][2], textureCharacter[0][1]);
+        animatedSprite = new Animation(0.2f, textureCharacter[0][1], textureCharacter[0][2], textureCharacter[0][3], textureCharacter[0][4],
+                textureCharacter[0][5], textureCharacter[0][6],textureCharacter[0][7], textureCharacter[0][8],textureCharacter[0][9]);
         animatedSprite.setPlayMode(Animation.PlayMode.LOOP);
         timerAnimacion = 0;
         sprite = new Sprite(textureCharacter[0][0]);    // QUIETO

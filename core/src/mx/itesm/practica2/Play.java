@@ -91,7 +91,7 @@ public class Play extends Pantalla {
         this.pantallaInicio = pantallaInicio;
         this.crows = new LinkedList<Enemy>();
         for (int i = 0; i < this.numCrows; i++) {
-            this.crows.add(new Enemy( new Texture("cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
+            this.crows.add(new Enemy( new Texture("gatosprites.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
         }
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {

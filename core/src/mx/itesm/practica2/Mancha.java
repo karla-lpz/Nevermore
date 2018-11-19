@@ -20,16 +20,33 @@ public class Mancha extends Object {
     private float timerAnimacion;
     private boolean volar;
 
-    public Mancha(Texture textura, float x, float y) {
-        super(textura, x, y);
-    }
-
     public void setVy(float vy){
         this.vy = vy;
     }
     public void setVx(float vx){
         this.vx = vx;
     }
+
+    public Mancha (Texture textura, float x, float y) {
+        super(textura, x, y);
+        TextureRegion stainAnimation = new TextureRegion(textura);
+        TextureRegion[][] characterTexture = stainAnimation.split(342,166);
+        //5 frames
+        animatedSprite = new Animation(0.2f, characterTexture[0][1], characterTexture[0][2], characterTexture[0][3], characterTexture[0][4],
+                characterTexture[0][5], characterTexture[0][6]);
+        animatedSprite.setPlayMode(Animation.PlayMode.NORMAL);
+        timerAnimacion = 0;
+       //sprite = new Sprite(characterTexture[0][0]);    // QUIETO
+        sprite.setPosition(x,y);
+        sprite.setScale(.01f);
+
+    }
+
+//    public Mancha(Texture textura, float x, float y) {
+//        super(textura, x, y);
+//    }
+
+
 
     public void Mancha(Texture texture, float x, float y){
         TextureRegion mancha_anim = new TextureRegion(texture);
