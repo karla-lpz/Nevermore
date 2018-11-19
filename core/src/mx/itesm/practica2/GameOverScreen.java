@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Align;
 
 //TODO: Ajustar tamaño de la fuente (esta muy pequeño)
@@ -15,7 +16,11 @@ public class GameOverScreen extends Pantalla {
     private static final int BANNER_WIDTH = 350;
     private static final int BANNER_HEIGHT = 100;
 
+    private final Pantalla_Inicio pantallaInicio;
+
     private Texture fnd = new Texture("nivel2.png");
+
+    private Sprite sprite;
 
     Pantalla_Inicio game;
 
@@ -24,7 +29,8 @@ public class GameOverScreen extends Pantalla {
     Texture gameOverBanner;
     BitmapFont scoreFont;
 
-    public GameOverScreen(Pantalla_Inicio game, int score){
+    public GameOverScreen(Pantalla_Inicio game, int score, Pantalla_Inicio pantallaInicio){
+        this.pantallaInicio = pantallaInicio;
         this.game = game;
         this.score = score;
 
@@ -45,13 +51,15 @@ public class GameOverScreen extends Pantalla {
 
     @Override
     public void show() {
-
+        sprite = new Sprite(new Texture("nivel2.png"));
+        sprite.setPosition(0,0);
     }
 
     @Override
     public void render(float delta) {
-//        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT);
+        game.batch.setProjectionMatrix(camara.combined);
         game.batch.begin();
 
         game.batch.draw(fnd, 0, 0);
@@ -66,10 +74,10 @@ public class GameOverScreen extends Pantalla {
         GlyphLayout tryAgainLayout = new GlyphLayout(scoreFont, "Try Again");
         GlyphLayout mainMenuLayout = new GlyphLayout(scoreFont, "Main Menu");
 
-        float tryAgainX = Gdx.graphics.getWidth() / 2 - tryAgainLayout.width / 2;
-        float tryAgainY = Gdx.graphics.getHeight() / 2 - tryAgainLayout.height / 2;
-        float mainMenuX = Gdx.graphics.getWidth() / 2 - mainMenuLayout.width / 2;
-        float mainMenuY = Gdx.graphics.getHeight() / 2 - mainMenuLayout.height / 2 - tryAgainLayout.height - 15;
+        float tryAgainX = Gdx.graphics.getWidth() / 3 - tryAgainLayout.width / 2;
+        float tryAgainY = Gdx.graphics.getHeight() / 3 - tryAgainLayout.height / 2;
+        float mainMenuX = Gdx.graphics.getWidth() / 3 - mainMenuLayout.width / 2;
+        float mainMenuY = Gdx.graphics.getHeight() / 3 - mainMenuLayout.height / 2 - tryAgainLayout.height - 15;
 
         float touchX = Gdx.input.getX(), touchY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
@@ -79,7 +87,7 @@ public class GameOverScreen extends Pantalla {
             if(touchX > tryAgainX && touchX < tryAgainX + tryAgainLayout.width && touchY > tryAgainY - tryAgainLayout.height && touchY < tryAgainY){
                 this.dispose();
                 game.batch.end();
-                game.setScreen(new PantallaMenu(game));
+                game.pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
                 return;
             }
 
@@ -87,7 +95,7 @@ public class GameOverScreen extends Pantalla {
             if(touchX > mainMenuX && touchX < mainMenuX + mainMenuLayout.width && touchY > mainMenuY - mainMenuLayout.height && touchY < mainMenuY){
                 this.dispose();
                 game.batch.end();
-                game.setScreen(new PantallaJuego(game));
+                game.setScreen(new PantallaMenu(game));
                 return;
             }
         }

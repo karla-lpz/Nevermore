@@ -13,8 +13,9 @@ public class Pantalla_Inicio extends Game {
     public static final int HEIGHT = 1280;
 
     public SpriteBatch batch;
+    public Game pantallaInicio;
 
-	@Override
+    @Override
 	public void create () {
 		setScreen(new PantallaMenu(this));
 		batch = new SpriteBatch();

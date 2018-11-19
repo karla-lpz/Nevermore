@@ -203,7 +203,7 @@ public class Play extends Pantalla {
 
         if (estado == Estado.PERDIO) {
             //loseText.mostrarMensaje(batch, "PERDISTE", ANCHO/2, ALTO/2);
-            pantallaInicio.setScreen(new GameOverScreen(pantallaInicio, 0) );
+            pantallaInicio.setScreen(new GameOverScreen(pantallaInicio, 0,pantallaInicio) );
         }
 
         if (estado == Estado.GANO) {
