@@ -14,14 +14,14 @@ public class PantallaStory extends  Pantalla{
 
     private ArrayList<Texture> story = new ArrayList<Texture>();
 
-    private Texture story1 = new Texture("HISTORIA1.png");
-    private Texture story2 = new Texture("HISTORIA2.png");
-    private Texture story3 = new Texture("HISTORIA3.png");
-    private Texture story4 = new Texture("HISTORIA4.png");
-    private Texture story5 = new Texture("HISTORIA5.png");
-    private Texture btnRegreso = new Texture("back.png");
-    private Texture btnNext = new Texture( "continueBtn.png");
-    private Texture btnPrev = new Texture( "back.png");
+    private Texture story1 = new Texture("Story/HISTORIA1.png");
+    private Texture story2 = new Texture("Story/HISTORIA2.png");
+    private Texture story3 = new Texture("Story/HISTORIA3.png");
+    private Texture story4 = new Texture("Story/HISTORIA4.png");
+    private Texture story5 = new Texture("Story/HISTORIA5.png");
+    private Texture btnRegreso = new Texture("Buttons/back.png");
+    private Texture btnNext = new Texture( "Buttons/continueBtn.png");
+    private Texture btnPrev = new Texture( "Buttons/back.png");
 
     private int page = 0;
     private float xPointer = ANCHO;
@@ -39,11 +39,11 @@ public class PantallaStory extends  Pantalla{
     }
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("continueBtn.png"));
+        sprite = new Sprite(new Texture("Buttons/continueBtn.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         Gdx.input.setInputProcessor(new PantallaStory.ProcesadorDeEntrada());
     }

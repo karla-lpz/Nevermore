@@ -12,8 +12,8 @@ public class PantallaSettings extends Pantalla {
     private Sprite sprite;
 
     private Texture fondo = new Texture("settingsPantalla.png");
-    private Texture btnRegreso = new Texture( "back.png");
-    private Texture creditsBtn = new Texture( "creditsBtn.png");
+    private Texture btnRegreso = new Texture( "Buttons/back.png");
+    private Texture creditsBtn = new Texture( "Buttons/creditsBtn.png");
     private Texture title = new Texture("settingstitulo.png");
 
     private boolean music;
@@ -26,11 +26,11 @@ public class PantallaSettings extends Pantalla {
 
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite = new Sprite(new Texture("scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
-        sprite = new Sprite(new Texture("creditsBtn.png"));
+        sprite = new Sprite(new Texture("Buttons/creditsBtn.png"));
         sprite.setPosition(ALTO / 2,ANCHO / 2);
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }

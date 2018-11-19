@@ -52,8 +52,8 @@ public class Play extends Pantalla {
     private Enemy enemigo;
     private Queue<Enemy> crows;
     private int numCrows = 6;
-    Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("FOLEY_LANZAMIENTO.mp3"));
-    Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("FOLEY_EXPLOSION.mp3"));
+    Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_LANZAMIENTO.mp3"));
+    Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_EXPLOSION.mp3"));
 
     private EscenaPausa escenaPausa;
 //__________________________________________________________________________________________________
@@ -72,9 +72,9 @@ public class Play extends Pantalla {
 //__________________________________________________________________________________________________
     private Texture Arco = new Texture("arco.png");
     private Texture Mancha = new Texture("manchacuervo.png");
-    private Texture fnd = new Texture("nivel1.png");
-    private Texture BotRegreso = new Texture("back.png");
-    private Texture BtnPause = new Texture("pausaBtn.png");
+    private Texture fnd = new Texture("Levels/nivel1.png");
+    private Texture BotRegreso = new Texture("Butons/back.png");
+    private Texture BtnPause = new Texture("Buttons/pausaBtn.png");
     Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGBA8888);
     private Texto texto;
     private float puntos;
@@ -87,11 +87,11 @@ public class Play extends Pantalla {
     private int cuerdaY;
     public Play(Pantalla_Inicio pantallaInicio) {
         estado = Estado.JUGANDO;
-        Music Musica = Gdx.audio.newMusic(Gdx.files.internal("CANCION_NIVEL1.mp3"));
+        Music Musica = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_NIVEL1.mp3"));
         this.pantallaInicio = pantallaInicio;
         this.crows = new LinkedList<Enemy>();
         for (int i = 0; i < this.numCrows; i++) {
-            this.crows.add(new Enemy( new Texture("cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
+            this.crows.add(new Enemy( new Texture("Enemies/cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
         }
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
@@ -101,10 +101,10 @@ public class Play extends Pantalla {
 
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("back.png"));
-        sprite = new Sprite(new Texture("arco.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
+        sprite = new Sprite(new Texture("Buttons/arco.png"));
         sprite.setPosition(ALTO*.2f,ANCHO*.2f );
-        sprite = new Sprite(new Texture("pausaBtn.png"));
+        sprite = new Sprite(new Texture("Buttons/pausaBtn.png"));
         pixmap.setColor(1f,1f,1f,1f);
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
         crearObjetos();
@@ -240,23 +240,23 @@ public class Play extends Pantalla {
     private void cargarMusica() {
         if(stage == 1 ){
             AssetManager manager = new AssetManager();
-            manager.load("CANCION_NIVEL1.mp3", Music.class);
+            manager.load("music/CANCION_NIVEL1.mp3", Music.class);
             manager.finishLoading();
-            Musica = manager.get("CANCION_NIVEL1.mp3");
+            Musica = manager.get("music/CANCION_NIVEL1.mp3");
             Musica.setLooping(true);
             Musica.play();
         } else if(stage == 2){
             AssetManager manager = new AssetManager();
-            manager.load("CANCION_NIVEL3.mp3", Music.class);
+            manager.load("music/CANCION_NIVEL3.mp3", Music.class);
             manager.finishLoading();
-            Musica = manager.get("CANCION_NIVEL3.mp3");
+            Musica = manager.get("music/CANCION_NIVEL3.mp3");
             Musica.setLooping(true);
             Musica.play();
         } else{
             AssetManager manager = new AssetManager();
-            manager.load("CANCION_NIVEL1.mp3", Music.class);
+            manager.load("music/CANCION_NIVEL1.mp3", Music.class);
             manager.finishLoading();
-            Musica = manager.get("CANCION_NIVEL1.mp3");
+            Musica = manager.get("music/CANCION_NIVEL1.mp3");
             Musica.setLooping(true);
             Musica.play();
         }
@@ -379,13 +379,13 @@ public class Play extends Pantalla {
             super(vista, batch);
             Texto score = new Texto();
             Musica.pause();
-            Texture fondoPausa = new Texture(Gdx.files.internal("fondopausa1.png"));
+            Texture fondoPausa = new Texture(Gdx.files.internal("/Backgroundfondopausa1.png"));
             //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
             //pixmap.dispose();
             Image imgRectangulo = new Image(fondoPausa);
             imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
             this.addActor(imgRectangulo);
-            Texture texturaBtnSalir = new Texture("home.png");
+            Texture texturaBtnSalir = new Texture("Buttons/home.png");
             TextureRegionDrawable trdSalir = new TextureRegionDrawable(new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
             btnSalir.setPosition((ANCHO/2)+150-btnSalir.getWidth()/2, ALTO/6);
@@ -399,7 +399,7 @@ public class Play extends Pantalla {
                 }
             });
             this.addActor(btnSalir);
-            Texture texturaBtnContinuar = new Texture("playbtn1.png");
+            Texture texturaBtnContinuar = new Texture("Buttons/playbtn1.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);

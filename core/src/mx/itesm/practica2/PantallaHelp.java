@@ -10,9 +10,9 @@ public class PantallaHelp extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
 
-    private Texture fondo = new Texture("FondoFinal.png");
-    private Texture btnRegreso = new Texture( "back.png");
-    private Texture title = new Texture("helptitulo.png");
+    private Texture fondo = new Texture("Background/FondoFinal.png");
+    private Texture btnRegreso = new Texture( "Buttons/back.png");
+    private Texture title = new Texture("Titles/helptitulo.png");
 
     private Texto helpText;
     private Texto textEnemies;
@@ -25,9 +25,9 @@ public class PantallaHelp extends Pantalla {
     }
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
-        sprite = new Sprite(new Texture("helptitulo.png"));
+        sprite = new Sprite(new Texture("Titles/helptitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         //Texture btnRegreso = new Texture("back.png");
         createText();

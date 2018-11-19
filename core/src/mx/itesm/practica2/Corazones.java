@@ -25,11 +25,11 @@ class Corazones
     private float ScX, ScY; //Sclae
 
     public  Corazones(int x, int y) {
-        texturaCorazonLLENO = new Texture("CORA_LLENO.png");
-        texturaCorazon1 = new Texture("CORA2.png");
-        texturaCorazon2 = new Texture("CORA3.png");
-        texturaCorazon3 = new Texture("CORA4.png");
-        texturaCorazon4 = new Texture("CORA5.png");
+        texturaCorazonLLENO = new Texture("hearts/CORA_LLENO.png");
+        texturaCorazon1 = new Texture("hearts/CORA2.png");
+        texturaCorazon2 = new Texture("hearts/CORA3.png");
+        texturaCorazon3 = new Texture("hearts/CORA4.png");
+        texturaCorazon4 = new Texture("hearts/CORA5.png");
         estado = CUATROCUARTOS;
         this.x = x;
         this.y = y;

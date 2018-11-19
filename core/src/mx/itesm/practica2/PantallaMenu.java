@@ -18,8 +18,8 @@ import java.io.FileNotFoundException;
 class PantallaMenu extends Pantalla{
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
-    private Texture fondo = new Texture("FondoFinal.png");
-    private Texture title = new Texture("nevermoreTitulo.png");
+    private Texture fondo = new Texture("Background/FondoFinal.png");
+    private Texture title = new Texture("Titles/nevermoreTitulo.png");
     //Contenedor de elementos graficos de la pantalla
     private Stage escenaMenu;
 
@@ -28,14 +28,14 @@ class PantallaMenu extends Pantalla{
 
         this.pantallaInicio = pantallaInicio;
     }
-    Music music = Gdx.audio.newMusic(Gdx.files.internal("CANCION_MENU_PRINCIPAL.mp3"));
+    Music music = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_MENU_PRINCIPAL.mp3"));
     @Override
     public void show() {
         //Es el primer metodo que se ejecuta
         crearEscena();
         cargarMusica();
         //_____________________Título_____________________________________________________________________
-        sprite = new Sprite(new Texture("nevermoreTitulo.png"));
+        sprite = new Sprite(new Texture("Titles/nevermoreTitulo.png"));
         sprite.setPosition(ALTO/2,ANCHO/2 );
         //__________________________________________________________________________
         Gdx.input.setInputProcessor(escenaMenu);
@@ -54,12 +54,12 @@ class PantallaMenu extends Pantalla{
 
         //_____________________Play_____________________________________________________________________
 
-        Texture textBtnPlay = new Texture("playBtn.png");
+        Texture textBtnPlay = new Texture("Buttons/playBtn.png");
         TextureRegionDrawable trd = new TextureRegionDrawable(new TextureRegion(textBtnPlay));
 
         //Imagen Boton oprimido
 
-        Texture textBtnPlayOprimido = new Texture("playBtnPush.png");
+        Texture textBtnPlayOprimido = new Texture("Buttons/playBtnPush.png");
         TextureRegionDrawable trdOp = new TextureRegionDrawable(new TextureRegion(textBtnPlayOprimido));
 
         ImageButton btnPlay = new ImageButton(trd, trdOp);
@@ -76,10 +76,10 @@ class PantallaMenu extends Pantalla{
         });
 
         //_______________________Scores____________Boton___________________________
-            Texture textBtnScores = new Texture("scoresBtn.png");
+            Texture textBtnScores = new Texture("Buttons/scoresBtn.png");
             TextureRegionDrawable ScoresTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnScores));
 
-            Texture textBtnScoresOp = new Texture("scoresBtnPush.png");
+            Texture textBtnScoresOp = new Texture("Buttons/scoresBtnPush.png");
             TextureRegionDrawable ScoresTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnScoresOp));
             ImageButton btnScores = new ImageButton(ScoresTrd2, ScoresTrd2Op);
             btnScores.setPosition(ANCHO/2-btnScores.getWidth()/2, .4f*ALTO);
@@ -103,9 +103,9 @@ class PantallaMenu extends Pantalla{
 
         //______________________Help_______________________________________________
 
-        Texture textBtnHelp = new Texture("helpBtn.png");
+        Texture textBtnHelp = new Texture("Buttons/helpBtn.png");
         TextureRegionDrawable HelpTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnHelp));
-        Texture textBtnHelpOp = new Texture("helpBtnPush.png");
+        Texture textBtnHelpOp = new Texture("Buttons/helpBtnPush.png");
         TextureRegionDrawable HelpTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnHelpOp));
         ImageButton btnHelp = new ImageButton(HelpTrd2, HelpTrd2Op);
         btnHelp.setPosition(ANCHO/2-btnHelp.getWidth()/2, .2f*ALTO);
@@ -124,10 +124,10 @@ class PantallaMenu extends Pantalla{
 
         //______________________Story_______________________________________________
         
-        Texture textBtnStory = new Texture("libroBtn.png");
+        Texture textBtnStory = new Texture("Buttons/libroBtn.png");
         TextureRegionDrawable StoryTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnStory));
 
-        Texture textBtnStoryOp = new Texture("libroBtn.png");
+        Texture textBtnStoryOp = new Texture("Buttons/libroBtn.png");
         TextureRegionDrawable StoryTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnStoryOp));
         ImageButton btnStory = new ImageButton(StoryTrd2, StoryTrd2Op);
         btnStory.setPosition(0, 0);
@@ -144,10 +144,10 @@ class PantallaMenu extends Pantalla{
 
         //______________________Settings_______________________________________________
 
-        Texture textBtnSettings = new Texture("engraneBtn.png");
+        Texture textBtnSettings = new Texture("Buttons/engraneBtn.png");
         TextureRegionDrawable SettingsTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnSettings));
 
-        Texture textBtnSettingsOp = new Texture("engraneBtn.png");
+        Texture textBtnSettingsOp = new Texture("Buttons/engraneBtn.png");
         TextureRegionDrawable SettingsTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnSettingsOp));
         ImageButton btnSettings = new ImageButton(SettingsTrd2, SettingsTrd2Op);
         btnSettings.setPosition(ANCHO-btnSettings.getWidth(), .05f*ALTO);
@@ -173,9 +173,9 @@ class PantallaMenu extends Pantalla{
 
     private void cargarMusica() {
         AssetManager manager = new AssetManager();
-        manager.load("CANCION_MENU_PRINCIPAL.mp3", Music.class);
+        manager.load("music/CANCION_MENU_PRINCIPAL.mp3", Music.class);
         manager.finishLoading();
-        music = manager.get("CANCION_MENU_PRINCIPAL.mp3");
+        music = manager.get("music/CANCION_MENU_PRINCIPAL.mp3");
         music.setLooping(true);
         music.play();
         music.setLooping(true);

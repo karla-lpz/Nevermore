@@ -11,9 +11,9 @@ public class PantallaCredits extends Pantalla {
 
     private Sprite sprite;
 
-    private Texture fondo = new Texture("FondoFinal.png");
-    private Texture btnRegreso = new Texture( "back.png");
-    private Texture title = new Texture("creditstitulo.png");
+    private Texture fondo = new Texture("Background/FondoFinal.png");
+    private Texture btnRegreso = new Texture( "Buttons/back.png");
+    private Texture title = new Texture("Titles/creditstitulo.png");
 
     private Texto participantsTitle;
     private Texto participantsName;
@@ -27,9 +27,9 @@ public class PantallaCredits extends Pantalla {
 
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
-        sprite = new Sprite(new Texture("scorestitulo.png"));
+        sprite = new Sprite(new Texture("Titles/scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         createText();
         Gdx.input.setInputProcessor(new PantallaCredits.ProcesadorDeEntrada());

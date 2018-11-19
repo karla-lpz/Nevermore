@@ -17,9 +17,9 @@ public class PantallaScores extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
 
-    private Texture fondo = new Texture("FondoFinal.png");
-    private Texture btnRegreso = new Texture( "back.png");
-    private Texture title = new Texture("scorestitulo.png");
+    private Texture fondo = new Texture("Background/FondoFinal.png");
+    private Texture btnRegreso = new Texture( "Buttons/back.png");
+    private Texture title = new Texture("Titles/scorestitulo.png");
     private Texture firstPlace = new Texture("medalla-oro.png");
     private Texture secondPlace = new Texture("medalla-plata.png");
     private Texture thirdPlace = new Texture("medalla-bronce.png");
@@ -55,11 +55,11 @@ public class PantallaScores extends Pantalla {
 
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
-        sprite = new Sprite(new Texture("scorestitulo.png"));
+        sprite = new Sprite(new Texture("Titles/scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
-        Texture btnRegreso = new Texture("back.png");
+        Texture btnRegreso = new Texture("Buttons/back.png");
         sprite = new Sprite(new Texture("medalla-oro.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         sprite = new Sprite(new Texture("medalla-plata.png"));

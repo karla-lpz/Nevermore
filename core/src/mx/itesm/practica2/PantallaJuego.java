@@ -25,11 +25,11 @@ class PantallaJuego extends Pantalla {
 
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("button_help.png"));
+        sprite = new Sprite(new Texture("Buttons/button_help.png"));
         sprite.setPosition(ANCHO/2, ALTO/3);
         //Fondo
         textFondo = new Texture("A_dream.jpg");
-        textBtnRegreso = new Texture("back.jpg");
+        textBtnRegreso = new Texture("Buttons/back.jpg");
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
 
