@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import javax.xml.soap.Text;
-
 
 public class Enemigo extends Objeto {
     boolean isActive;
@@ -45,8 +43,23 @@ public class Enemigo extends Objeto {
         sprite.setScale(.01f);
 
     }
+    public void Mancha(Texture texture, float x, float y, float escalaX, float escalaY){
+        TextureRegion mancha_anim = new TextureRegion(texture);
+        animatedSprite = new Animation(.5f, mancha_anim);
+        animatedSprite.setPlayMode(Animation.PlayMode.NORMAL);
+        timerAnimacion=10;
+        sprite = new Sprite(mancha_anim);
+        sprite.setScale(escalaX/3, escalaY/3);
+    }
+    public float getScaleX(){
+        return sprite.getScaleX();
+    }
 
-//TODO: Mueva en X
+    public float getScaleY(){
+        return sprite.getScaleX();
+    }
+
+    //TODO: Mueva en X
 //TODO: renew
 // TODO SCALE
     public void dibujar(SpriteBatch batch) {
@@ -83,11 +96,6 @@ public class Enemigo extends Objeto {
             vuelo(true);
 
         }
-
-    }
-    public void Mancha(Texture texture, int x, int y){
-        sprite.setY(y);
-        sprite.setX(x);
 
     }
 
