@@ -49,8 +49,8 @@ public class Play extends Pantalla {
 
     private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
     private Sprite enemigoSprite = new Sprite(enemigoBlock);
-    private Enemy enemigo;
-    private Queue<Enemy> crows;
+    private Cat enemigo;
+    private Queue<Cat> crows;
     private int numCrows = 6;
     Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_LANZAMIENTO.mp3"));
     Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_EXPLOSION.mp3"));
@@ -73,7 +73,7 @@ public class Play extends Pantalla {
     private Texture Arco = new Texture("arco.png");
     private Texture Mancha = new Texture("manchacuervo.png");
     private Texture fnd = new Texture("Levels/nivel1.png");
-    private Texture BotRegreso = new Texture("Butons/back.png");
+    private Texture BotRegreso = new Texture("Buttons/back.png");
     private Texture BtnPause = new Texture("Buttons/pausaBtn.png");
     Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGBA8888);
     private Texto texto;
@@ -89,9 +89,9 @@ public class Play extends Pantalla {
         estado = Estado.JUGANDO;
         Music Musica = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_NIVEL1.mp3"));
         this.pantallaInicio = pantallaInicio;
-        this.crows = new LinkedList<Enemy>();
+        this.crows = new LinkedList<Cat>();
         for (int i = 0; i < this.numCrows; i++) {
-            this.crows.add(new Enemy( new Texture("Enemies/cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
+            this.crows.add(new Cat( new Texture("Enemies/gatosprites.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
         }
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
@@ -102,7 +102,7 @@ public class Play extends Pantalla {
     @Override
     public void show() {
         sprite = new Sprite(new Texture("Buttons/back.png"));
-        sprite = new Sprite(new Texture("Buttons/arco.png"));
+        sprite = new Sprite(new Texture("arco.png"));
         sprite.setPosition(ALTO*.2f,ANCHO*.2f );
         sprite = new Sprite(new Texture("Buttons/pausaBtn.png"));
         pixmap.setColor(1f,1f,1f,1f);
@@ -379,7 +379,7 @@ public class Play extends Pantalla {
             super(vista, batch);
             Texto score = new Texto();
             Musica.pause();
-            Texture fondoPausa = new Texture(Gdx.files.internal("/Backgroundfondopausa1.png"));
+            Texture fondoPausa = new Texture(Gdx.files.internal("Background/fondopausa1.png"));
             //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
             //pixmap.dispose();
             Image imgRectangulo = new Image(fondoPausa);
