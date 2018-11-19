@@ -170,7 +170,6 @@ public class Play extends Pantalla {
             rectPluma.width = rectPluma.getWidth() - 20f;
             EffectE.play(1f);
             pluma.deactivate();
-            cora.BajarVida(cora.getEstado());
             //enemigo.Mancha(Mancha, enemigo.getPositionX(), enemigo.getPositionY() , enemigo.getScaleX() , enemigo.getScaleY());
             enemigo.deactivate();
             puntos ++;
@@ -182,6 +181,7 @@ public class Play extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(fnd, 0, 0);
+
         if (estado == Estado.JUGANDO) {
             batch.draw(Arco, 0, ALTO / 5.9f);
             pluma.mover(delta, power);
@@ -192,7 +192,12 @@ public class Play extends Pantalla {
             cora.render(batch, cora.getEstado());
             Texture texturaRectangulo = new Texture( pixmap );
             batch.draw(texturaRectangulo, 0,0);
+            if(enemigo.getScaleX() > 4f){
+                cora.BajarVida(cora.getEstado());
+                enemigo.deactivate();
 
+            }
+            Gdx.app.log("Size del Cuervo", Float.toString(enemigo.getScaleX()));
             if(touchDownBool == false){
                 pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/10));
                 pixmap.drawLine((int)(ANCHO-50f),0,(int)(ANCHO/2), (int)(ALTO/10));
@@ -223,6 +228,9 @@ public class Play extends Pantalla {
         if (estado == Estado.PAUSADO) {
             escenaPausa.draw();
         }
+
+
+
 
     }
     private void actualizarObjetos() {
@@ -268,6 +276,7 @@ public class Play extends Pantalla {
             Musica.setLooping(true);
             Musica.play();
         }
+
 
     }
     @Override
