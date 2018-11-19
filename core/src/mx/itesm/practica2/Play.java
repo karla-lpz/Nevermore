@@ -51,8 +51,8 @@ public class Play extends Pantalla {
     private Enemigo enemigo;
     private Queue<Enemigo> crows;
     private int numCrows = 6;
-    Sound lanzamientoF = Gdx.audio.newSound(Gdx.files.internal("FOLEY_LANZAMIENTO.mp3"));
-    Sound explosionF = Gdx.audio.newSound(Gdx.files.internal("FOLEY_EXPLOSION.mp3"));
+    Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("FOLEY_LANZAMIENTO.mp3"));
+    Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("FOLEY_EXPLOSION.mp3"));
 
     private EscenaPausa escenaPausa;
 //__________________________________________________________________________________________________
@@ -161,6 +161,7 @@ public class Play extends Pantalla {
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
             rectPluma.height = rectPluma.getHeight() - 20f;
             rectPluma.width = rectPluma.getWidth() - 20f;
+            EffectE.play(1f);
             pluma.deactivate();
             enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
             enemigo.deactivate();
@@ -334,6 +335,7 @@ public class Play extends Pantalla {
             pluma.setVy(vy);
             Gdx.app.log("Impulso en Y", Float.toString(vx));
             pluma.volar(true);
+            EffectL.play(1f);
             return false;
         }
         @Override
