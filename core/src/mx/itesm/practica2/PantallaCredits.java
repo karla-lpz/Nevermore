@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 public class PantallaCredits extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
 
@@ -13,11 +15,11 @@ public class PantallaCredits extends Pantalla {
 
     private Texture fondo = new Texture("Background/FondoFinal.png");
     private Texture btnRegreso = new Texture( "Buttons/back.png");
+    private Texture aboutUs = new Texture("Buttons/aboutus.png");
     private Texture title = new Texture("Titles/creditstitulo.png");
 
-    private Texto participantsTitle;
-    private Texto participantsName;
-    private Texto paticipantsC;
+    private Texto musicTitle;
+    private Texto musicMessage;
     private Texto music;
 
     public PantallaCredits(Pantalla_Inicio pantallaInicio) {
@@ -29,6 +31,8 @@ public class PantallaCredits extends Pantalla {
     public void show() {
         sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
+        sprite = new Sprite(new Texture("Buttons/aboutus.png"));
+        sprite.setPosition(ALTO * .2f, ANCHO * .2f);
         sprite = new Sprite(new Texture("Titles/scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         createText();
@@ -37,9 +41,8 @@ public class PantallaCredits extends Pantalla {
     }
 
     private void createText(){
-        participantsTitle = new Texto();
-        participantsName = new Texto();
-        paticipantsC = new Texto();
+        musicTitle = new Texto();
+        musicMessage = new Texto();
         music = new Texto();
     }
 
@@ -50,11 +53,11 @@ public class PantallaCredits extends Pantalla {
         batch.begin();
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
+        batch.draw(aboutUs,ANCHO / 3.5f , ALTO / 9.9f );
         batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
-        participantsTitle.mostrarMensaje(batch, "Participants", 40.5f * ALTO / 160.5f , ANCHO / 0.75f );
-        participantsName.mostrarMensaje(batch, "Diana Diaz \nLeilani Trejo \nKarla Lopez \nHumberto Perez",
-                30.5f * ALTO / 160.5f, ANCHO / 0.83f );
-        paticipantsC.mostrarMensaje(batch, "LAD \nLAD \nISC \nISC", 62.5f * ALTO / 160.5f, ANCHO / 0.83f);
+        musicTitle.mostrarMensaje(batch, "MUSIC", 40.5f * ALTO / 160.5f , ANCHO / 0.72f);
+        musicMessage.mostrarMensaje(batch, "Main Menu: https://\nincompetech.com/music\n/royalty-free\n/index.html?isrc\n=USUAN1100783",
+                ANCHO / 2.0f, ANCHO / 0.79f);
         batch.end();
     }
 
@@ -73,7 +76,7 @@ public class PantallaCredits extends Pantalla {
 
     }
 
-    private class ProcesadorDeEntrada implements InputProcessor {
+    class ProcesadorDeEntrada implements InputProcessor {
         @Override
         public boolean keyDown(int keycode) {
             return false;
@@ -98,7 +101,15 @@ public class PantallaCredits extends Pantalla {
             float anchoBtn = btnRegreso.getWidth();
             float altoBtn = btnRegreso.getWidth();
             if(v.x >= x && v.x <= x + anchoBtn && v.y >= y && v.y <= y + altoBtn){
-                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+                pantallaInicio.setScreen(new PantallaSettings(pantallaInicio));
+            }
+
+            float xAbout = ANCHO / 3.5f ;
+            float yAbout = ALTO / 9.9f ;
+            float anchoAbout = aboutUs.getWidth();
+            float altoAbout = aboutUs.getWidth();
+            if(v.x >= xAbout && v.x <= xAbout + anchoAbout && v.y >= yAbout && v.y <= yAbout + altoAbout){
+                pantallaInicio.setScreen(new AboutUsScreen(pantallaInicio));
             }
 
             return true;

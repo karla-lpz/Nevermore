@@ -6,23 +6,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
-public class PantallaSettings extends Pantalla {
+public class AboutUsScreen extends Pantalla{
+
     private final Pantalla_Inicio pantallaInicio;
 
     private Sprite sprite;
 
-    private Texture fondo = new Texture("settingsPantalla.png");
+    private Texture fondo = new Texture("Background/FondoFinal.png");
+    private Texture title = new Texture("Titles/creditstitulo.png");
     private Texture btnRegreso = new Texture( "Buttons/back.png");
-    private Texture aboutUs = new Texture("Buttons/aboutus.png");
-    private Texture creditsBtn = new Texture( "Buttons/creditsBtn.png");
-    private Texture title = new Texture("Titles/settingstitulo.png");
 
-    private boolean music;
+    private Texto participantsTitle;
+    private Texto participantsName;
+    private Texto paticipantsC;
+    private Texto participantsContact;
 
-    public PantallaSettings(Pantalla_Inicio pantallaInicio) {
-
+    public AboutUsScreen(Pantalla_Inicio pantallaInicio) {
         this.pantallaInicio = pantallaInicio;
-
     }
 
     @Override
@@ -31,9 +31,15 @@ public class PantallaSettings extends Pantalla {
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite = new Sprite(new Texture("Titles/scorestitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
-        sprite = new Sprite(new Texture("Buttons/creditsBtn.png"));
-        sprite.setPosition(ALTO / 2,ANCHO / 2);
-        Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
+        createText();
+        Gdx.input.setInputProcessor(new AboutUsScreen.ProcesadorDeEntrada());
+    }
+
+    private void createText() {
+        participantsTitle = new Texto();
+        participantsName = new Texto();
+        paticipantsC = new Texto();
+        participantsContact = new Texto();
     }
 
     @Override
@@ -43,15 +49,14 @@ public class PantallaSettings extends Pantalla {
         batch.begin();
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
-        batch.draw(creditsBtn,  0.50f * ANCHO / 2 , 0.07f * ALTO / 2);
-        batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
+        participantsTitle.mostrarMensaje(batch, "PARTICIPANTS", 40.5f * ALTO / 160.5f , ANCHO / 0.75f);
+        participantsName.mostrarMensaje(batch, " Diana Diaz \n\n Leilani Trejo \n\n Karla Lopez \n\n Humberto Perez",
+                25.5f * ALTO / 160.5f, ANCHO / 0.83f );
+        paticipantsC.mostrarMensaje(batch, " LAD \n\n LAD \n\n ISC\n\n ISC", 55.5f * ALTO / 160.5f, ANCHO / 0.83f);
+        participantsContact.mostrarMensaje(batch,"\n A01371780@itesm.mx \n\n A00000000@itesm.mx\n\n A01378562@itesm.mx\n\n A01651926@itesm.mx",
+                41.5f * ALTO / 160.5f,ANCHO / 0.83f);
         batch.end();
     }
-
-
-
-
-
 
     @Override
     public void pause() {
@@ -68,12 +73,7 @@ public class PantallaSettings extends Pantalla {
 
     }
 
-    class ProcesadorDeEntrada implements InputProcessor {
-
-
-
-
-
+    private class ProcesadorDeEntrada implements InputProcessor {
         @Override
         public boolean keyDown(int keycode) {
             return false;
@@ -98,15 +98,9 @@ public class PantallaSettings extends Pantalla {
             float anchoBtn = btnRegreso.getWidth();
             float altoBtn = btnRegreso.getWidth();
             if(v.x >= x && v.x <= x + anchoBtn && v.y >= y && v.y <= y + altoBtn){
-                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
-            }
-            float xMusic = 0.75f * ANCHO / 2 ;
-            float yMusic = 0.25f * ALTO / 2;
-            float anchoMusic = creditsBtn.getWidth();
-            float altoMusic = creditsBtn.getWidth();
-            if(v.x >= xMusic && v.x <= xMusic + anchoMusic && v.y >= yMusic && v.y <= yMusic + altoMusic){
                 pantallaInicio.setScreen(new PantallaCredits(pantallaInicio));
             }
+
             return true;
         }
 

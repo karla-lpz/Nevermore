@@ -18,7 +18,7 @@ public class GameOverScreen extends Pantalla {
 
     private final Pantalla_Inicio pantallaInicio;
 
-    private Texture fnd = new Texture("nivel2.png");
+    private Texture fnd = new Texture("Levels/nivel2.png");
 
     private Sprite sprite;
 
@@ -45,13 +45,13 @@ public class GameOverScreen extends Pantalla {
         }
 
         //Load textures and fonts
-        gameOverBanner = new Texture("game_over.png");
-        scoreFont = new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
+        gameOverBanner = new Texture("Titles/game_over.png");
+        scoreFont = new BitmapFont(Gdx.files.internal("fonts/Nevermore.fnt"));
     }
 
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("nivel2.png"));
+        sprite = new Sprite(new Texture("Levels/nivel2.png"));
         sprite.setPosition(0,0);
     }
 
@@ -66,7 +66,7 @@ public class GameOverScreen extends Pantalla {
         game.batch.draw(gameOverBanner, Gdx.graphics.getWidth() / 3.5f - BANNER_WIDTH / 2,
                 Gdx.graphics.getHeight() - BANNER_HEIGHT - 200, 900, 150);
 
-        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score: \n" + score, Color.BLUE, 0, Align.left, false);
+        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score: \n" + score, Color.WHITE, 0, Align.left, false);
         GlyphLayout highscoreLayout = new GlyphLayout(scoreFont, "Highscore: \n" + highscore, Color.BLUE, 0, Align.left, false);
         scoreFont.draw(game.batch, scoreLayout, Gdx.graphics.getWidth() / 2 - scoreLayout.width / 2, Gdx.graphics.getHeight() - BANNER_HEIGHT - 110 * 2);
         scoreFont.draw(game.batch, highscoreLayout, Gdx.graphics.getWidth() / 2 - highscoreLayout.width / 2, Gdx.graphics.getHeight() - BANNER_HEIGHT - scoreLayout.height - 85 * 3);

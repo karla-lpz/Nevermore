@@ -9,7 +9,7 @@ public class Texto {
     private BitmapFont font;
 
    public Texto(){
-        font = new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
+        font = new BitmapFont(Gdx.files.internal("fonts/Nevermore.fnt"));
     }
 
     public void mostrarMensaje(SpriteBatch batch, String mensaje, float x, float y){

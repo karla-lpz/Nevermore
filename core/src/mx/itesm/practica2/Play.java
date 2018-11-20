@@ -75,16 +75,23 @@ public class Play extends Pantalla {
     private Texture fnd = new Texture("Levels/nivel1.png");
     private Texture BotRegreso = new Texture("Buttons/back.png");
     private Texture BtnPause = new Texture("Buttons/pausaBtn.png");
+
     Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGBA8888);
-    private Texto texto;
+
     private float puntos;
+
+    private Texto texto;
     private Texto punctuationText;
     private Texto winText;
     private Texto loseText;
+
     private Estado estado;
+
     private boolean touchDownBool;
+
     private int cuerdaX;
     private int cuerdaY;
+
     public Play(Pantalla_Inicio pantallaInicio) {
         estado = Estado.JUGANDO;
         Music Musica = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_NIVEL1.mp3"));
