@@ -20,6 +20,7 @@ public class AboutUsScreen extends Pantalla{
     private Texto participantsName;
     private Texto paticipantsC;
     private Texto participantsContact;
+    private Texto subjectInfo;
 
     public AboutUsScreen(Pantalla_Inicio pantallaInicio) {
         this.pantallaInicio = pantallaInicio;
@@ -40,6 +41,7 @@ public class AboutUsScreen extends Pantalla{
         participantsName = new Texto();
         paticipantsC = new Texto();
         participantsContact = new Texto();
+        subjectInfo = new Texto();
     }
 
     @Override
@@ -53,8 +55,9 @@ public class AboutUsScreen extends Pantalla{
         participantsName.mostrarMensaje(batch, " Diana Diaz \n\n Leilani Trejo \n\n Karla Lopez \n\n Humberto Perez",
                 25.5f * ALTO / 160.5f, ANCHO / 0.83f );
         paticipantsC.mostrarMensaje(batch, " LAD \n\n LAD \n\n ISC\n\n ISC", 55.5f * ALTO / 160.5f, ANCHO / 0.83f);
-        participantsContact.mostrarMensaje(batch,"\n A01371780@itesm.mx \n\n A00000000@itesm.mx\n\n A01378562@itesm.mx\n\n A01651926@itesm.mx",
+        participantsContact.mostrarMensaje(batch,"\n A01371780@itesm.mx \n\n A01377035@itesm.mx\n\n A01378562@itesm.mx\n\n A01651926@itesm.mx",
                 41.5f * ALTO / 160.5f,ANCHO / 0.83f);
+        subjectInfo.mostrarMensaje(batch, "  Subject:VideoJuegos \n  Campus Estado de Mexico", 3 * 90.5f, ANCHO / 1.7f );
         batch.end();
     }
 

@@ -100,11 +100,11 @@ public class PantallaSettings extends Pantalla {
             if(v.x >= x && v.x <= x + anchoBtn && v.y >= y && v.y <= y + altoBtn){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
             }
-            float xMusic = 0.75f * ANCHO / 2 ;
-            float yMusic = 0.25f * ALTO / 2;
-            float anchoMusic = creditsBtn.getWidth();
-            float altoMusic = creditsBtn.getWidth();
-            if(v.x >= xMusic && v.x <= xMusic + anchoMusic && v.y >= yMusic && v.y <= yMusic + altoMusic){
+            float xCredits = 0.50f * ANCHO / 2;
+            float yCredits = 0.07f * ALTO / 2;
+            float anchoCredits = creditsBtn.getWidth();
+            float altoCredits = creditsBtn.getWidth();
+            if(v.x >= xCredits && v.x <= xCredits + anchoCredits && v.y >= yCredits && v.y <= yCredits + altoCredits){
                 pantallaInicio.setScreen(new PantallaCredits(pantallaInicio));
             }
             return true;
