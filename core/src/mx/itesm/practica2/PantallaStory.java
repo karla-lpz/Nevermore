@@ -2,6 +2,8 @@ package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
@@ -13,6 +15,8 @@ public class PantallaStory extends  Pantalla{
     private final Pantalla_Inicio pantallaInicio;
 
     private ArrayList<Texture> story = new ArrayList<Texture>();
+
+    private Music music;
 
     private Texture story1 = new Texture("Story/HISTORIA1.png");
     private Texture story2 = new Texture("Story/HISTORIA2.png");
@@ -36,9 +40,11 @@ public class PantallaStory extends  Pantalla{
         story.add(story3);
         story.add(story4);
         story.add(story5);
+        Music music = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_MENU_PRINCIPAL.mp3"));
     }
     @Override
     public void show() {
+        cargarMusica();
         sprite = new Sprite(new Texture("Buttons/continueBtn.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite = new Sprite(new Texture("Buttons/back.png"));
@@ -46,6 +52,16 @@ public class PantallaStory extends  Pantalla{
         sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         Gdx.input.setInputProcessor(new PantallaStory.ProcesadorDeEntrada());
+    }
+
+    private void cargarMusica() {
+        AssetManager manager = new AssetManager();
+        manager.load("music/CANCION_MENU_PRINCIPAL.mp3", Music.class);
+        manager.finishLoading();
+        music = manager.get("music/CANCION_MENU_PRINCIPAL.mp3");
+        music.setLooping(true);
+        music.play();
+        music.setLooping(true);
     }
 
     @Override

@@ -49,8 +49,8 @@ public class Play extends Pantalla {
 
     private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
     private Sprite enemigoSprite = new Sprite(enemigoBlock);
-    private Cat enemigo;
-    private Queue<Cat> crows;
+    private Enemy enemigo;
+    private Queue<Enemy> crows;
     private int numCrows = 6;
     Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_LANZAMIENTO.mp3"));
     Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_EXPLOSION.mp3"));
@@ -96,9 +96,9 @@ public class Play extends Pantalla {
         estado = Estado.JUGANDO;
         Music Musica = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_NIVEL1.mp3"));
         this.pantallaInicio = pantallaInicio;
-        this.crows = new LinkedList<Cat>();
+        this.crows = new LinkedList<Enemy>();
         for (int i = 0; i < this.numCrows; i++) {
-            this.crows.add(new Cat( new Texture("Enemies/gatosprites.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
+            this.crows.add(new Cat( new Texture("Enemies/cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
         }
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
