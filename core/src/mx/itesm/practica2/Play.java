@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 //TODO: Vidas:
@@ -44,7 +45,7 @@ public class Play extends Pantalla {
     private Sprite sprite;
     private int stage = 0;
     private Music Musica;
-
+    private Array<Corazones> arrCorazon;
 //Enemigo___________________________________________________________________________________________
 
     private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
@@ -61,6 +62,12 @@ public class Play extends Pantalla {
 //Flecha____________________________________________________________________________________________
 
     //TODO: Move Pluma to method show
+    private Texture corazon1 = new Texture("hearts/CORA_LLENO.png");
+    private Texture corazon2 = new Texture("hearts/CORA2.png");
+    private Texture corazon3 = new Texture("hearts/CORA3.png");
+    private Texture corazon4 = new Texture("hearts/CORA4.png");
+    private Texture corazon5 = new Texture("hearts/CORA5.png");
+
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new Sprite(plumaBlock);
     private Pluma pluma;
@@ -69,13 +76,13 @@ public class Play extends Pantalla {
     private int shoots = 9;
 
 
-//__________________________________________________________________________________________________
+    //__________________________________________________________________________________________________
     private Texture Arco = new Texture("arco.png");
     private Texture Mancha = new Texture("manchacuervo.png");
     private Texture fnd = new Texture("Levels/nivel1.png");
     private Texture BotRegreso = new Texture("Buttons/back.png");
     private Texture BtnPause = new Texture("Buttons/pausaBtn.png");
-
+    Corazones cora = new Corazones(20, 20);
     Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGBA8888);
 
     private float puntos;
@@ -118,6 +125,7 @@ public class Play extends Pantalla {
         cargarMusica();
         eliminarObjetos();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
+        arrCorazon = new Array<Corazones>(12*5);
     }
 
 
@@ -156,6 +164,7 @@ public class Play extends Pantalla {
 
 
         if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO) {
+
             this.estado = Estado.PERDIO;
         }
 
@@ -189,8 +198,14 @@ public class Play extends Pantalla {
             batch.draw(BtnPause, 0, ALTO / 1.12f);
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
+            cora.render(batch, cora.getEstado());
+            cora.render(batch, cora.getEstado());
             Texture texturaRectangulo = new Texture( pixmap );
             batch.draw(texturaRectangulo, 0,0);
+            if(enemigo.getScaleX() > 4f){
+                cora.BajarVida(cora.getEstado());
+                enemigo.deactivate();
+            }
 
             if(touchDownBool == false){
                 pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/10));
