@@ -77,7 +77,7 @@ public class GameOverScreen extends Pantalla {
         float tryAgainX = Gdx.graphics.getWidth() / 2 - tryAgainLayout.width / 2;
         float tryAgainY = Gdx.graphics.getHeight() / 2 - tryAgainLayout.height / 2;
         float mainMenuX = Gdx.graphics.getWidth() / 2 - mainMenuLayout.width / 2;
-        float mainMenuY = Gdx.graphics.getHeight() / 2 - mainMenuLayout.height / 2 - tryAgainLayout.height - 15;
+        float mainMenuY = Gdx.graphics.getHeight() / 2.5f - mainMenuLayout.height / 2 - tryAgainLayout.height - 15;
 
         float touchX = Gdx.input.getX(), touchY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
@@ -87,7 +87,7 @@ public class GameOverScreen extends Pantalla {
             if(touchX > tryAgainX && touchX < tryAgainX + tryAgainLayout.width && touchY > tryAgainY - tryAgainLayout.height && touchY < tryAgainY){
                 this.dispose();
                 game.batch.end();
-                game.pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
+                game.pantallaInicio.setScreen(new Play(pantallaInicio));
                 return;
             }
 
@@ -95,7 +95,7 @@ public class GameOverScreen extends Pantalla {
             if(touchX > mainMenuX && touchX < mainMenuX + mainMenuLayout.width && touchY > mainMenuY - mainMenuLayout.height && touchY < mainMenuY){
                 this.dispose();
                 game.batch.end();
-                game.setScreen(new PantallaMenu(game));
+                game.setScreen(new PantallaMenu(pantallaInicio));
                 return;
             }
         }

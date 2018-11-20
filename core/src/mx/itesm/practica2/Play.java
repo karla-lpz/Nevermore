@@ -214,7 +214,7 @@ public class Play extends Pantalla {
         }
 
         if (estado == Estado.GANO) {
-            winText.mostrarMensaje(batch, "GANASTE", ANCHO/2, ALTO/2);
+            winText.mostrarMensaje(batch, "YOU WON", ANCHO/2, ALTO/2);
             Musica.stop();
         }
         batch.end();

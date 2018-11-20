@@ -13,7 +13,7 @@ public class AboutUsScreen extends Pantalla{
     private Sprite sprite;
 
     private Texture fondo = new Texture("Background/FondoFinal.png");
-    private Texture title = new Texture("Titles/creditstitulo.png");
+    private Texture title = new Texture("Titles/aboutustitulo.png");
     private Texture btnRegreso = new Texture( "Buttons/back.png");
 
     private Texto participantsTitle;
@@ -30,7 +30,7 @@ public class AboutUsScreen extends Pantalla{
     public void show() {
         sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
-        sprite = new Sprite(new Texture("Titles/scorestitulo.png"));
+        sprite = new Sprite(new Texture("Titles/aboutustitulo.png"));
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         createText();
         Gdx.input.setInputProcessor(new AboutUsScreen.ProcesadorDeEntrada());
@@ -50,6 +50,7 @@ public class AboutUsScreen extends Pantalla{
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(fondo, 0, 0);
+        batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
         participantsTitle.mostrarMensaje(batch, "PARTICIPANTS", 40.5f * ALTO / 160.5f , ANCHO / 0.75f);
         participantsName.mostrarMensaje(batch, " Diana Diaz \n\n Leilani Trejo \n\n Karla Lopez \n\n Humberto Perez",
