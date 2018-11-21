@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 //TODO: Vidas:
@@ -44,7 +45,7 @@ public class Play extends Pantalla {
     private Sprite sprite;
     private int stage = 0;
     private Music Musica;
-
+    private Array<Corazones> arrCorazon;
 //Enemigo___________________________________________________________________________________________
 
     private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
@@ -61,6 +62,12 @@ public class Play extends Pantalla {
 //Flecha____________________________________________________________________________________________
 
     //TODO: Move Pluma to method show
+    private Texture corazon1 = new Texture("hearts/CORA_LLENO.png");
+    private Texture corazon2 = new Texture("hearts/CORA2.png");
+    private Texture corazon3 = new Texture("hearts/CORA3.png");
+    private Texture corazon4 = new Texture("hearts/CORA4.png");
+    private Texture corazon5 = new Texture("hearts/CORA5.png");
+
     private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
     private Sprite plumaSprite = new Sprite(plumaBlock);
     private Pluma pluma;
@@ -69,22 +76,29 @@ public class Play extends Pantalla {
     private int shoots = 9;
 
 
-//__________________________________________________________________________________________________
+    //__________________________________________________________________________________________________
     private Texture Arco = new Texture("arco.png");
     private Texture Mancha = new Texture("manchacuervo.png");
-    private Texture fnd = new Texture("nivel1.png");
-    private Texture BotRegreso = new Texture("back.png");
-    private Texture BtnPause = new Texture("pausaBtn.png");
+    private Texture fnd = new Texture("Levels/nivel1.png");
+    private Texture BotRegreso = new Texture("Buttons/back.png");
+    private Texture BtnPause = new Texture("Buttons/pausaBtn.png");
+    Corazones cora = new Corazones(20, 20);
     Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO*.22), Pixmap.Format.RGBA8888);
-    private Texto texto;
+
     private float puntos;
+
+    private Texto texto;
     private Texto punctuationText;
     private Texto winText;
     private Texto loseText;
+
     private Estado estado;
+
     private boolean touchDownBool;
+
     private int cuerdaX;
     private int cuerdaY;
+
     public Play(Pantalla_Inicio pantallaInicio) {
         estado = Estado.JUGANDO;
         Music Musica = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_NIVEL1.mp3"));
@@ -92,7 +106,6 @@ public class Play extends Pantalla {
         this.crows = new LinkedList<Enemy>();
         for (int i = 0; i < this.numCrows; i++) {
             this.crows.add(new Cat( new Texture("Enemies/cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
-            this.crows.add(new Enemy( new Texture("cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
         }
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
@@ -102,16 +115,17 @@ public class Play extends Pantalla {
 
     @Override
     public void show() {
-        sprite = new Sprite(new Texture("back.png"));
+        sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite = new Sprite(new Texture("arco.png"));
         sprite.setPosition(ALTO*.2f,ANCHO*.2f );
-        sprite = new Sprite(new Texture("pausaBtn.png"));
+        sprite = new Sprite(new Texture("Buttons/pausaBtn.png"));
         pixmap.setColor(1f,1f,1f,1f);
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
         crearObjetos();
         cargarMusica();
         eliminarObjetos();
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
+        arrCorazon = new Array<Corazones>(12*5);
     }
 
 
@@ -150,6 +164,7 @@ public class Play extends Pantalla {
 
 
         if (!pluma.isActive && estado != Estado.GANO && estado != Estado.PERDIO) {
+
             this.estado = Estado.PERDIO;
         }
 
@@ -165,7 +180,7 @@ public class Play extends Pantalla {
             rectPluma.width = rectPluma.getWidth() - 20f;
             EffectE.play(1f);
             pluma.deactivate();
-           // enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
+            enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
             enemigo.deactivate();
             puntos ++;
             score = puntos;
@@ -183,8 +198,14 @@ public class Play extends Pantalla {
             batch.draw(BtnPause, 0, ALTO / 1.12f);
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
+            cora.render(batch, cora.getEstado());
+            cora.render(batch, cora.getEstado());
             Texture texturaRectangulo = new Texture( pixmap );
             batch.draw(texturaRectangulo, 0,0);
+            if(enemigo.getScaleX() > 4f){
+                cora.BajarVida(cora.getEstado());
+                enemigo.deactivate();
+            }
 
             if(touchDownBool == false){
                 pixmap.drawLine(50,0,(int)(ANCHO/2), (int)(ALTO/10));
@@ -208,7 +229,7 @@ public class Play extends Pantalla {
         }
 
         if (estado == Estado.GANO) {
-            winText.mostrarMensaje(batch, "GANASTE", ANCHO/2, ALTO/2);
+            winText.mostrarMensaje(batch, "YOU WON", ANCHO/2, ALTO/2);
             Musica.stop();
         }
         batch.end();
@@ -243,7 +264,7 @@ public class Play extends Pantalla {
             AssetManager manager = new AssetManager();
             manager.load("music/CANCION_NIVEL1.mp3", Music.class);
             manager.finishLoading();
-            Musica = manager.get("CANCION_NIVEL1.mp3");
+            Musica = manager.get("music/CANCION_NIVEL1.mp3");
             Musica.setLooping(true);
             Musica.play();
         } else if(stage == 2){
@@ -333,6 +354,7 @@ public class Play extends Pantalla {
             float vy = pluma.getVelocidad() * (float)Math.sin (alfa);
             float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
+            //pluma.setVx(Math.max(vx, -547));
             Gdx.app.log("Impulso en X", Float.toString(vx));
             pluma.setVy(vy);
             Gdx.app.log("Impulso en Y", Float.toString(vx));
@@ -379,13 +401,13 @@ public class Play extends Pantalla {
             super(vista, batch);
             Texto score = new Texto();
             Musica.pause();
-            Texture fondoPausa = new Texture(Gdx.files.internal("fondopausa1.png"));
+            Texture fondoPausa = new Texture(Gdx.files.internal("Background/fondopausa1.png"));
             //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
             //pixmap.dispose();
             Image imgRectangulo = new Image(fondoPausa);
             imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
             this.addActor(imgRectangulo);
-            Texture texturaBtnSalir = new Texture("home.png");
+            Texture texturaBtnSalir = new Texture("Buttons/home.png");
             TextureRegionDrawable trdSalir = new TextureRegionDrawable(new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
             btnSalir.setPosition((ANCHO/2)+150-btnSalir.getWidth()/2, ALTO/6);
@@ -399,7 +421,7 @@ public class Play extends Pantalla {
                 }
             });
             this.addActor(btnSalir);
-            Texture texturaBtnContinuar = new Texture("playbtn1.png");
+            Texture texturaBtnContinuar = new Texture("Buttons/playbtn1.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
