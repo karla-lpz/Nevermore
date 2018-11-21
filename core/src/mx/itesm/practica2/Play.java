@@ -6,9 +6,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.Color;
 import java.awt.TextComponent;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -20,11 +22,17 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import javax.xml.soap.Text;
+
+import static java.awt.Color.*;
+
 //TODO: Vidas:
 //TODO: Enemigos:
 //TODO: Settings imagen:
@@ -176,11 +184,16 @@ public class Play extends Pantalla {
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
         Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
-            rectPluma.height = rectPluma.getHeight() - 20f;
-            rectPluma.width = rectPluma.getWidth() - 20f;
+            //rectPluma.height = rectPluma.getHeight()/2;
+           // rectPluma.width = rectPluma.getWidth() - 100f;
+            rectPluma.setSize(354f, 200f);
+            Gdx.app.log("Medias de la cuerda", Float.toString(pluma.getAlto())+ "Alto");
+            Gdx.app.log("Medias de la cuerda", Float.toString(pluma.getAncho()) + "Ancho");
+
             EffectE.play(1f);
+            Gdx.input.vibrate(100);
             pluma.deactivate();
-            enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
+           // enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
             enemigo.deactivate();
             puntos ++;
             score = puntos;
@@ -199,11 +212,11 @@ public class Play extends Pantalla {
             enemigo.dibujar(batch);
             pluma.dibujar(batch);
             cora.render(batch, cora.getEstado());
-            cora.render(batch, cora.getEstado());
-            Texture texturaRectangulo = new Texture( pixmap );
-            batch.draw(texturaRectangulo, 0,0);
+            //Texture texturaRectangulo = new Texture( pixmap );
+            //batch.draw(texturaRectangulo, 0,0);
             if(enemigo.getScaleX() > 4f){
                 cora.BajarVida(cora.getEstado());
+                Gdx.input.vibrate(1000);
                 enemigo.deactivate();
             }
 
@@ -399,11 +412,9 @@ public class Play extends Pantalla {
     private class EscenaPausa extends Stage{
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
-            Texto score = new Texto();
             Musica.pause();
+
             Texture fondoPausa = new Texture(Gdx.files.internal("Background/fondopausa1.png"));
-            //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
-            //pixmap.dispose();
             Image imgRectangulo = new Image(fondoPausa);
             imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
             this.addActor(imgRectangulo);
@@ -414,7 +425,6 @@ public class Play extends Pantalla {
             btnSalir.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    //Regresa al menú
                     Musica.stop();
                     pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
 
@@ -436,6 +446,14 @@ public class Play extends Pantalla {
                 }
             });
             this.addActor(btnContinuar);
+
+            TextButton.TextButtonStyle estilo = new TextButton.TextButtonStyle();
+            estilo.fontColor = Color.RED;
+            estilo.font= new BitmapFont(Gdx.files.internal("fonts/Nevermore.fnt"));
+            TextButton btn = new TextButton(String.valueOf(score), estilo);
+            btn.setPosition((ANCHO/2) -30, (ALTO/2)-10);
+            this.addActor(btn);
+
         }
 
     }

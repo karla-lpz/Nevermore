@@ -41,7 +41,7 @@ public class Enemy extends Object {
         timerAnimacion = 0;
         sprite = new Sprite(texturaPersonaje[0][0]);    // QUIETO
         sprite.setPosition(x,y);
-        sprite.setScale(.01f);
+        sprite.setScale(.1f);
 
     }
     public void Mancha(Texture texture, float x, float y, float escalaX, float escalaY){
@@ -50,7 +50,7 @@ public class Enemy extends Object {
         animatedSprite.setPlayMode(Animation.PlayMode.NORMAL);
         timerAnimacion=10;
         sprite = new Sprite(mancha_anim);
-        sprite.setScale(escalaX/3, escalaY/3);
+        sprite.setScale(escalaX/2, escalaY/2);
     }
     public float getScaleX(){
         return sprite.getScaleX();
@@ -102,7 +102,8 @@ public class Enemy extends Object {
 
 
     public void vuelo(boolean volando){
-        sprite.setScale(sprite.getScaleX() + (.005f));
+        sprite.setScale(sprite.getScaleX() + (.01f));
+
         if (sprite.getScaleX() >= 5) {
             isActive = false;
         }
