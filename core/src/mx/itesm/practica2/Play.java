@@ -200,8 +200,8 @@ public class Play extends Pantalla {
             pluma.dibujar(batch);
             cora.render(batch, cora.getEstado());
             cora.render(batch, cora.getEstado());
-            Texture texturaRectangulo = new Texture( pixmap );
-            batch.draw(texturaRectangulo, 0,0);
+            //Texture texturaRectangulo = new Texture( pixmap );
+            //batch.draw(texturaRectangulo, 0,0);
             if(enemigo.getScaleX() > 4f){
                 cora.BajarVida(cora.getEstado());
                 enemigo.deactivate();
