@@ -21,14 +21,13 @@ public class Enemy extends AnimatedGameObject {
     public void die(float escalaX, float escalaY){
         Texture stain = new Texture("manchacuervo.png");
         TextureRegion mancha_anim = new TextureRegion(stain);
-        animation = new Animation(.1f, mancha_anim);
+        //animation = new Animation(.1f, mancha_anim);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
         animationTimer = 10;
         sprite = new Sprite(stain);
         sprite.setScale(escalaX/3, escalaY/3);
         this.deactivate();
     }
-
     // NOTE: Los dos se mueven de la misma manera, es una ilusion causada por el incremento de la imagen.
     public void mover()
     {
