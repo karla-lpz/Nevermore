@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
+import org.lwjgl.openal.AL;
+
 public class PantallaSettings extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
 
@@ -16,6 +18,10 @@ public class PantallaSettings extends Pantalla {
     private Texture aboutUs = new Texture("Buttons/aboutus.png");
     private Texture creditsBtn = new Texture( "Buttons/creditsBtn.png");
     private Texture title = new Texture("Titles/settingstitulo.png");
+
+    private Texture Vol = new Texture("hearts/CORA_LLENO.png");
+    private Texture NoVol = new Texture("hearts/CORA5.png");
+
 
     private boolean music;
 
@@ -33,6 +39,11 @@ public class PantallaSettings extends Pantalla {
         sprite.setPosition(ALTO / 2, ANCHO / 2);
         sprite = new Sprite(new Texture("Buttons/creditsBtn.png"));
         sprite.setPosition(ALTO / 2,ANCHO / 2);
+
+        sprite = new Sprite(new Texture("hearts/CORA_LLENO.png"));
+        sprite.setPosition(ALTO / 2,ANCHO / 2);
+        sprite = new Sprite(new Texture("hearts/CORA5.png"));
+        sprite.setPosition(ALTO / 2,ANCHO / 2);
         Gdx.input.setInputProcessor(new ProcesadorDeEntrada());
     }
 
@@ -43,6 +54,9 @@ public class PantallaSettings extends Pantalla {
         batch.begin();
         batch.draw(fondo, 0, 0);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
+        batch.draw(Vol, (ANCHO/2)+Vol.getWidth(), (ALTO /2)-Vol.getHeight());
+        batch.draw(NoVol, (ANCHO/2)-NoVol.getWidth(), (ALTO /2)-NoVol.getHeight());
+
         batch.draw(creditsBtn,  0.50f * ANCHO / 2 , 0.07f * ALTO / 2);
         batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
         batch.end();
@@ -100,6 +114,16 @@ public class PantallaSettings extends Pantalla {
             if(v.x >= x && v.x <= x + anchoBtn && v.y >= y && v.y <= y + altoBtn){
                 pantallaInicio.setScreen(new PantallaMenu(pantallaInicio) );
             }
+
+            float xVol = ANCHO/2;
+            float yVol = ALTO/5;
+            float anchoVol = creditsBtn.getWidth();
+            float altoVol = creditsBtn.getHeight();
+            if(v.x >= xVol && v.x <= xVol + anchoVol && v.y >= yVol && v.y <= yVol + altoVol){
+                pantallaInicio.setScreen(new PantallaCredits(pantallaInicio));
+            }
+
+
             float xCredits = 0.50f * ANCHO / 2;
             float yCredits = 0.07f * ALTO / 2;
             float anchoCredits = creditsBtn.getWidth();
@@ -130,4 +154,9 @@ public class PantallaSettings extends Pantalla {
             return false;
         }
     }
+
+
+
+
+
 }
