@@ -64,7 +64,7 @@ class PantallaMenu extends Pantalla{
 
         ImageButton btnPlay = new ImageButton(trd, trdOp);
         //Estamos creando un button con 2 imagenes
-        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, .6f*ALTO);
+        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, .5f*ALTO);
         //Programar accion del boton
         btnPlay.addListener(new ClickListener() {
             @Override
@@ -76,25 +76,25 @@ class PantallaMenu extends Pantalla{
         });
 
         //_______________________Scores____________Boton___________________________
-            Texture textBtnScores = new Texture("Buttons/scoresBtn.png");
-            TextureRegionDrawable ScoresTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnScores));
-
-            Texture textBtnScoresOp = new Texture("Buttons/scoresBtnPush.png");
-            TextureRegionDrawable ScoresTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnScoresOp));
-            ImageButton btnScores = new ImageButton(ScoresTrd2, ScoresTrd2Op);
-            btnScores.setPosition(ANCHO/2-btnScores.getWidth()/2, .4f*ALTO);
-
-            btnScores.addListener(new ClickListener(){
-               @Override
-               public void clicked(InputEvent event, float x, float y) {
-                    super.clicked(event, x, y);
-                   try {
-                       pantallaInicio.setScreen(new PantallaScores(pantallaInicio));
-                   } catch (FileNotFoundException e) {
-                       e.printStackTrace();
-                   }
-               }
-            });
+//            Texture textBtnScores = new Texture("Buttons/scoresBtn.png");
+//            TextureRegionDrawable ScoresTrd2 = new TextureRegionDrawable(new TextureRegion(textBtnScores));
+//
+//            Texture textBtnScoresOp = new Texture("Buttons/scoresBtnPush.png");
+//            TextureRegionDrawable ScoresTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnScoresOp));
+//            ImageButton btnScores = new ImageButton(ScoresTrd2, ScoresTrd2Op);
+//            btnScores.setPosition(ANCHO/2-btnScores.getWidth()/2, .4f*ALTO);
+//
+//            btnScores.addListener(new ClickListener(){
+//               @Override
+//               public void clicked(InputEvent event, float x, float y) {
+//                    super.clicked(event, x, y);
+//                   try {
+//                       pantallaInicio.setScreen(new PantallaScores(pantallaInicio));
+//                   } catch (FileNotFoundException e) {
+//                       e.printStackTrace();
+//                   }
+//               }
+//            });
 
 
         //__________________________________________________________________________
@@ -108,7 +108,7 @@ class PantallaMenu extends Pantalla{
         Texture textBtnHelpOp = new Texture("Buttons/helpBtnPush.png");
         TextureRegionDrawable HelpTrd2Op = new TextureRegionDrawable(new TextureRegion(textBtnHelpOp));
         ImageButton btnHelp = new ImageButton(HelpTrd2, HelpTrd2Op);
-        btnHelp.setPosition(ANCHO/2-btnHelp.getWidth()/2, .2f*ALTO);
+        btnHelp.setPosition(ANCHO/2-btnHelp.getWidth()/2, .3f*ALTO);
         btnHelp.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -163,7 +163,7 @@ class PantallaMenu extends Pantalla{
 
 
         escenaMenu.addActor(btnPlay);
-        escenaMenu.addActor(btnScores);
+//        escenaMenu.addActor(btnScores);
         escenaMenu.addActor(btnHelp);
         escenaMenu.addActor(btnStory);
         escenaMenu.addActor(btnSettings);
