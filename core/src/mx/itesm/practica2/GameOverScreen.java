@@ -16,6 +16,9 @@ public class GameOverScreen extends Pantalla {
     private static final int BANNER_WIDTH = 350;
     private static final int BANNER_HEIGHT = 100;
 
+    private Texture tryAgain = new Texture("Buttons/tryagain.png");
+    private Texture homeBtn = new Texture("Buttons/home2.png");
+
     private final Pantalla_Inicio pantallaInicio;
 
     private Texture fnd = new Texture("Levels/nivel2.png");
@@ -52,6 +55,10 @@ public class GameOverScreen extends Pantalla {
     @Override
     public void show() {
         sprite = new Sprite(new Texture("Levels/nivel2.png"));
+        sprite = new Sprite(new Texture("Buttons/tryagain.png"));
+        sprite.setPosition(ALTO *.2f,ANCHO *.2f);
+        sprite = new Sprite(new Texture("Buttons/home2.png"));
+        sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite.setPosition(0,0);
     }
 
@@ -62,47 +69,18 @@ public class GameOverScreen extends Pantalla {
         //game.batch.setProjectionMatrix(camara.combined);
         game.batch.begin();
 
+        //Buttons
+        game.batch.draw(homeBtn, ANCHO / 1.5f, ALTO / 2);
+        game.batch.draw(tryAgain, ANCHO / 2, ALTO / 1.5f);
+
         //game.batch.draw(fnd, 0, 0);
         game.batch.draw(gameOverBanner, Gdx.graphics.getWidth() / 3.5f - BANNER_WIDTH / 2,
                 Gdx.graphics.getHeight() - BANNER_HEIGHT - 200, 900, 150);
 
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score: \n" + score, Color.WHITE, 0, Align.left, false);
-        GlyphLayout highscoreLayout = new GlyphLayout(scoreFont, "Highscore: \n" + highscore, Color.BLUE, 0, Align.left, false);
+        GlyphLayout highscoreLayout = new GlyphLayout(scoreFont, "Highscore: \n" + highscore, Color.WHITE, 0, Align.left, false);
         scoreFont.draw(game.batch, scoreLayout, Gdx.graphics.getWidth() / 2 - scoreLayout.width / 2, Gdx.graphics.getHeight() - BANNER_HEIGHT - 110 * 2);
         scoreFont.draw(game.batch, highscoreLayout, Gdx.graphics.getWidth() / 2 - highscoreLayout.width / 2, Gdx.graphics.getHeight() - BANNER_HEIGHT - scoreLayout.height - 85 * 3);
-
-        GlyphLayout tryAgainLayout = new GlyphLayout(scoreFont, "Try Again");
-        GlyphLayout mainMenuLayout = new GlyphLayout(scoreFont, "Main Menu");
-
-        float tryAgainX = Gdx.graphics.getWidth() / 2 - tryAgainLayout.width / 2;
-        float tryAgainY = Gdx.graphics.getHeight() / 2 - tryAgainLayout.height / 2;
-        float mainMenuX = Gdx.graphics.getWidth() / 2 - mainMenuLayout.width / 2;
-        float mainMenuY = Gdx.graphics.getHeight() / 2.5f - mainMenuLayout.height / 2 - tryAgainLayout.height - 15;
-
-        float touchX = Gdx.input.getX(), touchY = Gdx.graphics.getHeight() - Gdx.input.getY();
-
-        //If try again and main menu is being pressed
-        if(Gdx.input.isTouched()){
-            //Try Again
-            if(touchX > tryAgainX && touchX < tryAgainX + tryAgainLayout.width && touchY > tryAgainY - tryAgainLayout.height && touchY < tryAgainY){
-                this.dispose();
-                game.batch.end();
-                game.pantallaInicio.setScreen(new Play(pantallaInicio));
-                return;
-            }
-
-            //Main menu
-            if(touchX > mainMenuX && touchX < mainMenuX + mainMenuLayout.width && touchY > mainMenuY - mainMenuLayout.height && touchY < mainMenuY){
-                this.dispose();
-                game.batch.end();
-                game.setScreen(new PantallaMenu(pantallaInicio));
-                return;
-            }
-        }
-
-        // Draw buttons
-        scoreFont.draw(game.batch, tryAgainLayout, tryAgainX, tryAgainY);
-        scoreFont.draw(game.batch, mainMenuLayout, mainMenuX, mainMenuY);
 
         game.batch.end();
     }

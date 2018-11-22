@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
-public class Mancha extends Object {
+public class Mancha extends GameObject {
     boolean isActive;
     boolean volando = true;
 
@@ -42,7 +42,7 @@ public class Mancha extends Object {
 
     }
 
-//    public Mancha(Texture textura, float x, float y) {
+//    public die(Texture textura, float x, float y) {
 //        super(textura, x, y);
 //    }
 
@@ -79,7 +79,7 @@ public class Mancha extends Object {
     }
 
     public void scaleAnimetion(SpriteBatch batch){
-        //batch.draw(animatedSprite, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight(), sprite.scale(sprite.getScaleX()+ .015), sprite.scale(sprite.getScaleY() + 1.5)) ;
+        //batch.draw(animation, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight(), sprite.scale(sprite.getScaleX()+ .015), sprite.scale(sprite.getScaleY() + 1.5)) ;
     }
 
     public void deactivate() {
