@@ -48,7 +48,6 @@ public class Pluma extends GameObject {
 
         if(volando == true)
         {
-            float limite_vertical;
             float dx = vx * dt;
             float dy = vy * dt;
             sprite.setPosition(sprite.getX() + dx, sprite.getY() + dy);
