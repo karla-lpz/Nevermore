@@ -191,8 +191,8 @@ public class Play extends Pantalla {
         }
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
         Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
-        rectEnem.setCenter(enemigo.getPositionX()+(enemigo.getWidth()/2), enemigo.getPositionY()+(enemigo.getHeight()/2));
-        rectEnem.setSize(enemigo.getWidth()/2, enemigo.getHeight()/2);
+//        rectEnem.setCenter(enemigo.getPositionX()+(enemigo.getWidth()/2), enemigo.getPositionY()+(enemigo.getHeight()/2));
+//        rectEnem.setSize(enemigo.getWidth()/2, enemigo.getHeight()/2);
         //rectPluma.height = rectPluma.getHeight();
         //rectPluma.width = rectPluma.getWidth();
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){

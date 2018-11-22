@@ -1,6 +1,7 @@
 package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -80,6 +81,11 @@ public class AboutUsScreen extends Pantalla{
     private class ProcesadorDeEntrada implements InputProcessor {
         @Override
         public boolean keyDown(int keycode) {
+            if(keycode == Input.Keys.BACK){
+                Gdx.input.setCatchBackKey(true);
+                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+                return true;
+            }
             return false;
         }
 
