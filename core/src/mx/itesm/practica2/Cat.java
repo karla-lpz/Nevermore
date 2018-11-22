@@ -43,6 +43,7 @@ public class Cat extends Enemy {
 //        sprite.setScale(.01f);
     }
 
+
     public void render(final SpriteBatch batch){
         time += Gdx.graphics.getDeltaTime(); //time passed since last render
         actualFrame = (TextureRegion) animation.getKeyFrame(time, true);
