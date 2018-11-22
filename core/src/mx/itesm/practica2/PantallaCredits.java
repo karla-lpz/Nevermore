@@ -3,12 +3,9 @@ package mx.itesm.practica2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class PantallaCredits extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;

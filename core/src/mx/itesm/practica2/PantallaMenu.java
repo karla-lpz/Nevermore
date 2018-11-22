@@ -3,25 +3,27 @@ package mx.itesm.practica2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import java.io.FileNotFoundException;
 
 class PantallaMenu extends Pantalla{
     private final Pantalla_Inicio pantallaInicio;
     private Sprite sprite;
     private Texture fondo = new Texture("Background/FondoFinal.png");
     private Texture title = new Texture("Titles/nevermoreTitulo.png");
+
+    private LoadingAnimation loadingAnimation;
     //Contenedor de elementos graficos de la pantalla
     private Stage escenaMenu;
+
+    private LoadingAnimation loading;
 
 
     public PantallaMenu(Pantalla_Inicio pantallaInicio) {
@@ -29,6 +31,12 @@ class PantallaMenu extends Pantalla{
         this.pantallaInicio = pantallaInicio;
     }
     Music music = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_MENU_PRINCIPAL.mp3"));
+
+    public PantallaMenu(Pantalla_Inicio pantallaInicio, LoadingAnimation loading) {
+        this.pantallaInicio = pantallaInicio;
+        this.loading = loading;
+    }
+
     @Override
     public void show() {
         //Es el primer metodo que se ejecuta
@@ -70,8 +78,18 @@ class PantallaMenu extends Pantalla{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                    pantallaInicio.setScreen(new Play(pantallaInicio));
-                    music.stop();
+//                int time = 0;
+//                if (time <= 6){
+//                    Gdx.gl.glClearColor(0, 0 , 0, 0);
+//                    Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT);
+//                    loadingAnimation.isActive();
+//                    time += 1;
+//                }
+                Gdx.gl.glClearColor(0, 0 , 0, 0);
+                Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT);
+//
+                pantallaInicio.setScreen(new Play(pantallaInicio));
+                music.stop();
             }
         });
 

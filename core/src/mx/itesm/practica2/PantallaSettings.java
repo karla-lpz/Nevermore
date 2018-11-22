@@ -3,11 +3,11 @@ package mx.itesm.practica2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
-
-import org.lwjgl.openal.AL;
 
 public class PantallaSettings extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
@@ -23,16 +23,17 @@ public class PantallaSettings extends Pantalla {
     private Texture NoVol = new Texture("volumenoff.png");
     private Boolean hayMusica = true;
 
-
+    Music music = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_MENU_PRINCIPAL.mp3"));
 
     public PantallaSettings(Pantalla_Inicio pantallaInicio) {
 
         this.pantallaInicio = pantallaInicio;
-
+        Music music = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_MENU_PRINCIPAL.mp3"));
     }
 
     @Override
     public void show() {
+        cargarMusica();
         sprite = new Sprite(new Texture("Buttons/back.png"));
         sprite.setPosition(ALTO *.2f,ANCHO *.2f);
         sprite = new Sprite(new Texture("Titles/scorestitulo.png"));
@@ -71,8 +72,15 @@ public class PantallaSettings extends Pantalla {
 
     }
 
-
-
+    private void cargarMusica() {
+        AssetManager manager = new AssetManager();
+        manager.load("music/CANCION_MENU_PRINCIPAL.mp3", Music.class);
+        manager.finishLoading();
+        music = manager.get("music/CANCION_MENU_PRINCIPAL.mp3");
+        music.setLooping(true);
+        music.play();
+        music.setLooping(true);
+    }
 
 
 

@@ -48,7 +48,7 @@ public class Play extends Pantalla {
     private int stage = 0;
     private Music Musica;
     private Array<Corazones> arrCorazon;
-//Enemigo___________________________________________________________________________________________
+    //Enemigo_______________________________
     private Enemy enemigo;
     private Queue<Enemy> enemies;
     private int numEnemies = 10;
@@ -61,9 +61,9 @@ public class Play extends Pantalla {
     private EscenaGano escenaGano;
     private EscenaPerdio escenaPerdio;
 
-//__________________________________________________________________________________________________
+//__________________________________
 
-//Flecha____________________________________________________________________________________________
+//Flecha________________________________
 
     //TODO: Move Pluma to method show
     private Texture corazon1 = new Texture("hearts/corazon.png");
@@ -77,7 +77,7 @@ public class Play extends Pantalla {
     private int shoots = 9;
 
 
-    //__________________________________________________________________________________________________
+    //__________________________________
     private Texture Arco = new Texture("arco.png");
     private Texture fnd = new Texture("Levels/nivel1.png");
     private Texture BotRegreso = new Texture("Buttons/back.png");
@@ -250,7 +250,7 @@ public class Play extends Pantalla {
 
         if (estado == Estado.PERDIO) {
             //escenaPerdio.draw();
-            escenaGano.draw();
+            escenaPerdio.draw();
             Gdx.input.setInputProcessor(escenaPerdio);
 
         }
@@ -451,7 +451,7 @@ public class Play extends Pantalla {
             return false;
         }
     }
-   private class EscenaPausa extends Stage{
+    private class EscenaPausa extends Stage{
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             Texto score = new Texto();
@@ -503,14 +503,14 @@ public class Play extends Pantalla {
 
     }
 
-//_____________________-PERDIO-____________________________________________________________________
+    //_______-PERDIO-________________________
     private class EscenaPerdio extends Stage{
         public EscenaPerdio(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             Texto score = new Texto();
             Texture fondoPausa = new Texture(Gdx.files.internal("Levels/nivel2.png"));
-              //
-             //
+            //
+            //
             //
             Image imgRectangulo = new Image(fondoPausa);
             imgRectangulo.setPosition(0, 0);
@@ -554,7 +554,7 @@ public class Play extends Pantalla {
     }
 
 
-//_____________________________-GANO-____________________________________________
+//__________-GANO-_______________
 
 
     private class EscenaGano extends Stage{
@@ -599,6 +599,8 @@ public class Play extends Pantalla {
             TextButton btn = new TextButton(String.valueOf(puntos), estilo);
             btn.setPosition((ANCHO/2) -30, (ALTO/2)-10);
             this.addActor(btn);
+
+
 
         }
 

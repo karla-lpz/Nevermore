@@ -40,7 +40,7 @@ public class PantallaStory extends  Pantalla{
         story.add(story3);
         story.add(story4);
         story.add(story5);
-        Music music = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_MENU_PRINCIPAL.mp3"));
+        Music music = Gdx.audio.newMusic(Gdx.files.internal("music/FOLEY_TRUENO.mp3"));
     }
     @Override
     public void show() {
@@ -56,9 +56,9 @@ public class PantallaStory extends  Pantalla{
 
     private void cargarMusica() {
         AssetManager manager = new AssetManager();
-        manager.load("music/CANCION_MENU_PRINCIPAL.mp3", Music.class);
+        manager.load("music/FOLEY_TRUENO.mp3", Music.class);
         manager.finishLoading();
-        music = manager.get("music/CANCION_MENU_PRINCIPAL.mp3");
+        music = manager.get("music/FOLEY_TRUENO.mp3");
         music.setLooping(true);
         music.play();
         music.setLooping(true);
