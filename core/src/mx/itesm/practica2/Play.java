@@ -1,5 +1,6 @@
 package mx.itesm.practica2;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -62,7 +63,7 @@ public class Play extends Pantalla {
 //Flecha____________________________________________________________________________________________
 
     //TODO: Move Pluma to method show
-    private Texture corazon1 = new Texture("hearts/CORA_LLENO.png");
+    private Texture corazon1 = new Texture("hearts/corazon.png");
     private Texture corazon2 = new Texture("hearts/CORA2.png");
     private Texture corazon3 = new Texture("hearts/CORA3.png");
     private Texture corazon4 = new Texture("hearts/CORA4.png");
@@ -183,12 +184,15 @@ public class Play extends Pantalla {
         }
         Rectangle rectPluma=  (Rectangle)pluma.getRectangle();
         Rectangle rectEnem =  (Rectangle)enemigo.getRectangle();
+        rectEnem.setCenter(enemigo.getPositionX()+(enemigo.getWidth()/2), enemigo.getPositionY()+(enemigo.getHeight()/2));
+        rectEnem.setSize(enemigo.getWidth()/2, enemigo.getHeight()/2);
+        //rectPluma.height = rectPluma.getHeight();
+        //rectPluma.width = rectPluma.getWidth();
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
-            rectPluma.height = rectPluma.getHeight() - 20f;
-            rectPluma.width = rectPluma.getWidth() - 20f;
             EffectE.play(1f);
             pluma.deactivate();
             enemigo.die(enemigo.getScaleX(), enemigo.getScaleY());
+            Gdx.input.vibrate(500);
             puntos ++;
             score = puntos;
         }
@@ -211,6 +215,7 @@ public class Play extends Pantalla {
             //batch.draw(texturaRectangulo, 0,0);
             if(enemigo.getScaleX() > 4f){
                 cora.BajarVida(cora.getEstado());
+                Gdx.input.vibrate( 1000);
                 enemigo.deactivate();
             }
 
@@ -300,6 +305,11 @@ public class Play extends Pantalla {
 
         @Override
         public boolean keyDown(int keycode) {
+            if(keycode == Input.Keys.BACK){
+                Gdx.input.setCatchBackKey(true);
+                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+                return true;
+            }
             return false;
         }
 
@@ -356,19 +366,29 @@ public class Play extends Pantalla {
             touchDownBool = false;
             if (v.y < 1000 || !(estado == Estado.JUGANDO)) return true;
             camara.unproject(v);
-            variable = ((360 - v.x)/50) * ANCHO;
-            float alfa = (float) Math.atan2(ALTO-v.y, v.x);
-            float vy = pluma.getVelocidad() * (float)Math.sin (alfa);
+            Float newSuperVx;
+            //newSuperVx = v.x;
+            if(v.x < 90f){
+                newSuperVx = 90f;
+            }else {
+                newSuperVx = v.x;
+            }
+            Gdx.app.log("Valor de Vx : ", Float.toString(v.x));
+            variable = ((360 - newSuperVx)/50) * ANCHO;
+            //if(v.y <= -50){
+            //    VyTouchUp = -50;
+            //}
+            float alfa = (float) Math.atan2(ALTO-v.y, newSuperVx);
+            float vy = pluma.getVelocidad() * (float)Math.sin(alfa);
             float vx = variable * (float)Math.cos(alfa);
             pluma.setVx(vx);
             //pluma.setVx(Math.max(vx, -547));
-            Gdx.app.log("Impulso en X", Float.toString(vx));
             pluma.setVy(vy);
-            Gdx.app.log("Impulso en Y", Float.toString(vx));
             pluma.volar(true);
             EffectL.play(1f);
             return false;
         }
+
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             Vector3 v = new Vector3(screenX, screenY, 0);
@@ -378,7 +398,6 @@ public class Play extends Pantalla {
                 cuerdaY = (int)v.y-1000;
                 camara.unproject(v);
                 power = (v.y * 0.1f) * 2;
-                float dy = v.y - iniPlumaY;
                 iniPlumaY = v.y;
                 pluma.sprite.setY(v.y - (pluma.getHeight() /2) );
                 pluma.rotar(pluma, v.x);

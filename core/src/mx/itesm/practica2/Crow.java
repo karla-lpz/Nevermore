@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Crow extends Enemy {
 
-    private static final String TEXTURE = "Enemies/cuervo-sprite.png";
+    private static final String TEXTURE = "Enemies/spritesfinal.png";
     private static final int TILE_HEIGHT = 166;
     private static final int TILE_WIDTH = 342;
 

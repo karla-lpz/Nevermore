@@ -1,7 +1,9 @@
 package mx.itesm.practica2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
@@ -12,6 +14,7 @@ public class PantallaCredits extends Pantalla {
     private final Pantalla_Inicio pantallaInicio;
 
     private Sprite sprite;
+
 
     private Texture fondo = new Texture("Background/FondoFinal.png");
     private Texture btnRegreso = new Texture( "Buttons/back.png");
@@ -79,6 +82,11 @@ public class PantallaCredits extends Pantalla {
     class ProcesadorDeEntrada implements InputProcessor {
         @Override
         public boolean keyDown(int keycode) {
+            if(keycode == Input.Keys.BACK){
+                Gdx.input.setCatchBackKey(true);
+                pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+                return true;
+            }
             return false;
         }
 
