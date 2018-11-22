@@ -13,7 +13,7 @@ public class AboutUsScreen extends Pantalla{
 
     private Sprite sprite;
 
-    private Texture fondo = new Texture("Background/FondoFinal.png");
+    private Texture fondo = new Texture("nosotros.png");
     private Texture title = new Texture("Titles/aboutustitulo.png");
     private Texture btnRegreso = new Texture( "Buttons/back.png");
 
@@ -53,13 +53,13 @@ public class AboutUsScreen extends Pantalla{
         batch.draw(fondo, 0, 0);
         batch.draw(title, ALTO / 150.5f, ANCHO / 0.70f);
         batch.draw(btnRegreso, ANCHO - btnRegreso.getWidth() * 1.0f, ALTO - btnRegreso.getHeight() * 1.2f);
-        participantsTitle.mostrarMensaje(batch, "PARTICIPANTS", 40.5f * ALTO / 160.5f , ANCHO / 0.75f);
-        participantsName.mostrarMensaje(batch, " Diana Diaz \n\n Leilani Trejo \n\n Karla Lopez \n\n Humberto Perez",
-                25.5f * ALTO / 160.5f, ANCHO / 0.83f );
-        paticipantsC.mostrarMensaje(batch, " LAD \n\n LAD \n\n ISC\n\n ISC", 55.5f * ALTO / 160.5f, ANCHO / 0.83f);
-        participantsContact.mostrarMensaje(batch,"\n A01371780@itesm.mx \n\n A01377035@itesm.mx\n\n A01378562@itesm.mx\n\n A01651926@itesm.mx",
-                41.5f * ALTO / 160.5f,ANCHO / 0.83f);
-        subjectInfo.mostrarMensaje(batch, "  Subject:VideoJuegos \n  Campus Estado de Mexico", 3 * 90.5f, ANCHO / 1.7f );
+//        participantsTitle.mostrarMensaje(batch, "PARTICIPANTS", 40.5f * ALTO / 160.5f , ANCHO / 0.75f);
+//        participantsName.mostrarMensaje(batch, " Diana Diaz \n\n Leilani Trejo \n\n Karla Lopez \n\n Humberto Perez",
+//                25.5f * ALTO / 160.5f, ANCHO / 0.83f );
+//        paticipantsC.mostrarMensaje(batch, " LAD \n\n LAD \n\n ISC\n\n ISC", 55.5f * ALTO / 160.5f, ANCHO / 0.83f);
+//        participantsContact.mostrarMensaje(batch,"\n A01371780@itesm.mx \n\n A01377035@itesm.mx\n\n A01378562@itesm.mx\n\n A01651926@itesm.mx",
+//                41.5f * ALTO / 160.5f,ANCHO / 0.83f);
+//        subjectInfo.mostrarMensaje(batch, "  Subject:VideoJuegos \n  Campus Estado de Mexico", 3 * 90.5f, ANCHO / 1.7f );
         batch.end();
     }
 
