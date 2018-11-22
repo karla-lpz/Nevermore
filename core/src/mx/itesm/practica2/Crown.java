@@ -62,7 +62,7 @@ public class Crown extends Enemy{
     public void mover(float dt) {}
 
     @Override
-    public void move(boolean volando){}
+    public void vuelo(boolean volando){}
 
 
     @Override
