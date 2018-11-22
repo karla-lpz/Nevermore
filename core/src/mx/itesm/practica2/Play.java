@@ -58,6 +58,9 @@ public class Play extends Pantalla {
     Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_EXPLOSION.mp3"));
 
     private EscenaPausa escenaPausa;
+    private EscenaGano escenaGano;
+    private EscenaPerdio escenaPerdio;
+
 //__________________________________________________________________________________________________
 
 //Flecha____________________________________________________________________________________________
@@ -236,11 +239,12 @@ public class Play extends Pantalla {
         punctuationText.mostrarMensaje(batch, "Puntuacion", ANCHO/2-ANCHO/6, 3.5f*ALTO/4);
 
         if (estado == Estado.PERDIO) {
+            //escenaPerdio.draw();
             //loseText.mostrarMensaje(batch, "PERDISTE", ANCHO/2, ALTO/2);
-            pantallaInicio.setScreen(new GameOverScreen(pantallaInicio, 0,pantallaInicio) );
         }
 
         if (estado == Estado.GANO) {
+           // escenaGano.draw();
             winText.mostrarMensaje(batch, "YOU WON", ANCHO/2, ALTO/2);
             Musica.stop();
         }
@@ -424,6 +428,113 @@ public class Play extends Pantalla {
     }
     private class EscenaPausa extends Stage{
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+            Texto score = new Texto();
+            Musica.pause();
+            Texture fondoPausa = new Texture(Gdx.files.internal("Background/fondopausa1.png"));
+            //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
+            //pixmap.dispose();
+            Image imgRectangulo = new Image(fondoPausa);
+            imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
+            this.addActor(imgRectangulo);
+            Texture texturaBtnSalir = new Texture("Buttons/home.png");
+            TextureRegionDrawable trdSalir = new TextureRegionDrawable(new TextureRegion(texturaBtnSalir));
+            ImageButton btnSalir = new ImageButton(trdSalir);
+            btnSalir.setPosition((ANCHO/2)+150-btnSalir.getWidth()/2, ALTO/6);
+            btnSalir.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    //Regresa al menú
+                    Musica.stop();
+                    pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+
+                }
+            });
+            this.addActor(btnSalir);
+            Texture texturaBtnContinuar = new Texture("Buttons/playbtn1.png");
+            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnContinuar));
+            ImageButton btnContinuar = new ImageButton(trdContinuar);
+            btnContinuar.setPosition((ANCHO/2)-150-btnContinuar.getWidth()/2, ALTO/6);
+            btnContinuar.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al juego
+                    Musica.play();
+                    estado = Estado.JUGANDO;
+                    Gdx.input.setInputProcessor(new ProcesadorDeEntrada()); // No debería crear uno nuevo
+                }
+            });
+            this.addActor(btnContinuar);
+
+            TextButton.TextButtonStyle estilo = new TextButton.TextButtonStyle();
+            estilo.fontColor = Color.BLACK;
+            estilo.font= new BitmapFont(Gdx.files.internal("fonts/Nevermore.fnt"));
+            TextButton btn = new TextButton(String.valueOf(puntos), estilo);
+            btn.setPosition((ANCHO/2) -30, (ALTO/2)-10);
+            this.addActor(btn);
+
+        }
+
+    }
+
+
+    private class EscenaPerdio extends Stage{
+        public EscenaPerdio(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+            Texto score = new Texto();
+            Musica.pause();
+            Texture fondoPausa = new Texture(Gdx.files.internal("Background/fondopausa1.png"));
+            //Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
+            //pixmap.dispose();
+            Image imgRectangulo = new Image(fondoPausa);
+            imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
+            this.addActor(imgRectangulo);
+            Texture texturaBtnSalir = new Texture("Buttons/home.png");
+            TextureRegionDrawable trdSalir = new TextureRegionDrawable(new TextureRegion(texturaBtnSalir));
+            ImageButton btnSalir = new ImageButton(trdSalir);
+            btnSalir.setPosition((ANCHO/2)+150-btnSalir.getWidth()/2, ALTO/6);
+            btnSalir.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    //Regresa al menú
+                    Musica.stop();
+                    pantallaInicio.setScreen(new PantallaMenu(pantallaInicio));
+
+                }
+            });
+            this.addActor(btnSalir);
+            Texture texturaBtnContinuar = new Texture("Buttons/playbtn1.png");
+            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnContinuar));
+            ImageButton btnContinuar = new ImageButton(trdContinuar);
+            btnContinuar.setPosition((ANCHO/2)-150-btnContinuar.getWidth()/2, ALTO/6);
+            btnContinuar.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al juego
+                    Musica.play();
+                    estado = Estado.JUGANDO;
+                    Gdx.input.setInputProcessor(new ProcesadorDeEntrada()); // No debería crear uno nuevo
+                }
+            });
+            this.addActor(btnContinuar);
+
+            TextButton.TextButtonStyle estilo = new TextButton.TextButtonStyle();
+            estilo.fontColor = Color.BLACK;
+            estilo.font= new BitmapFont(Gdx.files.internal("fonts/Nevermore.fnt"));
+            TextButton btn = new TextButton(String.valueOf(puntos), estilo);
+            btn.setPosition((ANCHO/2) -30, (ALTO/2)-10);
+            this.addActor(btn);
+
+        }
+
+    }
+
+
+
+    private class EscenaGano extends Stage{
+        public EscenaGano(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             Texto score = new Texto();
             Musica.pause();
