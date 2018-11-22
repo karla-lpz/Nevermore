@@ -195,6 +195,7 @@ public class Play extends Pantalla {
 //        rectEnem.setSize(enemigo.getWidth()/2, enemigo.getHeight()/2);
         //rectPluma.height = rectPluma.getHeight();
         //rectPluma.width = rectPluma.getWidth();
+        int win = 0;
         if(pluma.isActive && rectPluma.overlaps(rectEnem)){
             EffectE.play(1f);
             pluma.deactivate();
@@ -202,6 +203,11 @@ public class Play extends Pantalla {
             Gdx.input.vibrate(500);
             puntos ++;
             score = puntos;
+            win ++;
+        }
+
+        if(win >= numEnemies){
+            estado = Estado.GANO;
         }
 
         borrarPantalla(0, 0, 1);
