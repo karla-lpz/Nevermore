@@ -9,11 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import java.awt.TextComponent;
+
 import java.util.LinkedList;
 import java.util.Queue;
-import java.awt.Menu;
-import java.util.logging.SocketHandler;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool.Poolable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 //TODO: Vidas:
 //TODO: Enemigos:
@@ -47,12 +45,11 @@ public class Play extends Pantalla {
     private Music Musica;
     private Array<Corazones> arrCorazon;
 //Enemigo___________________________________________________________________________________________
-
-    private Texture enemigoBlock = new Texture(Gdx.files.internal("crow.png"));
-    private Sprite enemigoSprite = new Sprite(enemigoBlock);
     private Enemy enemigo;
-    private Queue<Enemy> crows;
-    private int numCrows = 6;
+    private Queue<Enemy> enemies;
+    private int numEnemies = 10;
+
+
     Sound EffectL = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_LANZAMIENTO.mp3"));
     Sound EffectE = Gdx.audio.newSound(Gdx.files.internal("music/FOLEY_EXPLOSION.mp3"));
 
@@ -67,9 +64,6 @@ public class Play extends Pantalla {
     private Texture corazon3 = new Texture("hearts/CORA3.png");
     private Texture corazon4 = new Texture("hearts/CORA4.png");
     private Texture corazon5 = new Texture("hearts/CORA5.png");
-
-    private Texture plumaBlock = new Texture(Gdx.files.internal("pluma.png"));
-    private Sprite plumaSprite = new Sprite(plumaBlock);
     private Pluma pluma;
     private float VELOCIDAD = 10;
     private Queue<Pluma> plumas;
@@ -103,13 +97,24 @@ public class Play extends Pantalla {
         estado = Estado.JUGANDO;
         Music Musica = Gdx.audio.newMusic(Gdx.files.internal("music/CANCION_NIVEL1.mp3"));
         this.pantallaInicio = pantallaInicio;
-        this.crows = new LinkedList<Enemy>();
-        for (int i = 0; i < this.numCrows; i++) {
-            this.crows.add(new Cat( new Texture("Enemies/cuervo-sprite.png"), (float) Math.random() * 500, (float) Math.random() * 10 + 880));
+        this.enemies = new LinkedList<Enemy>();
+        for (int i = 0; i < this.numEnemies; i++) {
+            Enemy newEnemy;
+            int tmp = (int) ( Math.random() * 2 + 1);
+            switch (tmp){
+                case 1:
+                    newEnemy = new Crow((float) Math.random() * 500, (float) Math.random() * 10 + 880);
+                    this.enemies.add(newEnemy);
+                    break;
+                case 2:
+                    newEnemy = new Cat((float) Math.random() * 500, (float) Math.random() * 10 + 880);
+                    this.enemies.add(newEnemy);
+                    break;
+            }
         }
         this.plumas =  new LinkedList<Pluma>();
         for (int i = 0; i < shoots; i++) {
-            this.plumas.add(new Pluma(plumaBlock, ANCHO/3.6f, 20));
+            this.plumas.add(new Pluma(ANCHO/3.6f, 20));
         }
     }
 
@@ -140,7 +145,7 @@ public class Play extends Pantalla {
     }
     private void eliminarObjetos(){
         pluma = this.plumas.remove();
-        enemigo = this.crows.remove();
+        enemigo = this.enemies.remove();
 
     }
 
@@ -152,11 +157,11 @@ public class Play extends Pantalla {
         }
 
 
-        if (!this.enemigo.isActive && !this.crows.isEmpty()) {
-            enemigo = this.crows.remove();
+        if (!this.enemigo.isActive() && !this.enemies.isEmpty()) {
+            enemigo = this.enemies.remove();
         }
 
-        if (!this.enemigo.isActive && estado != Estado.GANO) {
+        if (!this.enemigo.isActive() && estado != Estado.GANO) {
             this.estado = Estado.GANO;
             stage ++;
             //TODO: AGREGAR PUNTAJES
@@ -180,8 +185,7 @@ public class Play extends Pantalla {
             rectPluma.width = rectPluma.getWidth() - 20f;
             EffectE.play(1f);
             pluma.deactivate();
-            enemigo.Mancha(Mancha, enemigo.getPositionX() + enemigo.getAncho(), enemigo.getPositionY() + enemigo.getAlto() , enemigo.getScaleX(), enemigo.getScaleY());
-            enemigo.deactivate();
+            enemigo.die(enemigo.getScaleX(), enemigo.getScaleY());
             puntos ++;
             score = puntos;
         }
@@ -194,9 +198,9 @@ public class Play extends Pantalla {
         if (estado == Estado.JUGANDO) {
             batch.draw(Arco, 0, ALTO / 5.9f);
             pluma.mover(delta, power);
-            enemigo.mover(delta);
+            enemigo.mover();
             batch.draw(BtnPause, 0, ALTO / 1.12f);
-            enemigo.dibujar(batch);
+            enemigo.animate(batch);
             pluma.dibujar(batch);
             cora.render(batch, cora.getEstado());
             cora.render(batch, cora.getEstado());
@@ -373,7 +377,7 @@ public class Play extends Pantalla {
                 power = (v.y * 0.1f) * 2;
                 float dy = v.y - iniPlumaY;
                 iniPlumaY = v.y;
-                pluma.sprite.setY(v.y - (pluma.getAlto() /2) );
+                pluma.sprite.setY(v.y - (pluma.getHeight() /2) );
                 pluma.rotar(pluma, v.x);
                 if(v.x > 390)
                 {
